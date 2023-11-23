@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="480dp"
+    android:background="@drawable/corner_top"
+    tools:context=".ui.utils.BottomSheetFragment">
+
+    <ImageView
+        android:id="@+id/imageViewCloseButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/close_button"
+        android:src="@drawable/close_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewRegisterSuccess"
+        style="@style/TextContent.Headline"
+        android:layout_marginTop="90dp"
+        android:text="@string/register_n_success"
+        android:textAlignment="center"
+        android:textColor="@color/dark_blue"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewCloseButton" />
+
+    <ImageView
+        android:id="@+id/ImageViewIconResponseSuccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/icon_response_success"
+        android:src="@drawable/icon_response_success"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewRegisterSuccess" />
+
+    <Button
+        android:id="@+id/buttonToHomePage"
+        style="@style/ButtonContent"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="130dp"
+        android:layout_marginTop="80dp"
+        android:text="@string/homepage"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

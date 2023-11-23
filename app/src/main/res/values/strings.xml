@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Final Project</string>
+    <string name="email_or_phone">email / Nomor Telepon</string>
+    <string name="example_email">Contoh:achmad78@gmail.com</string>
+    <string name="enter">Masuk</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Masukkan Password</string>
+    <string name="forgot_password">Lupa Kata Sandi</string>
+    <string name="don_t_have_account_yet">Belum punya akun?</string>
+    <string name="register_here">Daftar Disini</string>
+    <string name="enter_without_login">Masuk Tanpa Login</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_back">Button Back</string>
+    <string name="register">Daftar</string>
+    <string name="name">Nama</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="example_phone">+62</string>
+    <string name="create_password">Buat Password</string>
+    <string name="have_account">Sudah punya akun?</string>
+    <string name="login_here">Masuk disini</string>
+    <string name="close_button">Close Button</string>
+    <string name="register_n_success">Registrasi \n Berhasil</string>
+    <string name="icon_response_success">Icon response success register</string>
+    <string name="homepage">Beranda</string>
+
+</resources>

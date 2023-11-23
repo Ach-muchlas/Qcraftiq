@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_blue_bg">
+
+    <ImageView
+        android:id="@+id/imageViewButtonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="14dp"
+        android:contentDescription="@string/button_back"
+        android:src="@drawable/arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewRegister"
+        style="@style/TextContent.Headline"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/register"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewButtonBack" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginTop="24dp"
+        android:text="@string/name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewRegister" />
+
+    <EditText
+        android:id="@+id/edtName"
+        style="@style/EditTextContent"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="5dp"
+        android:autofillHints="name"
+        android:hint="@string/full_name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewName" />
+
+    <TextView
+        android:id="@+id/textViewEmail"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginTop="16dp"
+        android:text="@string/email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtName" />
+
+    <EditText
+        android:id="@+id/edtEmail"
+        style="@style/EditTextContent"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="5dp"
+        android:autofillHints="emailAddress"
+        android:hint="@string/example_email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewEmail" />
+
+    <TextView
+        android:id="@+id/textViewPhone"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginTop="16dp"
+        android:text="@string/phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtEmail" />
+
+    <EditText
+        android:id="@+id/edtPhone"
+        style="@style/EditTextContent"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="5dp"
+        android:autofillHints="phone"
+        android:hint="@string/example_phone"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewPhone" />
+
+    <TextView
+        android:id="@+id/textViewPassword"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginTop="16dp"
+        android:text="@string/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtPhone" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edtPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="26dp"
+        app:endIconDrawable="@drawable/open_close_eye"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewPassword"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            style="@style/EditTextContent"
+            android:hint="@string/create_password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>y
+
+    <Button
+        android:id="@+id/btnLogin"
+        style="@style/ButtonContent"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="35dp"
+        android:fontFamily="@font/pop_medium"
+        android:text="@string/register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtPassword" />
+
+    <TextView
+        android:id="@+id/textViewDontHaveAccount"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/have_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewRegisterHere"
+        style="@style/TextContent.Body.PopBold"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/login_here"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textViewDontHaveAccount" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
