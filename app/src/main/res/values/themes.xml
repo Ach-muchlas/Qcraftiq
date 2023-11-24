@@ -18,11 +18,28 @@
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
     </style>
 
+    <style name="TextContent.Body.MonMedium">
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+        <item name="fontFamily">@font/mon_reg</item>
+    </style>
+
+    <style name="TextContent.Body.MonBold">
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+        <item name="fontFamily">@font/mon_bold</item>
+    </style>
 
     <style name="TextContent.Body.PopMedium">
         <item name="android:layout_marginLeft">28dp</item>
         <item name="android:layout_marginRight">28dp</item>
         <item name="fontFamily">@font/pop_medium</item>
+    </style>
+
+    <style name="TextContent.Body.PopSemiBold">
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+        <item name="fontFamily">@font/pop_semi_bold</item>
     </style>
 
     <style name="TextContent.Body.PopBold">

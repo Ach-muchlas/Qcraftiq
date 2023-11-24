@@ -25,5 +25,19 @@
     <string name="register_n_success">Registrasi \n Berhasil</string>
     <string name="icon_response_success">Icon response success register</string>
     <string name="homepage">Beranda</string>
+    <string name="title_home">Beranda</string>
+    <string name="title_notification">Notifikasi</string>
+    <string name="title_class">Kelas</string>
+    <string name="title_course">Kursus</string>
+    <string name="title_account">Akun</string>
+    <string name="look_for_best_course">Cari kursus terbaik.....</string>
+    <string name="category">Kategori</string>
+    <string name="see_all">Lihat Semua</string>
+    <string name="popular_course">Kursus Populer</string>
+    <string name="image_content">image content</string>
+    <string name="example_category_content">Mobile Development</string>
+    <string name="icon_start">icon start</string>
+    <string name="example_value_rate">4.7</string>
+    <string name="example_name_course">Belajar Android Pemula</string>
 
 </resources>

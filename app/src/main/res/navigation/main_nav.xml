@@ -3,16 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/mainActivity">
+    app:startDestination="@id/navigation_home">
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.am.finalproject.ui.main.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.am.finalproject.ui.auth.register.RegisterFragment"
-        tools:layout="@layout/fragment_register"
-        android:label="RegisterFragment" />
+        android:id="@+id/navigation_home"
+        android:name="com.am.finalproject.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="com.am.finalproject.ui.account.AccountFragment"
+        android:label="@string/title_account"
+        tools:layout="@layout/fragment_account" />
+
+    <fragment
+        android:id="@+id/navigation_classroom"
+        android:name="com.am.finalproject.ui.classroom.ClassroomFragment"
+        android:label="@string/title_class"
+        tools:layout="@layout/fragment_classroom" />
+
+    <fragment
+        android:id="@+id/navigation_course"
+        android:name="com.am.finalproject.ui.course.CourseFragment"
+        android:label="@string/title_course"
+        tools:layout="@layout/fragment_course" />
+
+    <fragment
+        android:id="@+id/navigation_notification"
+        android:name="com.am.finalproject.ui.notification.NotificationFragment"
+        android:label="@string/title_notification"
+        tools:layout="@layout/fragment_notification" />
+
 </navigation>
