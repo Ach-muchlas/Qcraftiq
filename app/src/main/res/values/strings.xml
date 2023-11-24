@@ -25,5 +25,14 @@
     <string name="register_n_success">Registrasi \n Berhasil</string>
     <string name="icon_response_success">Icon response success register</string>
     <string name="homepage">Beranda</string>
+    <string name="account">Akun</string>
+    <string name="version">Version 1.10.1</string>
+    <string name="save_my_profile">Simpan Profile Saya</string>
+    <string name="input_city_of_residence">Masukan Kota tempat tinggal</string>
+    <string name="city">Kota</string>
+    <string name="input_country_of_residence">Masukan Negara tempat tinggal</string>
+    <string name="country">Negara</string>
+    <string name="example_email_2">youremail@gmail.com</string>
+    <string name="example_name">Nama Anda</string>
 
 </resources>
