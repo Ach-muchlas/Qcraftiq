@@ -34,5 +34,9 @@
     <string name="country">Negara</string>
     <string name="example_email_2">youremail@gmail.com</string>
     <string name="example_name">Nama Anda</string>
+    <string name="change_password">Ubah Password</string>
+    <string name="input_old_password">Masukan Password Lama</string>
+    <string name="input_new_password">Masukan Password Baru</string>
+    <string name="password_hint">********</string>
 
 </resources>
