@@ -35,7 +35,7 @@ class PaymentHistoryFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View? {
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_payment_history, container, false)
+		return inflater.inflate(R.layout.fragment_change_password, container, false)
 	}
 
 	companion object {
