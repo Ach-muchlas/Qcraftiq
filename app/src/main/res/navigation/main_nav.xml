@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_account" />
 
     <fragment
-        android:id="@+id/navigation_classroom"
+        android:id="@+id/navigation_class"
         android:name="com.am.finalproject.ui.classroom.ClassroomFragment"
         android:label="@string/title_class"
         tools:layout="@layout/fragment_classroom" />

@@ -1,9 +1,9 @@
 package com.am.finalproject.data
 
 data class Course(
-    val imageUrl: String,
+    val imageUrl: Int,
     val tagLine: String,
-    val name: String,
+    val title: String,
     val mentor: String,
     val level: String,
     val module: String,

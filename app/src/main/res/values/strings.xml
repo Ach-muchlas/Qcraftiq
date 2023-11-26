@@ -39,5 +39,20 @@
     <string name="icon_start">icon start</string>
     <string name="example_value_rate">4.7</string>
     <string name="example_name_course">Belajar Android Pemula</string>
+    <string name="example_name_mentor">Achmad Muchlasin</string>
+    <string name="icon_level_course">icon level course</string>
+    <string name="example_level_course">Advance Level</string>
+    <string name="icon_module">icon_module</string>
+    <string name="example_module">19 Modul</string>
+    <string name="icon_time">icon_time</string>
+    <string name="example_time">60 Menit</string>
+    <string name="example_text_button">Beli Rp 249.000</string>
+    <string name="buy">Beli\t</string>
+    <string name="notification">Notifikasi</string>
+    <string name="icon_notification">Icon Notification</string>
+    <string name="example_tagline_notification">Promosi</string>
+    <string name="example_time_now">2 Maret, 12:00</string>
+    <string name="example_title_notification">Dapatkan potongan 50% selama\n Bulan Ramadhan</string>
+    <string name="example_description_notification">Syarat dan ketentuan berlaku!</string>
 
 </resources>
