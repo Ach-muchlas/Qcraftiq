@@ -1,55 +1,60 @@
 package com.am.finalproject.adapter.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.am.finalproject.R
-import com.am.finalproject.data.Course
+import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.databinding.ItemPopularCourseBinding
+import com.bumptech.glide.Glide
 
 class HomePopularCourseAdapter :
-    ListAdapter<Course, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<DataItemCourse, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
     inner class MyViewHolder(private val binding: ItemPopularCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Course) {
-            val buttonText = binding.root.context.getString(R.string.buy) + data.price
-            binding.textViewTagLineCategory.text = data.tagLine
-            binding.imageContent.setImageResource(data.imageUrl)
+        fun bindContentPopularCourse(data: DataItemCourse) {
+            val buttonText = "Buy      " + data.price
+            binding.textViewTagLineCategory.text = data.category?.title
             binding.textViewTitleCourse.text = data.title
-            binding.textViewRate.text = data.rate.toString()
-            binding.textViewMentor.text = data.mentor
+            Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
+            binding.textViewRate.text = data.rating.toString()
+            binding.textViewMentor.text = data.authorBy
             binding.textViewLevelCourse.text = data.level
-            binding.textViewModule.text = data.module
-            binding.textViewTime.text = data.time
+            binding.textViewModule.text = data.rating.toString()
+            binding.textViewTime.text = data.rating.toString()
             binding.buttonBuy.text = buttonText
+            binding.progressBar.visibility = View.GONE
+            binding.textViewProgressStatus.visibility = View.GONE
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
             ItemPopularCourseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
+
     }
 
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val dataPopularCourse = getItem(position)
-        holder.bind(dataPopularCourse)
+        val data = getItem(position)
+        holder.bindContentPopularCourse(data)
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Course>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItemCourse>() {
             override fun areItemsTheSame(
-                oldItem: Course,
-                newItem: Course
+                oldItem: DataItemCourse,
+                newItem: DataItemCourse
             ): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: Course,
-                newItem: Course
+                oldItem: DataItemCourse, newItem: DataItemCourse
             ): Boolean {
                 return oldItem == newItem
             }

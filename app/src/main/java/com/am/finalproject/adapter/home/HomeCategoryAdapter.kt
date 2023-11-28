@@ -5,15 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.am.finalproject.data.Category
+import com.am.finalproject.data.remote.DataItemCategory
 import com.am.finalproject.databinding.ItemCategoryBinding
+import com.bumptech.glide.Glide
 
-class HomeCategoryAdapter : ListAdapter<Category, HomeCategoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class HomeCategoryAdapter :
+    ListAdapter<DataItemCategory, HomeCategoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
     inner class MyViewHolder(private val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Category) {
-            binding.textViewTitle.text = data.name
-            binding.imageContent.setImageResource(data.imageUrl)
+        fun bind(data: DataItemCategory) {
+            binding.textViewTitle.text = data.title
+            Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
         }
     }
 
@@ -29,17 +31,17 @@ class HomeCategoryAdapter : ListAdapter<Category, HomeCategoryAdapter.MyViewHold
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Category>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItemCategory>() {
             override fun areItemsTheSame(
-                oldItem: Category,
-                newItem: Category
+                oldItem: DataItemCategory,
+                newItem: DataItemCategory
             ): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: Category,
-                newItem: Category
+                oldItem: DataItemCategory,
+                newItem: DataItemCategory
             ): Boolean {
                 return oldItem == newItem
             }

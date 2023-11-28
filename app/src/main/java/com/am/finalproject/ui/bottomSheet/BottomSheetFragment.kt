@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.util.bottomSheet
+package com.am.finalproject.ui.bottomSheet
 
 import android.os.Bundle
 import android.view.LayoutInflater

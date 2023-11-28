@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="480dp"
     android:background="@drawable/corner_top"
-    tools:context=".ui.util.bottomSheet.BottomSheetFragment">
+    tools:context=".ui.bottomSheet.BottomSheetFragment">
 
     <ImageView
         android:id="@+id/imageViewCloseButton"

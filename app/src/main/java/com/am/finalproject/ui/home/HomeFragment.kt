@@ -1,6 +1,7 @@
 package com.am.finalproject.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,21 +9,26 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.am.finalproject.R
 import com.am.finalproject.adapter.home.HomeCategoryAdapter
-import com.am.finalproject.data.dataDummyCategory
+import com.am.finalproject.data.remote.CategoryResponse
+import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentHomeBinding
-import com.am.finalproject.ui.util.tabLayout.PopularCourseFragment
+import com.am.finalproject.ui.tabLayout.popularCourse.PopularCourseFragment
+import com.am.finalproject.ui.tabLayout.popularCourse.PopularCourseViewModel
+import com.am.finalproject.utils.DisplayLayout.setUpVisibilityProgressBar
+import com.am.finalproject.utils.DisplayLayout.toastMessage
 import com.google.android.material.tabs.TabLayout
+import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val popularCourseViewModel: PopularCourseViewModel by inject()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        setUpCategoryAdapter()
+        displayCategory()
         setUpTabLayout()
-//        setUpPopularCourseAdapter()
         return binding.root
     }
 
@@ -39,7 +45,7 @@ class HomeFragment : Fragment() {
                 tab.let {
                     val position = it.position
                     val title = tabTitle[position]
-                    val fragment = PopularCourseFragment.newsInstance(title)
+                    val fragment = PopularCourseFragment()
                     showFragment(fragment)
                 }
             }
@@ -51,8 +57,7 @@ class HomeFragment : Fragment() {
             }
 
         })
-        val firstTabTitle = tabTitle.first()
-        val firsFragment = PopularCourseFragment.newsInstance(firstTabTitle)
+        val firsFragment = PopularCourseFragment()
         showFragment(firsFragment)
     }
 
@@ -63,9 +68,31 @@ class HomeFragment : Fragment() {
         transaction.commit()
     }
 
-    private fun setUpCategoryAdapter() {
+    private fun displayCategory() {
+        popularCourseViewModel.getCategory().observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.LOADING -> {
+                    setUpVisibilityProgressBar(binding.progressBar, true)
+                }
+
+                Status.SUCCESS -> {
+                    setUpCategoryAdapter(resource.data)
+                    setUpVisibilityProgressBar(binding.progressBar, false)
+                    toastMessage(requireContext(), "${resource.message}")
+                }
+
+                Status.ERROR -> {
+                    setUpVisibilityProgressBar(binding.progressBar, false)
+                    toastMessage(requireContext(), " Error ${resource.message}")
+                }
+            }
+
+        }
+    }
+
+    private fun setUpCategoryAdapter(data: CategoryResponse?) {
         val adapter = HomeCategoryAdapter()
-        adapter.submitList(dataDummyCategory)
+        adapter.submitList(data?.data)
         binding.recyclerViewCategory.adapter = adapter
         binding.recyclerViewCategory.layoutManager = GridLayoutManager(requireContext(), 2)
     }

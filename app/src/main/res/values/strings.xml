@@ -38,7 +38,7 @@
     <string name="example_category_content">Mobile Development</string>
     <string name="icon_start">icon start</string>
     <string name="example_value_rate">4.7</string>
-    <string name="example_name_course">Belajar Android Pemula</string>
+    <string name="example_name_course">Belajar Dasar Pemograman Android Pemula</string>
     <string name="example_name_mentor">Achmad Muchlasin</string>
     <string name="icon_level_course">icon level course</string>
     <string name="example_level_course">Advance Level</string>
@@ -54,5 +54,7 @@
     <string name="example_time_now">2 Maret, 12:00</string>
     <string name="example_title_notification">Dapatkan potongan 50% selama\n Bulan Ramadhan</string>
     <string name="example_description_notification">Syarat dan ketentuan berlaku!</string>
+    <string name="example_progress_status">60% complete</string>
+    <string name="my_class">Kelas Berjalan</string>
 
 </resources>

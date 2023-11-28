@@ -52,23 +52,23 @@
 
     <!--small sp without ignore-->
     <style name="TextContent.Body.MonMedium.SmallSp">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextContent.Body.MonBold.SmallSp">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextContent.Body.MonMedium.ExtraSmallSp">
-        <item name="android:textSize">8sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="TextContent.Body.MonBold.ExtraSmallSp">
-        <item name="android:textSize">8sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="TextContent.Headline.SmallSp">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
 

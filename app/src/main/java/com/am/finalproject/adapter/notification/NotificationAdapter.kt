@@ -1,15 +1,14 @@
 package com.am.finalproject.adapter.notification
 
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.data.Notification
 import com.am.finalproject.databinding.ItemNotificationBinding
 import com.am.finalproject.utils.Formatter
+import java.util.TimeZone
 
 class NotificationAdapter : ListAdapter<Notification, NotificationAdapter.MyViewHolder>(
     DIFF_CALLBACK
@@ -20,7 +19,7 @@ class NotificationAdapter : ListAdapter<Notification, NotificationAdapter.MyView
             binding.textViewTagLineNotification.text = data.tagLine
             binding.textViewTitleNotification.text = data.title
             binding.textViewDescriptionNotification.text = data.description
-            binding.textViewTimeNowNotification.text = data.time
+            binding.textViewTimeNowNotification.text =data.time
         }
     }
 
