@@ -25,5 +25,37 @@
     <string name="register_n_success">Registrasi \n Berhasil</string>
     <string name="icon_response_success">Icon response success register</string>
     <string name="homepage">Beranda</string>
+    <string name="study">Belajar</string>
+    <string name="tittle_splash_one">dari Pengalaman Terbaik!</string>
+    <string name="title_splash_two">dari Praktisi Terbaik!</string>
+    <string name="title_splash_three">darimana Saja!</string>
+    <string name="logo_app">Logo App</string>
+    <string name="btn_splash">btn splash</string>
+    <string name="description">description</string>
+    <string name="image_slide">image slide</string>
+    <string name="image_view_button_back">image view button back</string>
+    <string name="course_image_view">Course image view</string>
+    <string name="ui_ux_design">UI/UX Design</string>
+    <string name="intro_basic_ui">Intro to Basic of User Interaction Design</string>
+    <string name="simon_doe_author">Simon Doe</string>
+    <string name="price">Harga</string>
+    <string name="rupiah">Rp.</string>
+    <string name="_349_000">349.000</string>
+    <string name="_38_390">38.390</string>
+    <string name="ppn_11">PPN 11%</string>
+    <string name="total">Total</string>
+    <string name="_387_390">387.390</string>
+    <string name="text_button_payment">Bayar dan Ikuti Kelas Selamanya</string>
+    <string name="bank_transfer">Bank Transfer</string>
+    <string name="credit_card">Credit Card</string>
+    <string name="card_number">Card Number</string>
+    <string name="_3550_0000_0000_0000">3550 0000 0000 0000</string>
+    <string name="card_holder_name">Card Holder Name</string>
+    <string name="jeff_bezos">Jeff Bezos</string>
+    <string name="ccv">CCV</string>
+    <string name="dot3">. . .</string>
+    <string name="expire_date">Expire Date</string>
+    <string name="_08_24">08/24</string>
+    <string name="image_credit_card">Image credit card</string>
 
 </resources>

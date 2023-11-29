@@ -2,7 +2,6 @@ package com.am.finalproject.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.am.finalproject.R
 import com.am.finalproject.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
