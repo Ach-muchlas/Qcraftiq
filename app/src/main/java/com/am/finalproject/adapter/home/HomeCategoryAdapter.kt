@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.data.remote.DataItemCategory
 import com.am.finalproject.databinding.ItemCategoryBinding
 import com.bumptech.glide.Glide
+import kotlin.math.min
 
 class HomeCategoryAdapter :
     ListAdapter<DataItemCategory, HomeCategoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    var showAllItems: Boolean = false
+
     inner class MyViewHolder(private val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: DataItemCategory) {
@@ -28,6 +31,14 @@ class HomeCategoryAdapter :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val dataCategory = getItem(position)
         holder.bind(dataCategory)
+    }
+
+    override fun getItemCount(): Int {
+        return if (showAllItems) {
+            super.getItemCount()
+        } else {
+            min(super.getItemCount(), 4)
+        }
     }
 
     companion object {

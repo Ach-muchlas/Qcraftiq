@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="200dp"
-    android:layout_height="250dp"
+    android:layout_height="260dp"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     android:layout_marginEnd="10dp"
@@ -19,12 +19,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="160dp"
         android:layout_marginTop="100dp">
 
         <TextView
             android:id="@+id/textViewTagLineCategory"
-            style="@style/TextContent.Body.MonBold.SmallSp"
+            style="@style/TextContent.Body.MonBold.ExtraSmallSp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:text="@string/example_category_content"
@@ -147,20 +147,29 @@
             android:textAppearance="@style/TextContent.Body.MonBold.SmallSp"
             android:textAlignment="inherit"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/iconProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/icon_progress"
+            android:src="@drawable/check"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
             android:id="@+id/progressBar"
-            android:visibility="gone"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="150dp"
             android:layout_height="20dp"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iconProgress"
             app:rcAnimationEnable="true"
             app:rcBackgroundColor="@color/grey"
             app:rcProgressColor="@color/dark_blue" />

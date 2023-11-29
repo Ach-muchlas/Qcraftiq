@@ -52,23 +52,23 @@
 
     <!--small sp without ignore-->
     <style name="TextContent.Body.MonMedium.SmallSp">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="TextContent.Body.MonBold.SmallSp">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="TextContent.Body.MonMedium.ExtraSmallSp">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextContent.Body.MonBold.ExtraSmallSp">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextContent.Headline.SmallSp">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 
@@ -78,6 +78,7 @@
         <item name="tabMode">scrollable</item>
         <item name="tabIndicatorAnimationMode">elastic</item>
         <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabIndicator">@color/transparent</item>
     </style>
 
     <style name="EditTextContent">

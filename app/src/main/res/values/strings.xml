@@ -56,5 +56,6 @@
     <string name="example_description_notification">Syarat dan ketentuan berlaku!</string>
     <string name="example_progress_status">60% complete</string>
     <string name="my_class">Kelas Berjalan</string>
+    <string name="icon_progress">icon_progress</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.am.finalproject.adapter.home
+package com.am.finalproject.adapter.classroom
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,39 +10,36 @@ import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.databinding.ItemPopularCourseBinding
 import com.bumptech.glide.Glide
 
-class HomePopularCourseAdapter :
-    ListAdapter<DataItemCourse, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
-    inner class MyViewHolder(private val binding: ItemPopularCourseBinding) :
+class CourseTrackIngAdapter : ListAdapter<DataItemCourse, CourseTrackIngAdapter.MyViewHolder>(
+    DIFF_CALLBACK
+) {
+    inner class MyViewHolder(val binding: ItemPopularCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindContentPopularCourse(data: DataItemCourse) {
-            val buttonText = "Buy      " + data.price
-            binding.textViewTagLineCategory.text = data.category.title
-            binding.textViewTitleCourse.text = data.title
+        fun bind(data: DataItemCourse) {
+            val author = "By " + data.authorBy
             Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
+            binding.textViewTagLineCategory.text = data.category?.title
             binding.textViewRate.text = data.rating.toString()
-            binding.textViewMentor.text = data.authorBy
+            binding.textViewTitleCourse.text = data.title
+            binding.textViewMentor.text = author
             binding.textViewLevelCourse.text = data.level
             binding.textViewModule.text = data.rating.toString()
             binding.textViewTime.text = data.rating.toString()
-            binding.buttonBuy.text = buttonText
-            binding.progressBar.visibility = View.GONE
-            binding.textViewProgressStatus.visibility = View.GONE
-            binding.iconProgress.visibility = View.GONE
+            binding.buttonBuy.visibility = View.GONE
+            binding.textViewProgressStatus.text = data.rating.toString()
         }
-    }
 
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
             ItemPopularCourseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
-
     }
-
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val data = getItem(position)
-        holder.bindContentPopularCourse(data)
+        holder.bind(data)
     }
 
     companion object {
@@ -53,11 +50,14 @@ class HomePopularCourseAdapter :
             ): Boolean {
                 return oldItem == newItem
             }
+
             override fun areContentsTheSame(
-                oldItem: DataItemCourse, newItem: DataItemCourse
+                oldItem: DataItemCourse,
+                newItem: DataItemCourse
             ): Boolean {
                 return oldItem == newItem
             }
         }
     }
+
 }

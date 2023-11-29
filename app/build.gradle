@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id "androidx.navigation.safeargs"
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -78,5 +79,10 @@ dependencies {
     implementation("io.insert-koin:koin-android-compat:3.3.0")
     implementation("io.insert-koin:koin-androidx-workmanager:3.3.0")
     implementation("io.insert-koin:koin-androidx-navigation:3.3.0")
+
+    //room
+    implementation "androidx.room:room-runtime:2.6.0"
+    kapt "androidx.room:room-compiler:2.6.0"
+    implementation "androidx.room:room-ktx:2.6.0"
 
 }

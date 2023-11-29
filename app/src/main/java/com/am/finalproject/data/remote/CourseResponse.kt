@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class CourseResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItemCourse?>? = null,
+	val data: List<DataItemCourse>,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -17,36 +17,36 @@ data class CourseResponse(
 data class DataItemCourse(
 
 	@field:SerializedName("image")
-	val image: String? = null,
+	val image: String,
 
 	@field:SerializedName("level")
-	val level: String? = null,
+	val level: String,
 
 	@field:SerializedName("authorBy")
-	val authorBy: String? = null,
+	val authorBy: String,
 
 	@field:SerializedName("rating")
-	val rating: Any? = null,
+	val rating: Double,
 
 	@field:SerializedName("description")
-	val description: String? = null,
+	val description: String,
 
 	@field:SerializedName("title")
-	val title: String? = null,
+	val title: String,
 
 	@field:SerializedName("type")
-	val type: String? = null,
+	val type: String,
 
 	@field:SerializedName("price")
-	val price: Int? = null,
+	val price: Int,
 
 	@field:SerializedName("subtitle")
-	val subtitle: String? = null,
+	val subtitle: String,
 
 	@field:SerializedName("id")
-	val id: String? = null,
+	val id: String,
 
 	@field:SerializedName("category")
-	val category: DataItemCategory? = null,
+	val category: DataItemCategory,
 
 )
