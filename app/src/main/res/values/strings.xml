@@ -57,5 +57,12 @@
     <string name="expire_date">Expire Date</string>
     <string name="_08_24">08/24</string>
     <string name="image_credit_card">Image credit card</string>
+    <string name="congrats">Selamat!</string>
+    <string name="close_icon">close icon</string>
+    <string name="illustration_success_payment">illustration success payment</string>
+    <string name="success_payment">Transaksi pembayaran kelas premium berhasil!</string>
+    <string name="study_start">Mulai Belajar</string>
+    <string name="back_to_home">kembali Ke Beranda</string>
+    <string name="send_email">E-receipt telah dikirimkan ke email.</string>
 
 </resources>
