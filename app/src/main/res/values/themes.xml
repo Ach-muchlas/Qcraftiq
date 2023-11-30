@@ -4,6 +4,15 @@
 
     </style>
 
+    <style name="TabLayoutContent">
+        <item name="tabBackground">@drawable/custom_tab_selector</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabIndicatorAnimationMode">elastic</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabIndicator">@color/transparent</item>
+    </style>
+
     <style name="TextContent">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -18,6 +27,17 @@
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
     </style>
 
+    <style name="TextContent.Body.MonMedium">
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+        <item name="fontFamily">@font/mon_reg</item>
+    </style>
+
+    <style name="TextContent.Body.MonBold">
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+        <item name="fontFamily">@font/mon_bold</item>
+    </style>
 
     <style name="TextContent.Body.PopMedium">
         <item name="android:layout_marginLeft">28dp</item>
@@ -29,6 +49,27 @@
         <item name="android:layout_marginLeft">28dp</item>
         <item name="android:layout_marginRight">28dp</item>
         <item name="fontFamily">@font/pop_bold</item>
+    </style>
+
+    <!--small sp without ignore-->
+    <style name="TextContent.Body.MonMedium.SmallSp">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextContent.Body.MonBold.SmallSp">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextContent.Body.MonMedium.ExtraSmallSp">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextContent.Body.MonBold.ExtraSmallSp">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextContent.Headline.SmallSp">
+        <item name="android:textSize">14sp</item>
     </style>
 
 
@@ -44,7 +85,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/pop_medium</item>
-        <item name="android:textSize">14sp </item>
+        <item name="android:textSize">14sp</item>
         <item name="android:background">@drawable/bg_edt</item>
         <item name="android:padding">15dp</item>
     </style>

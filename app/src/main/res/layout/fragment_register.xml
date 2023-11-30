@@ -100,9 +100,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="26dp"
+        android:autofillHints="password"
         android:hint="@string/create_password"
         android:textColorHint="@color/grey"
-        android:autofillHints="password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewPassword"
         app:passwordToggleEnabled="true">

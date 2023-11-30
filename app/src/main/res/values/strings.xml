@@ -9,7 +9,6 @@
     <string name="don_t_have_account_yet">Belum punya akun?</string>
     <string name="register_here">Daftar Disini</string>
     <string name="enter_without_login">Masuk Tanpa Login</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_back">Button Back</string>
     <string name="register">Daftar</string>
@@ -26,7 +25,7 @@
     <string name="icon_response_success">Icon response success register</string>
     <string name="homepage">Beranda</string>
     <string name="account">Akun</string>
-    <string name="version">Version 1.10.1</string>
+    <string name="version">Version 1.1.1</string>
     <string name="save_my_profile">Simpan Profile Saya</string>
     <string name="input_city_of_residence">Masukan Kota tempat tinggal</string>
     <string name="city">Kota</string>
@@ -38,5 +37,26 @@
     <string name="input_old_password">Masukan Password Lama</string>
     <string name="input_new_password">Masukan Password Baru</string>
     <string name="password_hint">********</string>
+
+    <string name="image_content">image content</string>
+    <string name="example_category_content">Mobile Development</string>
+    <string name="icon_start">icon start</string>
+    <string name="example_value_rate">4.7</string>
+    <string name="example_name_course">Belajar Dasar Pemograman Android Pemula</string>
+    <string name="example_name_mentor">Achmad Muchlasin</string>
+    <string name="icon_level_course">icon level course</string>
+    <string name="example_level_course">Advance Level</string>
+    <string name="icon_module">icon_module</string>
+    <string name="example_module">19 Modul</string>
+    <string name="icon_time">icon_time</string>
+    <string name="example_time">60 Menit</string>
+    <string name="icon_progress">icon_progress</string>
+    <string name="example_text_button">Paid</string>
+    <string name="look_for_best_course">Cari kursus terbaik.....</string>
+    <string name="topic_class">Topik Kelas </string>
+    <string name="filter">Filter</string>
+    <string name="payment_history">Riwayat Pembayaran</string>
+    <string name="my_profile">Profile Saya</string>
+    <string name="logout">Keluar</string>
 
 </resources>
