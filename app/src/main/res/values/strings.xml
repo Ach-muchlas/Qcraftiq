@@ -64,5 +64,18 @@
     <string name="study_start">Mulai Belajar</string>
     <string name="back_to_home">kembali Ke Beranda</string>
     <string name="send_email">E-receipt telah dikirimkan ke email.</string>
+    <string name="newest">Paling Baru</string>
+    <string name="popular">Paling Populer</string>
+    <string name="promo">Promo</string>
+    <string name="category">Kategori</string>
+    <string name="web_development">Web Development</string>
+    <string name="android_development">Androi dDevelopment</string>
+    <string name="difficulty_level">Level Kesulitan</string>
+    <string name="level_all">Semua Level</string>
+    <string name="beginner_level">Beginner Level</string>
+    <string name="intermediate_level">Intermediate Level</string>
+    <string name="advanced_level">Advanced Level</string>
+    <string name="btn_filter">Terapkan Filter</string>
+    <string name="delete_filter">Hapus Filter</string>
 
 </resources>
