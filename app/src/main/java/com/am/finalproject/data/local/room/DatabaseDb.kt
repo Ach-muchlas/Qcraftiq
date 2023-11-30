@@ -1,4 +1,4 @@
-package com.am.finalproject.data.lokal.room
+package com.am.finalproject.data.local.room
 
 //@Database(entities = [PopularCourseEntity::class], version = 1, exportSchema = false)
 //abstract class DatabaseDb : RoomDatabase() {

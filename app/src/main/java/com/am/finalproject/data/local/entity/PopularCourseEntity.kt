@@ -1,9 +1,4 @@
-package com.am.finalproject.data.lokal.entity
-
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.am.finalproject.data.remote.DataItemCategory
+package com.am.finalproject.data.local.entity
 
 //@Entity(tableName = "popular_course")
 //class PopularCourseEntity(

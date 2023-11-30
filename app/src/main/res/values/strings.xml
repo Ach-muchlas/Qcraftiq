@@ -57,5 +57,8 @@
     <string name="example_progress_status">60% complete</string>
     <string name="my_class">Kelas Berjalan</string>
     <string name="icon_progress">icon_progress</string>
+    <string name="warning_text_field_empty">Oops! Kolom ini tidak boleh kosong</string>
+    <string name="warning_text_email_invalid">Oops! Alamat email yang Anda masukkan tidak valid.</string>
+    <string name="warning_text_field_less_8">Oops! Kolom ini tidak boleh kurang dari 8 karakter</string>
 
 </resources>

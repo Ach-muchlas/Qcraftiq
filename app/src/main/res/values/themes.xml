@@ -93,7 +93,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">60dp</item>
         <item name="android:background">@drawable/custom_bg_edt</item>
-        <item name="android:backgroundTint">@color/dark_blue</item>
         <item name="android:elevation">10dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">23sp</item>
