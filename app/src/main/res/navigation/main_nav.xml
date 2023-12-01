@@ -22,7 +22,7 @@
         tools:layout="@layout/activity_details" />
     <fragment
         android:id="@+id/bottomsheetdialogFragment"
-        android:name="com.am.finalproject.ui.details.bottomdialog.bottomsheetdialogFragment"
+        android:name="com.am.finalproject.ui.details.bottomdialog.BottomSheetDialogFragment"
         android:label="fragment_bottomsheetdialog"
         tools:layout="@layout/fragment_bottomsheetdialog" />
     <fragment

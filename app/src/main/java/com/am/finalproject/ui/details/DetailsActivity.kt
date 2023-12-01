@@ -11,6 +11,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.am.finalproject.databinding.ActivityDetailsBinding
 import com.am.finalproject.ui.adapter.ViewPagerAdapter
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -34,6 +35,9 @@ class DetailsActivity : AppCompatActivity() {
             fragments,
             this
         )
+
+        val bottomSheetDialogFragment = BottomSheetDialogFragment()
+        bottomSheetDialogFragment.show(supportFragmentManager, bottomSheetDialogFragment.tag)
 
         binding.viewPager2.isUserInputEnabled = false
         binding.viewPager2.apply {
