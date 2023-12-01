@@ -13,10 +13,16 @@
         android:theme="@style/Theme.FinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".ui.details.DetailsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_details"
+            android:theme="@style/Theme.FinalProject" />
+        <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

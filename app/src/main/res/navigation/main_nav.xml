@@ -15,4 +15,24 @@
         android:name="com.am.finalproject.ui.auth.register.RegisterFragment"
         tools:layout="@layout/fragment_register"
         android:label="RegisterFragment" />
+    <activity
+        android:id="@+id/detailsActivity"
+        android:name="com.am.finalproject.ui.details.DetailsActivity"
+        android:label="activity_details"
+        tools:layout="@layout/activity_details" />
+    <fragment
+        android:id="@+id/bottomsheetdialogFragment"
+        android:name="com.am.finalproject.ui.details.bottomdialog.bottomsheetdialogFragment"
+        android:label="fragment_bottomsheetdialog"
+        tools:layout="@layout/fragment_bottomsheetdialog" />
+    <fragment
+        android:id="@+id/tentangDetailsFragment"
+        android:name="com.am.finalproject.ui.details.TentangDetailsFragment"
+        android:label="fragment_tentangdetails"
+        tools:layout="@layout/fragment_tentangdetails" />
+    <fragment
+        android:id="@+id/materiKelasDetailsFragment"
+        android:name="com.am.finalproject.ui.details.MateriKelasDetailsFragment"
+        android:label="fragment_materikelasdetails"
+        tools:layout="@layout/fragment_materikelasdetails" />
 </navigation>
