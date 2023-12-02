@@ -70,6 +70,15 @@
     <style name="TextContent.Headline.SmallSp">
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="EditTextContent2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/pop_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/bg_edt</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
 
 
     <style name="TabLayoutContent">

@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="@id/purpleBar" />
 
     <!-- VideoPlayer -->
-    <androidx.media3.ui.PlayerView
+    <VideoView
         android:id="@+id/mediaplayer_view"
         android:layout_width="match_parent"
         android:layout_height="200dp"
