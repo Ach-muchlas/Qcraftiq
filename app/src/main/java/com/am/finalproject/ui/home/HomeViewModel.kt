@@ -19,7 +19,6 @@ class HomeViewModel (private val repository: Repository): ViewModel() {
 
     fun getPopularCourse() = repository.getPopularCourse()
 
-//    fun getPopularCourseLocalData() = repository.getPopularCourseLocalData()
 
     fun getCategoryCourse() = repository.getCategory()
 }

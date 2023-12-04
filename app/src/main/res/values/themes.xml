@@ -89,6 +89,14 @@
         <item name="android:padding">15dp</item>
     </style>
 
+    <style name="EditTextContentOtp">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="fontFamily">@font/pop_medium</item>
+        <item name="android:background">@drawable/custom_bg_edt_otp</item>
+        <item name="android:inputType">number</item>
+    </style>
+
     <style name="ButtonContent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">60dp</item>

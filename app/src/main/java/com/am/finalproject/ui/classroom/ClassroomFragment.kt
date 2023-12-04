@@ -28,7 +28,7 @@ class ClassroomFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentClassroomBinding.inflate(inflater, container, false)
-        setupTabLayout()
+//        setupTabLayout()
         displayCategory()
         return binding.root
     }
@@ -54,32 +54,32 @@ class ClassroomFragment : Fragment() {
         }
     }
 
-    private fun setupTabLayout() {
-        val tabLayout = binding.tabLayoutClass
-        val tabTitle = listOf("All", "In Progress", "Done")
-        for (title in tabTitle) {
-            val tab = tabLayout.newTab().setText(title)
-            tabLayout.addTab(tab)
-        }
-
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                tab.let {
-                    val fragment = ProgressCourseFragment()
-                    showFragment(fragment, childFragmentManager)
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-            }
-
-        })
-        val firsFragment = ProgressCourseFragment()
-        showFragment(firsFragment, childFragmentManager)
-    }
+//    private fun setupTabLayout() {
+//        val tabLayout = binding.tabLayoutClass
+//        val tabTitle = listOf("All", "In Progress", "Done")
+//        for (title in tabTitle) {
+//            val tab = tabLayout.newTab().setText(title)
+//            tabLayout.addTab(tab)
+//        }
+//
+//        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+//            override fun onTabSelected(tab: TabLayout.Tab) {
+//                tab.let {
+//                    val fragment = ProgressCourseFragment()
+//                    showFragment(fragment, childFragmentManager)
+//                }
+//            }
+//
+//            override fun onTabUnselected(tab: TabLayout.Tab) {
+//            }
+//
+//            override fun onTabReselected(tab: TabLayout.Tab) {
+//            }
+//
+//        })
+//        val firsFragment = ProgressCourseFragment()
+//        showFragment(firsFragment, childFragmentManager)
+//    }
 
 
     @SuppressLint("NotifyDataSetChanged")

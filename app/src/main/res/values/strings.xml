@@ -58,7 +58,18 @@
     <string name="my_class">Kelas Berjalan</string>
     <string name="icon_progress">icon_progress</string>
     <string name="warning_text_field_empty">Oops! Kolom ini tidak boleh kosong</string>
-    <string name="warning_text_email_invalid">Oops! Alamat email yang Anda masukkan tidak valid.</string>
+    <string name="warning_text_email_invalid">Oops! Alamat email Or Phone yang Anda masukkan tidak valid.</string>
+    <string name="warning_text_phone_invalid">Oops! Number Phone yang Anda masukkan tidak valid.</string>
     <string name="warning_text_field_less_8">Oops! Kolom ini tidak boleh kurang dari 8 karakter</string>
+    <string name="warning_password_uppercase">Oops! Kata sandi harus mengandung setidaknya 1 huruf besar.</string>
+    <string name="warning_password_special_character">Oops! Kata sandi harus mengandung setidaknya 1 karakter khusus.</string>
+    <string name="input_otp">Masukkan OTP</string>
+    <string name="the_6_digit_code_sent">Ketik 6 digit yang dikirimkan ke</string>
+    <string name="example_destination_otp">achmad00@gmai.com</string>
+    <string name="_0">0</string>
+    <string name="_1">1</string>
+    <string name="_3">3</string>
+    <string name="resending">Kirim ulang OTP dalam 56 detik</string>
+    <string name="request_new_code">Minta Kode baru via Email</string>
 
 </resources>

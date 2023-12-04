@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpDisplayBottomNavigation() {
         val navView: BottomNavigationView = binding.bottomNavigation
-
         val navHostController = findNavController(R.id.navHostFragmentActivityMain)
         navView.setupWithNavController(navHostController)
     }

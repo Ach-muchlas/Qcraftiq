@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -22,27 +23,38 @@ object DisplayLayout {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun showFragment(fragment: Fragment, childFragmentManager: FragmentManager) {
+    fun showFragment(container: Int, fragment: Fragment, childFragmentManager: FragmentManager) {
         val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.containerFragment, fragment)
+        transaction.replace(container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
 
-    fun validateEmailEditText(editText: EditText, email: CharSequence, context: Context) {
-        if (email.toString().isEmpty()) {
-            editText.error = context.getString(R.string.warning_text_field_empty)
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()) {
-            editText.error = context.getString(R.string.warning_text_email_invalid)
-        }
+    fun isValidEmail(text: CharSequence): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(text).matches()
     }
 
-    fun validatePasswordEditText(editText: EditText, password: CharSequence, context: Context) {
-        if (password.toString().isEmpty()) {
-            editText.error = context.getString(R.string.warning_text_field_empty)
-        } else if (password.length > 8) {
-            editText.error = context.getString(R.string.warning_text_field_less_8)
+    fun isValidPhoneNumber(number: CharSequence): Boolean {
+        return number.matches(Regex("\\d+"))
+    }
+
+    fun containsUpperCase(text: CharSequence): Boolean {
+        for (char in text) {
+            if (char.isUpperCase()) {
+                return true
+            }
         }
+        return false
+    }
+
+    fun containsSpecialCharacter(text: CharSequence): Boolean {
+        val specialCharacters = "!@#$%^&*()_-+=<>?/{}~`"
+        for (char in text) {
+            if (specialCharacters.contains(char)) {
+                return true
+            }
+        }
+        return false
     }
 
     fun buttonEnabled(button: Button, editText: EditText, context: Context) {
@@ -55,5 +67,10 @@ object DisplayLayout {
         val editTextEmail = editText.text
         button.isEnabled =
             editTextEmail != null && editTextEmail.isNotEmpty()
+    }
+
+    fun hideAppBar(activity: AppCompatActivity) {
+        val actionBar = activity.supportActionBar
+        actionBar?.hide()
     }
 }

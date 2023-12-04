@@ -27,6 +27,7 @@
         android:background="@drawable/corner_top"
         android:elevation="8dp"
         app:elevation="20dp"
+        app:labelVisibilityMode="labeled"
         app:itemIconSize="24dp"
         app:itemIconTint="@color/bottom_nav_color"
         app:itemTextColor="@color/bottom_nav_color"
