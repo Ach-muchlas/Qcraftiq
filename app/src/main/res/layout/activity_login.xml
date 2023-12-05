@@ -23,17 +23,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewMasuk" />
 
-    <EditText
-        android:id="@+id/edtEmail"
-        style="@style/EditTextContent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edlEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="26dp"
-        android:layout_marginTop="5dp"
-        android:autofillHints="emailAddress"
         android:hint="@string/example_email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:autofillHints="emailAddress"
+        android:textColorHint="@color/grey"
+        app:endIconMode="clear_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewEmailOrPhone" />
+        app:layout_constraintTop_toBottomOf="@id/textViewEmailOrPhone"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtEmail"
+            style="@style/EditTextContent"
+            android:inputType="textEmailAddress|text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/textViewPassword"
@@ -41,7 +49,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/password"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtEmail" />
+        app:layout_constraintTop_toBottomOf="@id/edlEmail" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edlPassword"

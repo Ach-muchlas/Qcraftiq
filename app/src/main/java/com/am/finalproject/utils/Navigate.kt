@@ -2,6 +2,8 @@ package com.am.finalproject.utils
 
 import android.content.Context
 import android.content.Intent
+import androidx.navigation.NavController
+import com.am.finalproject.R
 
 object Navigate {
 //    fun navigateToDestination(destination: Destination, navController: NavController) {

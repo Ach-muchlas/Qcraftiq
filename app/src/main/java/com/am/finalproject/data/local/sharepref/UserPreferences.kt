@@ -2,6 +2,7 @@ package com.am.finalproject.data.local.sharepref
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.am.finalproject.data.remote.LoginResult
 
 class UserPreferences(context: Context) {
 
@@ -15,9 +16,10 @@ class UserPreferences(context: Context) {
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     }
 
-    fun saveUser() {
+    fun saveUser(user: LoginResult){
         sharedPreferences.edit().apply {
-            /*data yang akan save*/
+            putString(KEY_TOKEN, user.accessToken)
+            putBoolean(KEY_LOGIN, true)
             apply()
         }
     }
@@ -25,6 +27,8 @@ class UserPreferences(context: Context) {
     fun isUserLogin(): Boolean {
         return sharedPreferences.getBoolean(KEY_LOGIN, false)
     }
+
+
 
     fun clearUser() {
         sharedPreferences.edit().clear().apply()
