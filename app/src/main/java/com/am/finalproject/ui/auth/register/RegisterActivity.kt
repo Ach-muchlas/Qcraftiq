@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.am.finalproject.R
@@ -12,6 +13,7 @@ import com.am.finalproject.databinding.ActivityRegisterBinding
 import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.auth.otp.OtpActivity
 import com.am.finalproject.utils.DisplayLayout
+import io.github.muddz.styleabletoast.StyleableToast
 import org.koin.android.ext.android.inject
 
 class RegisterActivity : AppCompatActivity() {
@@ -67,6 +69,11 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     binding.edlEmail.error = null
                 }
+                DisplayLayout.buttonEnabled(
+                    binding.buttonRegister,
+                    binding.edtEmail,
+                    this@RegisterActivity
+                )
             }
 
             override fun afterTextChanged(text: Editable) {
@@ -83,7 +90,6 @@ class RegisterActivity : AppCompatActivity() {
         /*password*/
         binding.edtPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
             override fun onTextChanged(text: CharSequence, p1: Int, p2: Int, p3: Int) {
                 if (text.toString().isEmpty()) {
                     binding.edlPassword.error = getString(R.string.warning_text_field_empty)
@@ -123,23 +129,27 @@ class RegisterActivity : AppCompatActivity() {
                                     putString(KEY_PHONE, phone)
                                     putString(KEY_PASSWORD, password)
                                 }
-
+                                StyleableToast.makeText(
+                                    this@RegisterActivity,
+                                    resources.data?.message,
+                                    Toast.LENGTH_SHORT,
+                                    R.style.MyToast_IsGreen
+                                ).show()
                                 val intent =
                                     Intent(this@RegisterActivity, OtpActivity::class.java).apply {
                                         putExtras(bundle)
                                     }
                                 startActivity(intent)
-                                DisplayLayout.toastMessage(
-                                    this@RegisterActivity,
-                                    resources.message.toString()
-                                )
+
                             }
 
                             Status.ERROR -> {
-                                DisplayLayout.toastMessage(
+                                StyleableToast.makeText(
                                     this@RegisterActivity,
-                                    resources.message.toString()
-                                )
+                                    "Email Already Used",
+                                    Toast.LENGTH_SHORT,
+                                    R.style.MyToast_IsRed
+                                ).show()
                             }
                         }
                     }

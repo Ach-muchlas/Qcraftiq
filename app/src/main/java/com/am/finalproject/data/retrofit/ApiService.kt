@@ -4,12 +4,19 @@ import com.am.finalproject.data.remote.CategoryResponse
 import com.am.finalproject.data.remote.CourseResponse
 import com.am.finalproject.data.remote.LoginBody
 import com.am.finalproject.data.remote.LoginResponse
+import com.am.finalproject.data.remote.ModuleResponse
 import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.remote.RegisterResponse
+import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiService {
 
@@ -34,8 +41,17 @@ interface ApiService {
         @Body registerBody: RegisterBodyWithOTP
     ): RegisterResponse
 
-    @POST("auth/register/otp")
+    @FormUrlEncoded
+    @PUT("auth/register/resend-otp")
     suspend fun resendOTP(
-        @Body email: String
+        @Field("email") email: String
     ): RegisterResponse
+    @GET("courses")
+    fun getCourse(
+    ) : Call<CourseResponse>
+
+    @GET("modules")
+    suspend fun getModules(
+        @Header("Authorization") bearer : String
+    ): ModuleResponse
 }

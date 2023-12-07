@@ -1,8 +1,7 @@
 package com.am.finalproject.utils
 
-import android.os.Handler
-import android.os.Looper
-import android.widget.ProgressBar
+import java.text.NumberFormat
+import java.util.Locale
 
 object Formatter {
 //    fun formatLocalDate(currentDate: String, targetTimeZone: String): String {
@@ -11,4 +10,9 @@ object Formatter {
 //            .withZone(ZoneId.of(targetTimeZone))
 //        return formatter.format(instant)
 //    }
+
+    fun formatterRupiah(amount: Int): String {
+        val formatter: NumberFormat = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+        return formatter.format(amount.toLong())
+    }
 }

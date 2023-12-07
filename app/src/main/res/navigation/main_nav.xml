@@ -25,9 +25,9 @@
 
     <fragment
         android:id="@+id/navigation_course"
-        android:name="com.am.finalproject.ui.course.TopicClassFragment"
+        android:name="com.am.finalproject.ui.course.CourseFragment"
         android:label="@string/title_course"
-        tools:layout="@layout/fragment_topic_class" />
+        tools:layout="@layout/fragment_course" />
 
     <fragment
         android:id="@+id/navigation_notification"

@@ -5,33 +5,38 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.am.finalproject.R
-import com.am.finalproject.data.local.sharepref.UserPreferences
 import com.am.finalproject.data.remote.LoginResult
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.ActivityLoginBinding
 import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.auth.register.RegisterActivity
 import com.am.finalproject.ui.main.MainActivity
+import com.am.finalproject.ui.onboarding.OnBoardingActivity
 import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.Navigate
+import io.github.muddz.styleabletoast.StyleableToast
 import org.koin.android.ext.android.inject
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var userPreferences: UserPreferences
-
     private val viewModel: AuthViewModel by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        userPreferences = UserPreferences(this)
-        supportActionBar?.hide()
+        initialization()
         setupEditText()
         navigation()
+    }
+
+    private fun initialization() {
+        viewModel.init(this)
+        DisplayLayout.hideAppBar(this)
     }
 
     private fun setupEditText() {
@@ -90,7 +95,11 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun navigation() {
-        if (userPreferences.isUserLogin()) Navigate.intentActivity(
+        if (!viewModel.isOnBoardingCompleted()) {
+            Navigate.intentActivity(this@LoginActivity, OnBoardingActivity::class.java)
+            viewModel.markOnBoardingCompleted()
+        }
+        if (viewModel.isUserLogin()) Navigate.intentActivity(
             this@LoginActivity,
             MainActivity::class.java
         )
@@ -112,21 +121,35 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.edtPassword.text.toString()
 
             viewModel.login(emailOrPhone, password).observe(this) { resources ->
+
                 when (resources.status) {
                     Status.LOADING -> {}
+
                     Status.SUCCESS -> {
-                        userPreferences.saveUser(LoginResult(resources.data?.data?.accessToken))
+                        viewModel.saveUser(LoginResult(resources.data?.data?.accessToken))
+                        StyleableToast.makeText(
+                            this,
+                            resources.data?.message,
+                            Toast.LENGTH_SHORT,
+                            R.style.MyToast_IsGreen
+                        ).show()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                         startActivity(intent)
+                        finish()
                     }
 
                     Status.ERROR -> {
-                        DisplayLayout.toastMessage(this, resources.message.toString())
+                        StyleableToast.makeText(
+                            this,
+                            "Email or Phone not Registered",
+                            Toast.LENGTH_SHORT,
+                            R.style.MyToast_IsRed
+                        ).show()
+                        Log.e("CHECK", resources.data?.message.toString())
                     }
                 }
-
             }
-            Log.e("CHECK", viewModel.login(emailOrPhone, password).toString())
         }
     }
 }

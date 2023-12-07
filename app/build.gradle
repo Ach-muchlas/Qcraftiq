@@ -48,8 +48,6 @@ dependencies {
 
     /*Unit Test*/
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
@@ -83,10 +81,12 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-navigation:3.3.0")
 
     //room
-    implementation "androidx.room:room-runtime:2.6.0"
-    kapt "androidx.room:room-compiler:2.6.0"
-    implementation "androidx.room:room-ktx:2.6.0"
+    implementation "androidx.room:room-runtime:2.6.1"
+    kapt "androidx.room:room-compiler:2.6.1"
+    implementation "androidx.room:room-ktx:2.6.1"
 
     /*video player*/
     implementation 'androidx.media3:media3-ui:1.2.0'
+    /*Styleable Toast*/
+    implementation 'io.github.muddz:styleabletoast:2.4.0'
 }

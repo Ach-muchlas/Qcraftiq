@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.splashscreen
+package com.am.finalproject.adapter.onboarding
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.R
+import com.am.finalproject.data.intro.IntroSlideData
 
 class IntroSliderAdapter(private val introSlides: List<IntroSlideData>) :
     RecyclerView.Adapter<IntroSliderAdapter.IntroSlideViewHolder>(){

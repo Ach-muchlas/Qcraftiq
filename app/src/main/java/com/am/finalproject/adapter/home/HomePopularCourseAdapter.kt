@@ -1,30 +1,30 @@
 package com.am.finalproject.adapter.home
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.am.finalproject.data.remote.DataItemCourse
+import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.databinding.ItemPopularCourseBinding
+import com.am.finalproject.utils.Formatter
 import com.bumptech.glide.Glide
 
 class HomePopularCourseAdapter :
-    ListAdapter<DataItemCourse, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<CourseEntity, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
     inner class MyViewHolder(private val binding: ItemPopularCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindContentPopularCourse(data: DataItemCourse) {
-            val buttonText = "Buy      " + data.price
-            binding.textViewTagLineCategory.text = data.category.title
+        fun bindContentPopularCourse(data: CourseEntity) {
+            binding.textViewTagLineCategory.text = data.categoryTitle
             binding.textViewTitleCourse.text = data.title
             Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
-            binding.textViewRate.text = data.rating.toString()
+            binding.textVieRating.text = data.rating.toString()
             binding.textViewMentor.text = data.authorBy
             binding.textViewLevelCourse.text = data.level
-            binding.textViewModule.text = data.rating.toString()
-            binding.textViewTime.text = data.rating.toString()
-            binding.buttonBuy.text = buttonText
+            binding.textViewTime.text = null
+            binding.buttonBuy.text = Formatter.formatterRupiah(data.price)
             binding.progressBar.visibility = View.GONE
             binding.textViewProgressStatus.visibility = View.GONE
             binding.iconProgress.visibility = View.GONE
@@ -46,15 +46,17 @@ class HomePopularCourseAdapter :
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItemCourse>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CourseEntity>() {
             override fun areItemsTheSame(
-                oldItem: DataItemCourse,
-                newItem: DataItemCourse
+                oldItem: CourseEntity,
+                newItem: CourseEntity
             ): Boolean {
                 return oldItem == newItem
             }
+
+            @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(
-                oldItem: DataItemCourse, newItem: DataItemCourse
+                oldItem: CourseEntity, newItem: CourseEntity
             ): Boolean {
                 return oldItem == newItem
             }

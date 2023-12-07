@@ -2,7 +2,6 @@ package com.am.finalproject.ui.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +10,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.finalproject.adapter.home.HomeCategoryAdapter
 import com.am.finalproject.adapter.home.HomePopularCourseAdapter
+import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.local.sharepref.UserPreferences
 import com.am.finalproject.data.remote.CategoryResponse
-import com.am.finalproject.data.remote.CourseResponse
 import com.am.finalproject.data.remote.DataItemCategory
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentHomeBinding
-import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.utils.DisplayLayout.setupVisibilityProgressBar
 import com.am.finalproject.utils.DisplayLayout.toastMessage
 import com.google.android.material.tabs.TabLayout
@@ -27,12 +25,13 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by inject()
-    private lateinit var sharedpref : UserPreferences
+    private lateinit var sharedpref: UserPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         displayCategory()
+        displayPopularCourse()
         sharedpref = UserPreferences(requireContext())
         binding.textViewSeeAllPopularCourse.setOnClickListener {
             sharedpref.clearUser()
@@ -40,48 +39,71 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    /*This function is to display tabs in the popular course.*/
     private fun setUpTabLayout(data: List<DataItemCategory?>?) {
         val tabLayout = binding.tabLayout
-        tabLayout.addTab(tabLayout.newTab().setText(""))
+        tabLayout.addTab(tabLayout.newTab().setText("All"))
         data?.forEach {
-            val tabTitle = listOf( it?.title)
-            Log.e("CHECK", "title : $tabTitle")
+            val tabTitle = listOf(it?.title)
             for (title in tabTitle) {
                 val tab = tabLayout.newTab().setText(title)
                 tabLayout.addTab(tab)
             }
+        }
 
-
-            tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    tab.let {
-                        viewModel.getPopularCourse().observe(viewLifecycleOwner) { resources ->
-                            when (resources.status) {
-                                Status.LOADING -> {}
-                                Status.SUCCESS -> {
-                                    setupPopularCourse(resources.data)
-                                }
-
-                                Status.ERROR -> {
-                                    toastMessage(requireContext(), resources.message.toString())
-                                }
-                            }
-
-                        }
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                if (tab.text.toString() == "All") {
+                    getALlCourseLocalData()
+                }else{
+                    viewModel.search(tab.text.toString()).observe(viewLifecycleOwner) { data ->
+                        setupPopularCourseAdapter(data)
                     }
                 }
+            }
 
-                override fun onTabUnselected(tab: TabLayout.Tab) {
-                }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
 
-                override fun onTabReselected(tab: TabLayout.Tab) {
-                }
-            })
-        }
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
 
     }
 
+
+    /*Function to retrieve popular course data from the local database.*/
+    private fun getALlCourseLocalData() {
+        viewModel.readCourseAll().observe(viewLifecycleOwner) { data ->
+            setupPopularCourseAdapter(data)
+        }
+    }
+
+    /*Function to display popular courses.*/
+    /*This function has implemented offline first.*/
+    private fun displayPopularCourse() {
+        viewModel.getCourse()
+            .observe(viewLifecycleOwner) { result ->
+                if (result != null) {
+                    when (result.status) {
+                        Status.LOADING -> {
+                            setupVisibilityProgressBar(binding.progressBarPopularCourse, true)
+                        }
+
+                        Status.SUCCESS -> {
+                            setupVisibilityProgressBar(binding.progressBarPopularCourse, false)
+                            setupPopularCourseAdapter(data = result.data!!)
+                        }
+
+                        Status.ERROR -> {
+                            setupVisibilityProgressBar(binding.progressBarPopularCourse, false)
+                        }
+                    }
+                }
+            }
+    }
+
+    /*This function is used to display categories.*/
     private fun displayCategory() {
+
         viewModel.getCategoryCourse().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.LOADING -> {
@@ -103,14 +125,17 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupPopularCourse(data: CourseResponse?) {
+    /*The function is used to set up a data adapter for popular courses.*/
+    private fun setupPopularCourseAdapter(data: List<CourseEntity>) {
         val adapter = HomePopularCourseAdapter()
-        adapter.submitList(data?.data)
+        adapter.submitList(data)
         binding.recyclerViewPopularCourse.adapter = adapter
         binding.recyclerViewPopularCourse.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
+
+    /*The function is used to set up a data adapter for popular courses. */
     @SuppressLint("NotifyDataSetChanged")
     private fun setUpCategoryAdapter(data: CategoryResponse?) {
         val adapter = HomeCategoryAdapter()

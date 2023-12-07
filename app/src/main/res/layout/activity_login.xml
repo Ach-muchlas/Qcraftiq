@@ -106,6 +106,7 @@
         app:layout_constraintBottom_toTopOf="@id/textViewEnterWithoutLogin"
         app:layout_constraintStart_toEndOf="@id/textViewDontHaveAccount" />
 
+
     <TextView
         android:id="@+id/textViewEnterWithoutLogin"
         style="@style/TextContent.Body.PopBold"
@@ -115,4 +116,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/textViewRegisterHere"
         app:layout_constraintStart_toStartOf="@id/textViewDontHaveAccount" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

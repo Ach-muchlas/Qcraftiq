@@ -2,15 +2,10 @@ package com.am.finalproject.ui.details
 
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.am.finalproject.databinding.ActivityDetailsBinding
-import com.am.finalproject.ui.adapter.ViewPagerAdapter
+import com.am.finalproject.adapter.detail.ViewPagerAdapter
 
 import com.google.android.material.tabs.TabLayoutMediator
 

@@ -18,12 +18,11 @@ class CourseTrackIngAdapter : ListAdapter<DataItemCourse, CourseTrackIngAdapter.
         fun bind(data: DataItemCourse) {
             val author = "By " + data.authorBy
             Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
-            binding.textViewTagLineCategory.text = data.category?.title
-            binding.textViewRate.text = data.rating.toString()
+            binding.textViewTagLineCategory.text = data.category.title
+            binding.textVieRating.text = data.rating.toString()
             binding.textViewTitleCourse.text = data.title
             binding.textViewMentor.text = author
             binding.textViewLevelCourse.text = data.level
-            binding.textViewModule.text = data.rating.toString()
             binding.textViewTime.text = data.rating.toString()
             binding.buttonBuy.visibility = View.GONE
             binding.textViewProgressStatus.text = data.rating.toString()

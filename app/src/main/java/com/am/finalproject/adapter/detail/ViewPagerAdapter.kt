@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.adapter
+package com.am.finalproject.adapter.detail
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

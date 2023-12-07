@@ -1,32 +1,44 @@
-package com.am.finalproject.ui.splashscreen
+package com.am.finalproject.ui.onboarding
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.am.finalproject.R
+import com.am.finalproject.adapter.onboarding.IntroSliderAdapter
+import com.am.finalproject.data.intro.IntroSlideData
+import com.am.finalproject.databinding.ActivityOnboardingBinding
+import com.am.finalproject.ui.auth.login.LoginActivity
+import com.am.finalproject.utils.DisplayLayout
+import com.am.finalproject.utils.Navigate
 
-class OnboardingSplashScreen : AppCompatActivity() {
+class OnBoardingActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityOnboardingBinding
     private lateinit var introSliderAdapter: IntroSliderAdapter
     private lateinit var indicatorContainer: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_onboarding_splash_screen)
-        supportActionBar?.hide()
+        binding = ActivityOnboardingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        DisplayLayout.hideAppBar(this)
+        navigation()
         setSliderItems()
         setupIndicator()
         setCurrentIndicator(0)
     }
 
-    private fun toRegisterFragment(){
-
+    private fun navigation() {
+        binding.textViewLoginHere.setOnClickListener {
+            Navigate.intentActivity(this, LoginActivity::class.java)
+        }
     }
-    private fun setSliderItems(){
+
+    private fun setSliderItems() {
         introSliderAdapter = IntroSliderAdapter(
             listOf(
                 IntroSlideData(
@@ -44,21 +56,21 @@ class OnboardingSplashScreen : AppCompatActivity() {
             )
         )
 
-        val onboardingViewPager = findViewById<ViewPager2>(R.id.onboardingViewPager)
-        onboardingViewPager.adapter = introSliderAdapter
-        onboardingViewPager.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback(){
+        val onBoardingViewPager = binding.onboardingViewPager
+        onBoardingViewPager.adapter = introSliderAdapter
+        onBoardingViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 setCurrentIndicator(position)
             }
         })
-        (onboardingViewPager.getChildAt(0)as RecyclerView).overScrollMode =
+        (onBoardingViewPager.getChildAt(0) as RecyclerView).overScrollMode =
             RecyclerView.OVER_SCROLL_NEVER
     }
 
     private fun setupIndicator(){
-        indicatorContainer = findViewById(R.id.indicatorsContainer)
+        indicatorContainer = binding.indicatorsContainer
         val indicators = arrayOfNulls<ImageView>(introSliderAdapter.itemCount)
         val layoutParams: LinearLayout.LayoutParams =
             LinearLayout.LayoutParams(

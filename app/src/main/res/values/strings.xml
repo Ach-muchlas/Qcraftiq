@@ -21,6 +21,7 @@
     <string name="popular_course">Kursus Populer</string>
     <string name="image_content">image content</string>
     <string name="example_category_content">Mobile Development</string>
+    <string name="example_category_content2">Pengembangan Aplikasi iOS</string>
     <string name="icon_start">icon start</string>
     <string name="example_value_rate">4.7</string>
     <string name="example_name_course">Belajar Dasar Pemograman Android Pemula</string>
@@ -46,9 +47,7 @@
     <string name="warning_text_email_invalid">Oops! Alamat email Or Phone yang Anda masukkan tidak valid.</string>
     <string name="warning_text_phone_invalid">Oops! Number Phone yang Anda masukkan tidak valid.</string>
     <string name="warning_text_field_less_8">Oops! Kolom ini tidak boleh kurang dari 8 karakter</string>
-<<<<<<< HEAD
     <string name="tentang_kelas">Tentang Kelas</string>
-=======
     <string name="warning_password_uppercase">Oops! Kata sandi harus mengandung setidaknya 1 huruf besar.</string>
     <string name="warning_password_special_character">Oops! Kata sandi harus mengandung setidaknya 1 karakter khusus.</string>
     <string name="input_otp">Masukkan OTP</string>
@@ -59,7 +58,6 @@
     <string name="_3">3</string>
     <string name="resending">Kirim ulang OTP dalam 56 detik</string>
     <string name="request_new_code">Minta Kode baru via Email</string>
->>>>>>> achmaddev
 
     <!-- Details -->
     <string name="kelas_lainnya">Kelas Lainnya</string>
@@ -128,9 +126,6 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="logo_app">Logo</string>
-
-
-
     <string name="study">Belajar</string>
     <string name="tittle_splash_one">dari Pengalaman Terbaik!</string>
     <string name="title_splash_two">dari Praktisi Terbaik!</string>
@@ -181,7 +176,6 @@
     <string name="advanced_level">Advanced Level</string>
     <string name="btn_filter">Terapkan Filter</string>
     <string name="delete_filter">Hapus Filter</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_back">Button Back</string>
     <string name="register">Daftar</string>
@@ -210,10 +204,10 @@
     <string name="input_old_password">Masukan Password Lama</string>
     <string name="input_new_password">Masukan Password Baru</string>
     <string name="password_hint">********</string>
-
     <string name="topic_class">Topik Kelas </string>
     <string name="filter">Filter</string>
     <string name="payment_history">Riwayat Pembayaran</string>
     <string name="my_profile">Profile Saya</string>
     <string name="logout">Keluar</string>
+    <string name="example_warning_email_not_registered">Alamat Email tidak terdaftar!</string>
 </resources>

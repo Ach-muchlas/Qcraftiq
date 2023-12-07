@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class CategoryResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItemCategory?>? = null,
+	val data: List<DataItemCategory>,
 
 	@field:SerializedName("message")
 	val message: Any? = null,
@@ -17,11 +17,11 @@ data class CategoryResponse(
 data class DataItemCategory(
 
 	@field:SerializedName("image")
-	val image: String? = null,
+	val image: String,
 
 	@field:SerializedName("id")
-	val id: String? = null,
+	val id: String,
 
 	@field:SerializedName("title")
-	val title: String? = null
+	val title: String
 )

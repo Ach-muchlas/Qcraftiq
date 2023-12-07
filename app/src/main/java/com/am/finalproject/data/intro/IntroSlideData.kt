@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.splashscreen
+package com.am.finalproject.data.intro
 
 data class IntroSlideData(
     val description: String,

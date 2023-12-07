@@ -54,7 +54,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/textViewCategory" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCategory"
             android:layout_width="match_parent"
@@ -114,8 +113,5 @@
             app:layout_constraintTop_toBottomOf="@id/tabLayout"
             tools:itemCount="1"
             tools:listitem="@layout/item_popular_course" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.core.widget.NestedScrollView>

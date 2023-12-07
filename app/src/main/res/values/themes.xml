@@ -49,6 +49,23 @@
         <item name="android:layout_marginRight">28dp</item>
         <item name="fontFamily">@font/pop_bold</item>
     </style>
+    
+    <style name="MyToast">
+        <item name="stFont">@font/mon_bold</item>
+        <item name="stTextSize">15sp</item>
+        <item name="stRadius">20dp</item>
+        <item name="stSolidBackground">true</item>
+    </style>
+
+    <style name="MyToast.IsRed">
+        <item name="stColorBackground">@color/red</item>
+        <item name="stTextColor">@color/white</item>
+    </style>
+
+    <style name="MyToast.IsGreen">
+        <item name="stColorBackground">@color/green</item>
+        <item name="stTextColor">@color/white</item>
+    </style>
 
     <!--small sp without ignore-->
     <style name="TextContent.Body.MonMedium.SmallSp">

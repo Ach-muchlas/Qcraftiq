@@ -1,9 +1,13 @@
 package com.am.finalproject.ui.auth.otp
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.am.finalproject.R
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.ActivityOtpBinding
 import com.am.finalproject.ui.auth.AuthViewModel
@@ -11,6 +15,7 @@ import com.am.finalproject.ui.auth.register.RegisterActivity
 import com.am.finalproject.ui.main.MainActivity
 import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.Navigate
+import io.github.muddz.styleabletoast.StyleableToast
 import org.koin.android.ext.android.inject
 
 class OtpActivity : AppCompatActivity() {
@@ -37,8 +42,25 @@ class OtpActivity : AppCompatActivity() {
     }
 
     private fun navigation() {
+        val receivedBundle = intent.extras
+        val email = receivedBundle?.getString(RegisterActivity.KEY_EMAIL)
+
+        Log.e("SIMPLE", email.toString())
         binding.imageViewButtonBack.setOnClickListener {
             Navigate.intentActivity(this, RegisterActivity::class.java)
+        }
+        binding.textViewRequestNewCode.setOnClickListener {
+            viewModel.resendOTP("haloachmad534@gmail.com").observe(this) { resources ->
+                when (resources.status) {
+                    Status.LOADING -> {}
+                    Status.SUCCESS -> {
+                        StyleableToast.makeText(this, resources.data?.message, Toast.LENGTH_SHORT, R.style.MyToast_IsGreen).show()
+                    }
+                    Status.ERROR -> {
+                        StyleableToast.makeText(this, resources.data?.message, Toast.LENGTH_SHORT, R.style.MyToast_IsRed).show()
+                    }
+                }
+            }
         }
     }
 
@@ -75,6 +97,7 @@ class OtpActivity : AppCompatActivity() {
         val phone = receivedBundle?.getString(RegisterActivity.KEY_PHONE)
         val password = receivedBundle?.getString(RegisterActivity.KEY_PASSWORD)
 
+
         viewModel.sendOTP(
             name.toString(),
             email.toString(),
@@ -85,21 +108,16 @@ class OtpActivity : AppCompatActivity() {
             when (resources.status) {
                 Status.LOADING -> {}
                 Status.SUCCESS -> {
-                    DisplayLayout.toastMessage(this, resources.message.toString())
-                    Navigate.intentActivity(this, MainActivity::class.java)
+                    StyleableToast.makeText(this, resources.data?.message, Toast.LENGTH_SHORT, R.style.MyToast_IsGreen).show()
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    finish()
                 }
 
                 Status.ERROR -> {
-                    DisplayLayout.toastMessage(this, resources.message.toString())
+                    StyleableToast.makeText(this, resources.data?.message, Toast.LENGTH_SHORT, R.style.MyToast_IsRed).show()
                 }
-            }
-        }
-
-        viewModel.resendOTP(email.toString()).observe(this) { resources ->
-            when (resources.status) {
-                Status.LOADING -> {}
-                Status.SUCCESS -> {}
-                Status.ERROR -> {}
             }
         }
     }

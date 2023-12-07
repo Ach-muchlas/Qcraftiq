@@ -10,9 +10,8 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.am.finalproject.R
+import io.github.muddz.styleabletoast.StyleableToast
 
 object DisplayLayout {
     fun setupVisibilityProgressBar(progressBar: ProgressBar, isVisible: Boolean) {
@@ -20,14 +19,7 @@ object DisplayLayout {
     }
 
     fun toastMessage(context: Context, message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    fun showFragment(container: Int, fragment: Fragment, childFragmentManager: FragmentManager) {
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        StyleableToast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     fun isValidEmail(text: CharSequence): Boolean {
