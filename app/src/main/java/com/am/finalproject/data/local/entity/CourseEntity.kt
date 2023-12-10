@@ -30,4 +30,8 @@ class CourseEntity(
 
     @field:ColumnInfo("time")
     val time: Int,
+
+    @field:ColumnInfo("module")
+    val module: Int,
+
     )

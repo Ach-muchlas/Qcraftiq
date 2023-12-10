@@ -23,6 +23,7 @@ class AuthViewModel(private val repository: Repository) : ViewModel() {
 
     fun resendOTP(email: String) = repository.resendOTP(email)
 
+    fun resetPassword(email: String) = repository.resetPassword(email)
     fun saveUser(user: LoginResult) {
         return sharedpref.saveUser(user)
     }

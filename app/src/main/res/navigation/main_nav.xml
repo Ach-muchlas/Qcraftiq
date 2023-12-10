@@ -27,12 +27,22 @@
         android:id="@+id/navigation_course"
         android:name="com.am.finalproject.ui.course.CourseFragment"
         android:label="@string/title_course"
-        tools:layout="@layout/fragment_course" />
+        tools:layout="@layout/fragment_course" >
+        <action
+            android:id="@+id/action_navigation_course_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notification"
         android:name="com.am.finalproject.ui.notification.NotificationFragment"
         android:label="@string/title_notification"
         tools:layout="@layout/fragment_notification" />
+
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.am.finalproject.ui.searchResult.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" />
 
 </navigation>

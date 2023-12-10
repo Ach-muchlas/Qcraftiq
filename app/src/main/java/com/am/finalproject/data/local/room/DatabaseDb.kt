@@ -6,17 +6,17 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.am.finalproject.data.local.entity.CategoryEntity
 import com.am.finalproject.data.local.entity.CourseEntity
-import com.am.finalproject.data.local.entity.ModuleEntity
 import com.am.finalproject.data.local.room.dao.CategoryDao
 import com.am.finalproject.data.local.room.dao.CourseDao
-import com.am.finalproject.data.local.room.dao.ModuleDao
 
 @Database(
-    entities = [CourseEntity::class],
-    version = 1,
+    entities = [CourseEntity::class, CategoryEntity::class],
+    version = 3,
+    exportSchema = false,
 )
 abstract class DatabaseDb : RoomDatabase() {
     abstract fun CourseDao(): CourseDao
+    abstract fun CategoryDao() : CategoryDao
     companion object {
         @Volatile
         private var instance: DatabaseDb? = null
@@ -25,7 +25,7 @@ abstract class DatabaseDb : RoomDatabase() {
                 instance ?: Room.databaseBuilder(
                     context.applicationContext,
                     DatabaseDb::class.java, "News.db"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
             }
     }
 }

@@ -1,5 +1,6 @@
 package com.am.finalproject.utils
 
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -11,8 +12,8 @@ object Formatter {
 //        return formatter.format(instant)
 //    }
 
-    fun formatterRupiah(amount: Int): String {
-        val formatter: NumberFormat = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
-        return formatter.format(amount.toLong())
+    fun formatCurrency(amount: Int): String {
+        val decimal = DecimalFormat("#,###.##")
+        return "Rp. " + decimal.format(amount)
     }
 }

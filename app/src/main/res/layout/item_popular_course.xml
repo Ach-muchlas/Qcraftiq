@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
-    android:layout_width="220dp"
-    android:layout_height="280dp"
+    android:layout_width="200dp"
+    android:layout_height="270dp"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     android:layout_marginEnd="10dp"
@@ -19,7 +19,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="170dp"
         android:layout_marginTop="100dp">
 
         <TextView
@@ -33,6 +33,27 @@
             android:textColor="@color/dark_blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewRating"
+            style="@style/TextContent.Body.MonBold.ExtraSmallSp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/rating"
+            app:layout_constraintBottom_toBottomOf="@id/iconStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iconStart" />
+
+        <ImageView
+            android:id="@+id/iconStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/icon_start"
+            android:src="@drawable/baseline_star_24"
+            app:layout_constraintBottom_toBottomOf="@id/textViewTagLineCategory"
+            app:layout_constraintEnd_toStartOf="@id/textViewRating"
+            app:layout_constraintTop_toTopOf="@id/textViewTagLineCategory" />
+
 
         <TextView
             android:id="@+id/textViewTitleCourse"
@@ -61,11 +82,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:contentDescription="@string/icon_level_course"
             android:src="@drawable/level"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewMentor" />
+            app:layout_constraintBottom_toTopOf="@id/iconTime" />
 
         <TextView
             android:id="@+id/textViewLevelCourse"
@@ -78,35 +99,35 @@
             app:layout_constraintTop_toTopOf="@id/iconLevel" />
 
         <ImageView
-            android:id="@+id/iconRate"
+            android:id="@+id/iconModule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
-            android:contentDescription="@string/icon_start"
-            android:src="@drawable/baseline_star_24"
+            android:contentDescription="@string/icon_module"
+            android:src="@drawable/modules"
             app:layout_constraintStart_toEndOf="@id/textViewLevelCourse"
-            app:layout_constraintTop_toBottomOf="@id/textViewMentor" />
+            app:layout_constraintTop_toTopOf="@id/textViewLevelCourse"
+            app:layout_constraintBottom_toBottomOf="@id/textViewLevelCourse"/>
 
         <TextView
-            android:id="@+id/textVieRating"
-            style="@style/TextContent.Body.MonMedium.SmallSp"
+            android:id="@+id/textViewModule"
+            style="@style/TextContent.Body.MonMedium.ExtraSmallSp"
             android:layout_marginStart="5dp"
             android:text="@string/rating"
-            app:layout_constraintBottom_toBottomOf="@id/iconRate"
-            app:layout_constraintStart_toEndOf="@id/iconRate"
-            app:layout_constraintTop_toTopOf="@id/iconRate" />
+            app:layout_constraintBottom_toBottomOf="@id/iconModule"
+            app:layout_constraintStart_toEndOf="@id/iconModule"
+            app:layout_constraintTop_toTopOf="@id/iconModule" />
 
         <ImageView
             android:id="@+id/iconTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:contentDescription="@string/icon_time"
             android:src="@drawable/time"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iconLevel" />
+            app:layout_constraintBottom_toTopOf="@id/buttonBuy" />
 
         <TextView
             android:id="@+id/textViewTime"

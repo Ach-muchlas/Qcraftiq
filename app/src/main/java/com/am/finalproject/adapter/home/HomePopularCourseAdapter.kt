@@ -16,18 +16,21 @@ class HomePopularCourseAdapter :
     ListAdapter<CourseEntity, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
     inner class MyViewHolder(private val binding: ItemPopularCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bindContentPopularCourse(data: CourseEntity) {
             binding.textViewTagLineCategory.text = data.categoryTitle
             binding.textViewTitleCourse.text = data.title
             Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
-            binding.textVieRating.text = data.rating.toString()
+            binding.textViewRating.text = data.rating.toString()
             binding.textViewMentor.text = data.authorBy
             binding.textViewLevelCourse.text = data.level
-            binding.textViewTime.text = null
-            binding.buttonBuy.text = Formatter.formatterRupiah(data.price)
+            binding.buttonBuy.text = Formatter.formatCurrency(data.price)
             binding.progressBar.visibility = View.GONE
             binding.textViewProgressStatus.visibility = View.GONE
             binding.iconProgress.visibility = View.GONE
+            binding.textViewModule.text = "${data.module} Modul"
+            binding.textViewTime.text = "${data.time} Menit"
+
         }
     }
 

@@ -6,13 +6,13 @@ import androidx.navigation.NavController
 import com.am.finalproject.R
 
 object Navigate {
-//    fun navigateToDestination(destination: Destination, navController: NavController) {
-//        navController.let {
-//            when (destination) {
-//                Destination.LOGIN_TO_REGISTER -> it.navigate(R.id.action_loginFragment_to_registerFragment)
-//            }
-//        }
-//    }
+    fun navigateToDestination(destination: Destination, navController: NavController) {
+        navController.let {
+            when (destination) {
+                Destination.COURSE_TO_SEARCH -> it.navigate(R.id.action_navigation_course_to_searchResultFragment)
+            }
+        }
+    }
 
     fun intentActivity(context: Context, targetActivity: Class<*>) {
         val intent = Intent(context, targetActivity)

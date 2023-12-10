@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ModuleResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItem>,
+	val data: List<DataItemModule>,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -14,7 +14,7 @@ data class ModuleResponse(
 	val status: String? = null
 )
 
-data class DataItem(
+data class DataItemModule(
 
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,

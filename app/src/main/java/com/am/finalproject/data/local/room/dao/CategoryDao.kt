@@ -11,10 +11,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CategoryDao {
-
-    @Query("SELECT * FROM category ORDER BY id ASC")
+    @Query("SELECT * FROM category ORDER BY id DESC")
     fun getCategoryFromLocalData(): LiveData<List<CategoryEntity>>
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCategory(popularCourse: List<CategoryEntity>)
+
+    @Query("DELETE FROM category")
+    fun delete()
 }

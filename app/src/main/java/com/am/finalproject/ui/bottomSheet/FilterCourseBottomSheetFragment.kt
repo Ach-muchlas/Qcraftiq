@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.am.finalproject.R
 
-class FilterCourseBottomSheetFragment : Fragment() {
+class FilterCourseBottomSheetFragment : BottomSheetFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

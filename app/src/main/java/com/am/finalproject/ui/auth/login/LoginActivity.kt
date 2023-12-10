@@ -14,6 +14,7 @@ import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.ActivityLoginBinding
 import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.auth.register.RegisterActivity
+import com.am.finalproject.ui.auth.resetPassword.ResetPasswordActivity
 import com.am.finalproject.ui.main.MainActivity
 import com.am.finalproject.ui.onboarding.OnBoardingActivity
 import com.am.finalproject.utils.DisplayLayout
@@ -109,47 +110,55 @@ class LoginActivity : AppCompatActivity() {
             textViewRegisterHere.setOnClickListener {
                 Navigate.intentActivity(this@LoginActivity, RegisterActivity::class.java)
             }
-        }
-        /*To Home*/
-        binding.textViewEnterWithoutLogin.setOnClickListener {
-            Navigate.intentActivity(this@LoginActivity, MainActivity::class.java)
-        }
 
-        /*Login*/
-        binding.buttonLogin.setOnClickListener {
-            val emailOrPhone = binding.edtEmail.text.toString()
-            val password = binding.edtPassword.text.toString()
+            /*To Home*/
+            textViewEnterWithoutLogin.setOnClickListener {
+                Navigate.intentActivity(this@LoginActivity, MainActivity::class.java)
+            }
 
-            viewModel.login(emailOrPhone, password).observe(this) { resources ->
+            /*Reset Password*/
+            textViewForgotPassword.setOnClickListener {
+                Navigate.intentActivity(this@LoginActivity, ResetPasswordActivity::class.java)
+            }
 
-                when (resources.status) {
-                    Status.LOADING -> {}
+            /*Login*/
+            buttonLogin.setOnClickListener {
+                val emailOrPhone = binding.edtEmail.text.toString()
+                val password = binding.edtPassword.text.toString()
 
-                    Status.SUCCESS -> {
-                        viewModel.saveUser(LoginResult(resources.data?.data?.accessToken))
-                        StyleableToast.makeText(
-                            this,
-                            resources.data?.message,
-                            Toast.LENGTH_SHORT,
-                            R.style.MyToast_IsGreen
-                        ).show()
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
-                        finish()
-                    }
+                viewModel.login(emailOrPhone, password).observe(this@LoginActivity) { resources ->
 
-                    Status.ERROR -> {
-                        StyleableToast.makeText(
-                            this,
-                            "Email or Phone not Registered",
-                            Toast.LENGTH_SHORT,
-                            R.style.MyToast_IsRed
-                        ).show()
-                        Log.e("CHECK", resources.data?.message.toString())
+                    when (resources.status) {
+                        Status.LOADING -> {}
+
+                        Status.SUCCESS -> {
+                            viewModel.saveUser(LoginResult(resources.data?.data?.accessToken))
+                            StyleableToast.makeText(
+                                this@LoginActivity,
+                                resources.data?.message,
+                                Toast.LENGTH_SHORT,
+                                R.style.MyToast_IsGreen
+                            ).show()
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                            finish()
+                        }
+
+                        Status.ERROR -> {
+                            StyleableToast.makeText(
+                                this@LoginActivity,
+                                "Email or Phone not Registered",
+                                Toast.LENGTH_SHORT,
+                                R.style.MyToast_IsRed
+                            ).show()
+                            Log.e("CHECK", resources.data?.message.toString())
+                        }
                     }
                 }
             }
+
+
         }
     }
 }

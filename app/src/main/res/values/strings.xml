@@ -210,4 +210,7 @@
     <string name="my_profile">Profile Saya</string>
     <string name="logout">Keluar</string>
     <string name="example_warning_email_not_registered">Alamat Email tidak terdaftar!</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="enter_email">Masukkan Email</string>
+    <string name="send">Kirim</string>
 </resources>

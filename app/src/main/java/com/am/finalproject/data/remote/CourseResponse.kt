@@ -49,4 +49,8 @@ data class DataItemCourse(
 	@field:SerializedName("category")
 	val category: DataItemCategory,
 
+	@field:SerializedName("module")
+	val module: List<DataItemModule>? = null,
 )
+
+
