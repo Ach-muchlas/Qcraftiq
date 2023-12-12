@@ -2,10 +2,10 @@ package com.am.finalproject.data.remote
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginResponse(
+data class ChangePasswordResponse(
 
 	@field:SerializedName("data")
-	val data: LoginResult? = null,
+	val data: Any? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -13,10 +13,3 @@ data class LoginResponse(
 	@field:SerializedName("status")
 	val status: String? = null
 )
-
-data class LoginResult(
-	@field:SerializedName("accessToken")
-	val accessToken: String? = null
-)
-
-

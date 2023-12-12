@@ -14,7 +14,7 @@ import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.ActivityLoginBinding
 import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.auth.register.RegisterActivity
-import com.am.finalproject.ui.auth.resetPassword.ResetPasswordActivity
+import com.am.finalproject.ui.auth.reset_password.ResetPasswordActivity
 import com.am.finalproject.ui.main.MainActivity
 import com.am.finalproject.ui.onboarding.OnBoardingActivity
 import com.am.finalproject.utils.DisplayLayout

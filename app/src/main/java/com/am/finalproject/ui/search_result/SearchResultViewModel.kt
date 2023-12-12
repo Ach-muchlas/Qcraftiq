@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.searchResult
+package com.am.finalproject.ui.search_result
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

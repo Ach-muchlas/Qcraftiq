@@ -1,5 +1,6 @@
 package com.am.finalproject.utils
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Patterns
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.am.finalproject.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.github.muddz.styleabletoast.StyleableToast
 
 object DisplayLayout {
@@ -64,5 +66,14 @@ object DisplayLayout {
     fun hideAppBar(activity: AppCompatActivity) {
         val actionBar = activity.supportActionBar
         actionBar?.hide()
+    }
+
+    fun setUpBottomNavigation(activity: Activity?, isGone: Boolean) {
+        val bottomNav = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        if (isGone) {
+            bottomNav?.visibility = View.GONE
+        } else {
+            bottomNav?.visibility = View.VISIBLE
+        }
     }
 }

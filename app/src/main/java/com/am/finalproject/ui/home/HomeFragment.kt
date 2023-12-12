@@ -17,7 +17,7 @@ import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.local.sharepref.UserPreferences
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentHomeBinding
-import com.am.finalproject.ui.searchResult.SearchResultViewModel
+import com.am.finalproject.ui.search_result.SearchResultViewModel
 import com.am.finalproject.utils.Destination
 import com.am.finalproject.utils.DisplayLayout.setupVisibilityProgressBar
 import com.am.finalproject.utils.DisplayLayout.toastMessage
@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         binding.edtSearch.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 binding.edtSearch.clearFocus()
-                Navigate.navigateToDestination(Destination.COURSE_TO_SEARCH, findNavController())
+                Navigate.navigateToDestination(Destination.HOME_TO_SEARCH, findNavController())
                 return@setOnTouchListener true
             }
             return@setOnTouchListener false

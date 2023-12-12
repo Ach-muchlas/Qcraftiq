@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.auth.resetPassword
+package com.am.finalproject.ui.auth.reset_password
 
 import android.os.Bundle
 import android.text.Editable

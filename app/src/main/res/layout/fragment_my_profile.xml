@@ -131,6 +131,7 @@
         style="@style/ButtonContent"
         android:layout_marginHorizontal="26dp"
         android:layout_marginTop="35dp"
+        android:elevation="10dp"
         android:fontFamily="@font/pop_medium"
         android:text="@string/save_my_profile"
         app:layout_constraintStart_toStartOf="parent"

@@ -10,6 +10,9 @@ object Navigate {
         navController.let {
             when (destination) {
                 Destination.COURSE_TO_SEARCH -> it.navigate(R.id.action_navigation_course_to_searchResultFragment)
+                Destination.HOME_TO_SEARCH -> it.navigate(R.id.action_navigation_home_to_searchResultFragment)
+                Destination.ACCOUNT_TO_HISTORY_PAYMENT -> it.navigate(R.id.action_navigation_account_to_paymentHistoryFragment)
+                Destination.ACCOUNT_TO_CHANGE_PASSWORD -> it.navigate(R.id.action_navigation_account_to_changePasswordFragment)
             }
         }
     }

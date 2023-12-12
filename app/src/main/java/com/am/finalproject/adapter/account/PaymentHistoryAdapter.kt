@@ -1,18 +1,19 @@
-package com.am.finalproject.adapter.course
+package com.am.finalproject.adapter.account
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.am.finalproject.R
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.databinding.ItemClassCourseBinding
 import com.bumptech.glide.Glide
 
-class TopicClassAdapter :
-    ListAdapter<DataItemCourse, TopicClassAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class PaymentHistoryAdapter :
+    ListAdapter<DataItemCourse, PaymentHistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+
     inner class MyViewHolder(private val binding: ItemClassCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
@@ -23,6 +24,7 @@ class TopicClassAdapter :
             binding.textViewRate.text = data.rating.toString()
             binding.textViewMentor.text = data.authorBy
             binding.textViewLevelCourse.text = data.level
+            binding.textViewContentCard.text = data.type
 
             val textMenit = " Menit"
             val textModule = " Modul"
@@ -36,15 +38,6 @@ class TopicClassAdapter :
                 binding.textViewModule.text = "0 $textModule"
                 binding.textViewTime.text = "0 $textMenit"
             }
-
-            if (data.type == "FREE") {
-                binding.textViewContentCard.text =
-                    "Mulai Kelas"
-                binding.iconContentCard.visibility = View.GONE
-            } else {
-                binding.textViewContentCard.text = data.type
-
-            }
         }
     }
 
@@ -55,10 +48,9 @@ class TopicClassAdapter :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val dataTopicClass = getItem(position)
-        holder.bind(dataTopicClass)
+        val data = getItem(position)
+        holder.bind(data)
     }
-
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItemCourse>() {

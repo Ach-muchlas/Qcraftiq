@@ -56,6 +56,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+    implementation ("com.squareup.retrofit2:adapter-rxjava2:2.5.0")
+
 
     /*rounded progress bar*/
     implementation 'com.akexorcist:round-corner-progress-bar:2.2.1'

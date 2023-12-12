@@ -9,13 +9,24 @@
         android:id="@+id/navigation_home"
         android:name="com.am.finalproject.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_account"
         android:name="com.am.finalproject.ui.account.AccountFragment"
         android:label="@string/title_account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_navigation_account_to_paymentHistoryFragment"
+            app:destination="@id/paymentHistoryFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_class"
@@ -41,8 +52,20 @@
 
     <fragment
         android:id="@+id/searchResultFragment"
-        android:name="com.am.finalproject.ui.searchResult.SearchResultFragment"
+        android:name="com.am.finalproject.ui.search_result.SearchResultFragment"
         android:label="fragment_search_result"
         tools:layout="@layout/fragment_search_result" />
+
+    <fragment
+        android:id="@+id/paymentHistoryFragment"
+        android:name="com.am.finalproject.ui.account.payment_history.PaymentHistoryFragment"
+        tools:layout="@layout/fragment_payment_history"
+        android:label="PaymentHistoryFragment" />
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.am.finalproject.ui.account.change_password.ChangePasswordFragment"
+        android:label="ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password"/>
 
 </navigation>

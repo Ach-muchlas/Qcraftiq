@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_blue_bg"
-    tools:context=".ui.detailPayment.DetailPaymentFragment">
+    tools:context=".ui.detail_payment.DetailPaymentFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewBtnBack"
