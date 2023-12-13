@@ -8,7 +8,6 @@ import com.am.finalproject.data.local.entity.CategoryEntity
 import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.local.room.dao.CategoryDao
 import com.am.finalproject.data.local.room.dao.CourseDao
-import com.am.finalproject.data.remote.ChangePasswordBody
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.remote.LoginBody
 import com.am.finalproject.data.remote.RegisterBody
@@ -234,5 +233,13 @@ class Repository(
         }
     }
 
-
+    fun getNotification(token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        val response = apiService.getNotification("Bearer $token")
+        try {
+            emit(Resource.success(response))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
 }

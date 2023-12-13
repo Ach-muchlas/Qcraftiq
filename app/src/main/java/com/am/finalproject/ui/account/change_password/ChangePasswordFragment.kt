@@ -115,8 +115,10 @@ class ChangePasswordFragment : Fragment() {
                             ).show()
                         }
                     }
-
                 }
+            newPassword?.clear()
+            oldPassword?.clear()
+            binding.edtRepeatPassword.text?.clear()
         }
     }
 

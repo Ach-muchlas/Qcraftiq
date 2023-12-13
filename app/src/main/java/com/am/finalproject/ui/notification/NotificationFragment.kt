@@ -4,41 +4,51 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.am.finalproject.R
 import com.am.finalproject.adapter.filter.FilterAdapter
 import com.am.finalproject.adapter.notification.NotificationAdapter
 import com.am.finalproject.data.Database
-import com.am.finalproject.data.dataDummyNotification
+import com.am.finalproject.data.remote.NotificationResponse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentNotificationBinding
+import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.home.HomeViewModel
+import com.am.finalproject.utils.DisplayLayout
+import io.github.muddz.styleabletoast.StyleableToast
 import org.koin.android.ext.android.inject
 
 class NotificationFragment : Fragment() {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: HomeViewModel by inject()
+    private val homeViewModel: HomeViewModel by inject()
+    private val viewModel: NotificationViewModel by inject()
+    private val authViewModel: AuthViewModel by inject()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
-
+        displayNotification()
 //        setUpNotificationAdapter()
-        setupAdapter()
+//        setupAdapter()
 
         return binding.root
     }
 
+    /*fungsi ini digunakan untuk filter bottom sheet*/
     private fun setupAdapter() {
-        viewModel.category().observe(viewLifecycleOwner) { resources ->
+        homeViewModel.category().observe(viewLifecycleOwner) { resources ->
             when (resources.status) {
                 Status.LOADING -> {}
                 Status.SUCCESS -> {
                     val adapter = FilterAdapter()
                     binding.recyclerViewNotification.adapter = adapter
-                    binding.recyclerViewNotification.layoutManager = LinearLayoutManager(requireContext())
+                    binding.recyclerViewNotification.layoutManager =
+                        LinearLayoutManager(requireContext())
                     val category = resources.data
                     if (category != null) {
                         val data = Database.getItem(category)
@@ -51,9 +61,34 @@ class NotificationFragment : Fragment() {
         }
     }
 
-    private fun setUpNotificationAdapter() {
+    private fun displayNotification() {
+        authViewModel.init(requireContext())
+        val token = authViewModel.getUser()?.accessToken
+        viewModel.notificationUser(token.toString()).observe(viewLifecycleOwner) { resources ->
+            when (resources.status) {
+                Status.LOADING -> {
+                    DisplayLayout.toastMessage(requireContext(), "Loading")
+                }
+
+                Status.SUCCESS -> {
+                    setUpNotificationAdapter(resources.data)
+                }
+
+                Status.ERROR -> {
+                    StyleableToast.makeText(
+                        requireContext(),
+                        resources.message,
+                        Toast.LENGTH_SHORT,
+                        R.style.MyToast_IsRed
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private fun setUpNotificationAdapter(data: NotificationResponse?) {
         val adapter = NotificationAdapter()
-        adapter.submitList(dataDummyNotification)
+        adapter.submitList(data?.data)
         binding.recyclerViewNotification.adapter = adapter
         binding.recyclerViewNotification.layoutManager = LinearLayoutManager(requireContext())
     }
