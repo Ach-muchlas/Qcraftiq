@@ -25,6 +25,6 @@ class SearchResultViewModel(private val repository: Repository) : ViewModel() {
         return repository.searchByNameLocalData(query).asLiveData()
     }
 
-    fun searchByType(query: String) = repository.searchByType(query)
+    fun filterByName(query: String) = repository.filterByName(query)
 
 }

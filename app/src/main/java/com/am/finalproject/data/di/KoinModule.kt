@@ -5,6 +5,7 @@ import com.am.finalproject.data.retrofit.ApiConfig
 import com.am.finalproject.data.source.Repository
 import com.am.finalproject.ui.account.AccountViewModel
 import com.am.finalproject.ui.auth.AuthViewModel
+import com.am.finalproject.ui.classroom.ClassroomViewModel
 import com.am.finalproject.ui.home.HomeViewModel
 import com.am.finalproject.ui.notification.NotificationViewModel
 import com.am.finalproject.ui.search_result.SearchResultViewModel
@@ -37,5 +38,6 @@ object KoinModule {
             viewModel { SearchResultViewModel(get()) }
             viewModel { AccountViewModel(get()) }
             viewModel { NotificationViewModel(get()) }
+            viewModel { ClassroomViewModel(get()) }
         }
 }

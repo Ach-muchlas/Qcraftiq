@@ -20,8 +20,22 @@ object DisplayLayout {
         progressBar.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
-    fun toastMessage(context: Context, message: String) {
-        StyleableToast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    fun toastMessage(context: Context, message: String, isSuccess: Boolean) {
+        if (isSuccess) {
+            StyleableToast.makeText(
+                context,
+                message,
+                Toast.LENGTH_SHORT,
+                R.style.MyToast_IsGreen
+            ).show()
+        } else {
+            StyleableToast.makeText(
+                context,
+                message,
+                Toast.LENGTH_SHORT,
+                R.style.MyToast_IsRed
+            ).show()
+        }
     }
 
     fun isValidEmail(text: CharSequence): Boolean {

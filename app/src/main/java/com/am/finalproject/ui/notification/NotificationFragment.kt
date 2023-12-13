@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.am.finalproject.R
 import com.am.finalproject.adapter.filter.FilterAdapter
 import com.am.finalproject.adapter.notification.NotificationAdapter
 import com.am.finalproject.data.Database
@@ -17,7 +15,6 @@ import com.am.finalproject.databinding.FragmentNotificationBinding
 import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.home.HomeViewModel
 import com.am.finalproject.utils.DisplayLayout
-import io.github.muddz.styleabletoast.StyleableToast
 import org.koin.android.ext.android.inject
 
 class NotificationFragment : Fragment() {
@@ -67,20 +64,21 @@ class NotificationFragment : Fragment() {
         viewModel.notificationUser(token.toString()).observe(viewLifecycleOwner) { resources ->
             when (resources.status) {
                 Status.LOADING -> {
-                    DisplayLayout.toastMessage(requireContext(), "Loading")
+                    DisplayLayout.setupVisibilityProgressBar(binding.progressBar, true)
                 }
 
                 Status.SUCCESS -> {
+                    DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
                     setUpNotificationAdapter(resources.data)
                 }
 
                 Status.ERROR -> {
-                    StyleableToast.makeText(
+                    DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
+                    DisplayLayout.toastMessage(
                         requireContext(),
-                        resources.message,
-                        Toast.LENGTH_SHORT,
-                        R.style.MyToast_IsRed
-                    ).show()
+                        resources.message.toString(),
+                        false
+                    )
                 }
             }
         }

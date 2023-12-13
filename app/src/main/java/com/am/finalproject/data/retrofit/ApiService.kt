@@ -8,6 +8,7 @@ import com.am.finalproject.data.remote.NotificationResponse
 import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.remote.RegisterResponse
+import com.am.finalproject.data.remote.TrackingClassResponse
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -52,13 +53,14 @@ interface ApiService {
     @FormUrlEncoded
     @PUT("users/change-password")
     suspend fun changePasswordUser(
-        @Header("Authorization") bearer : String,
-        @Field("password") password : String,
-        @Field("newPassword") newPassword : String
+        @Header("Authorization") bearer: String,
+        @Field("password") password: String,
+        @Field("newPassword") newPassword: String
     ): RegisterResponse
 
     @GET("notification/user")
-    suspend fun getNotification(
-        @Header("Authorization") bearer : String
-    ) : NotificationResponse
+    suspend fun getNotification(@Header("Authorization") bearer: String): NotificationResponse
+
+    @GET("courseTrackings/user")
+    suspend fun getTrackingClass(@Header("Authorization") bearer: String): TrackingClassResponse
 }

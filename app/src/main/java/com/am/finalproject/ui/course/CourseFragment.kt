@@ -96,7 +96,7 @@ class CourseFragment : Fragment() {
 						}
 					}
 				} else {
-					searchViewModel.searchByType(tab.text.toString())
+					searchViewModel.filterByName(tab.text.toString())
 						.observe(viewLifecycleOwner) { resource ->
 							when (resource.status) {
 								Status.LOADING -> {}

@@ -77,11 +77,11 @@
     </style>
 
     <style name="TextContent.Body.MonMedium.ExtraSmallSp">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="TextContent.Body.MonBold.ExtraSmallSp">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="TextContent.Headline.SmallSp">

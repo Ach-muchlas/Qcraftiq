@@ -204,7 +204,7 @@ class Repository(
         }
     }
 
-    fun searchByType(query: String) = liveData(Dispatchers.IO) {
+    fun filterByName(query: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
         val response = apiService.getPopularCourse()
         try {
@@ -215,6 +215,7 @@ class Repository(
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
         }
     }
+
 
     fun filter(query1: String? = null, query2: String? = null) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
@@ -235,9 +236,44 @@ class Repository(
 
     fun getNotification(token: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
-        val response = apiService.getNotification("Bearer $token")
         try {
+            val response = apiService.getNotification("Bearer $token")
             emit(Resource.success(response))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun getTrackingClass(token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(apiService.getTrackingClass("Bearer $token")))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun filterByStatus(query: String, token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getTrackingClass("Bearer $token")
+            val allCourse = response.data
+            val filtered =
+                allCourse?.filter { it.status.toString().contains(query, ignoreCase = true) }
+            emit(Resource.success(filtered))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun searchByNameInClass(query: String, token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getTrackingClass("Bearer $token")
+            val allCourse = response.data
+            val filtered =
+                allCourse?.filter { it.status.toString().contains(query, ignoreCase = true) }
+            emit(Resource.success(filtered))
         } catch (exception: Exception) {
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
         }
