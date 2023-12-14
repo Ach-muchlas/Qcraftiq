@@ -23,6 +23,9 @@ class Repository(
     private val categoryDao: CategoryDao,
     private val appExecutor: AppExecutors
 ) {
+
+    /*Authentication*/
+    /*fungsi ini digunakan untuk login user*/
     fun loginUser(emailOrPhone: String, password: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
         try {
@@ -34,6 +37,7 @@ class Repository(
     }
 
 
+    /*fungsi ini digunakan untuk register user*/
     fun registerUser(name: String, email: String, phone: String, password: String) =
         liveData(Dispatchers.IO) {
             emit(Resource.loading(null))
@@ -45,7 +49,7 @@ class Repository(
             }
         }
 
-
+    /*fungsi ini digunakan untuk send otp setelah register user*/
     fun sendOTP(name: String, email: String, phone: String, password: String, otp: String) =
         liveData(Dispatchers.IO) {
             emit(Resource.loading(null))
@@ -57,6 +61,7 @@ class Repository(
             }
         }
 
+    /*fungsi ini digunakan untuk mengirim kembali otp pada saat sudah melebihi batas 1 menit*/
     fun resendOTP(email: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
         try {
@@ -66,6 +71,8 @@ class Repository(
         }
     }
 
+    /*fungsi ini digunakan untuk reset password user*/
+    /*ketika user lupa password*/
     fun resetPassword(email: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
         try {
@@ -75,34 +82,27 @@ class Repository(
         }
     }
 
+
+    /*User management*/
+    fun changePassword(password: String, newPassword: String, token : String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(apiService.changePasswordUser("Bearer $token", password, newPassword)))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+
+    /*Course*/
+    /*fungsi ini digunkaan untuk read ulang data course dari local */
     fun readCourseALl(): Flow<List<CourseEntity>> {
         return courseDao.readCourseAll()
     }
 
-    fun getCategoryLocalData(): LiveData<Resource<List<CategoryEntity>>> = liveData {
-        emit(Resource.loading(null))
-        try {
-            val response = apiService.getCategoryCourse()
-            val data = response.data
-            appExecutor.diskIO.execute {
-                val list = data.map { category ->
-                    CategoryEntity(
-                        category.id,
-                        category.image,
-                        category.title
-                    )
-                }
-                categoryDao.delete()
-                categoryDao.insertCategory(list)
-            }
-        } catch (exception: Exception) {
-            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
-        }
-        val localData: LiveData<Resource<List<CategoryEntity>>> =
-            categoryDao.getCategoryFromLocalData().map { Resource.success(it) }
-        emitSource(localData)
-    }
-
+    /*fungsi ini digunakan untuk mendapatkan data course*/
+    /*namun fungsi ini menerapkan mengambil data dari internet ketika ada internet*/
+    /*dan ketika tidak ada internet maka akan mengambil data local*/
     fun getCourseLocalData(): LiveData<Resource<List<CourseEntity>>> = liveData {
         emit(Resource.loading(null))
         try {
@@ -135,6 +135,7 @@ class Repository(
         emitSource(localData)
     }
 
+    /*fungsi ini digunakan untuk mendapatkan data course dari internet*/
     fun getCourse() = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
         try {
@@ -144,6 +145,45 @@ class Repository(
         }
     }
 
+    /*Category*/
+    /*fungsi ini digunakan untuk mendapatkan data category*/
+    /*namun fungsi ini menerapkan mengambil data dari internet ketika ada internet*/
+    /*dan ketika tidak ada internet maka akan mengambil data local*/
+    fun getCategoryLocalData(): LiveData<Resource<List<CategoryEntity>>> = liveData {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getCategoryCourse()
+            val data = response.data
+            appExecutor.diskIO.execute {
+                val list = data.map { category ->
+                    CategoryEntity(
+                        category.id,
+                        category.image,
+                        category.title
+                    )
+                }
+                categoryDao.delete()
+                categoryDao.insertCategory(list)
+            }
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+        val localData: LiveData<Resource<List<CategoryEntity>>> =
+            categoryDao.getCategoryFromLocalData().map { Resource.success(it) }
+        emitSource(localData)
+    }
+
+    /*fungsi ini digunakan untuk mendapatkan data category dari internet*/
+    fun getCategory() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(apiService.getCategoryCourse()))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    /*Search*/
     fun searchByNameLocalData(query: String): Flow<List<CourseEntity>> {
         return courseDao.searchCourse(query)
     }
@@ -164,12 +204,75 @@ class Repository(
         }
     }
 
-    fun searchByType(query: String) = liveData(Dispatchers.IO) {
+    fun filterByName(query: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
         val response = apiService.getPopularCourse()
         try {
             val allCourse = response.data
             val filtered = allCourse.filter { it.type.contains(query, ignoreCase = true) }
+            emit(Resource.success(filtered))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+
+    fun filter(query1: String? = null, query2: String? = null) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        val response = apiService.getPopularCourse()
+        try {
+            val allCourse = response.data
+            val filtered = allCourse.filter {
+                it.category.id.contains(
+                    query1.toString(),
+                    ignoreCase = true
+                ) && it.level.contains(query2.toString(), ignoreCase = true)
+            }
+            emit(Resource.success(filtered))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun getNotification(token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getNotification("Bearer $token")
+            emit(Resource.success(response))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun getTrackingClass(token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            emit(Resource.success(apiService.getTrackingClass("Bearer $token")))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun filterByStatus(query: String, token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getTrackingClass("Bearer $token")
+            val allCourse = response.data
+            val filtered =
+                allCourse?.filter { it.status.toString().contains(query, ignoreCase = true) }
+            emit(Resource.success(filtered))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun searchByNameInClass(query: String, token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getTrackingClass("Bearer $token")
+            val allCourse = response.data
+            val filtered =
+                allCourse?.filter { it.status.toString().contains(query, ignoreCase = true) }
             emit(Resource.success(filtered))
         } catch (exception: Exception) {
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))

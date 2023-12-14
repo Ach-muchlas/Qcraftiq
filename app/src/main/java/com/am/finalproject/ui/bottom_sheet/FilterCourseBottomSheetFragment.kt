@@ -1,13 +1,12 @@
-package com.am.finalproject.ui.bottomSheet
+package com.am.finalproject.ui.bottom_sheet
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.am.finalproject.R
 
-class FilterCourseBottomSheetFragment : BottomSheetFragment() {
+class FilterCourseBottomSheetFragment : RegistrationSuccessBottomSheetFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

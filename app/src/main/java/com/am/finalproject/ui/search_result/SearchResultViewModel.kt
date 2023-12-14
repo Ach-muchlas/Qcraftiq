@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.searchResult
+package com.am.finalproject.ui.search_result
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +25,6 @@ class SearchResultViewModel(private val repository: Repository) : ViewModel() {
         return repository.searchByNameLocalData(query).asLiveData()
     }
 
-    fun searchByType(query: String) = repository.searchByType(query)
+    fun filterByName(query: String) = repository.filterByName(query)
 
 }

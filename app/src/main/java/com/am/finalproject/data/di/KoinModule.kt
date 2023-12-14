@@ -3,9 +3,12 @@ package com.am.finalproject.data.di
 import com.am.finalproject.data.local.room.DatabaseDb
 import com.am.finalproject.data.retrofit.ApiConfig
 import com.am.finalproject.data.source.Repository
+import com.am.finalproject.ui.account.AccountViewModel
 import com.am.finalproject.ui.auth.AuthViewModel
+import com.am.finalproject.ui.classroom.ClassroomViewModel
 import com.am.finalproject.ui.home.HomeViewModel
-import com.am.finalproject.ui.searchResult.SearchResultViewModel
+import com.am.finalproject.ui.notification.NotificationViewModel
+import com.am.finalproject.ui.search_result.SearchResultViewModel
 import com.am.finalproject.utils.AppExecutors
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -33,5 +36,8 @@ object KoinModule {
             viewModel { HomeViewModel(get()) }
             viewModel { AuthViewModel(get()) }
             viewModel { SearchResultViewModel(get()) }
+            viewModel { AccountViewModel(get()) }
+            viewModel { NotificationViewModel(get()) }
+            viewModel { ClassroomViewModel(get()) }
         }
 }

@@ -2,6 +2,7 @@ package com.am.finalproject.adapter.course
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -36,9 +37,14 @@ class TopicClassAdapter :
                 binding.textViewTime.text = "0 $textMenit"
             }
 
-            if (data.type == "FREE") binding.buttonStatus.text =
-                "Mulai Kelas" else binding.buttonStatus.text = data.type
+            if (data.type == "FREE") {
+                binding.textViewContentCard.text =
+                    "Mulai Kelas"
+                binding.iconContentCard.visibility = View.GONE
+            } else {
+                binding.textViewContentCard.text = data.type
 
+            }
         }
     }
 

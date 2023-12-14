@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.detailPayment
+package com.am.finalproject.ui.detail_payment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

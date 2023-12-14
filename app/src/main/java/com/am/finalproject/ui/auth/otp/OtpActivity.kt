@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.am.finalproject.R
+import com.am.finalproject.data.remote.LoginResult
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.ActivityOtpBinding
 import com.am.finalproject.ui.auth.AuthViewModel
@@ -105,18 +106,32 @@ class OtpActivity : AppCompatActivity() {
             password.toString(),
             getEnteredOTP()
         ).observe(this) { resources ->
-            when (resources.status) {
-                Status.LOADING -> {}
-                Status.SUCCESS -> {
-                    StyleableToast.makeText(this, resources.data?.message, Toast.LENGTH_SHORT, R.style.MyToast_IsGreen).show()
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
-                }
+            viewModel.login(email.toString(), password.toString()).observe(this) { result ->
+                when (resources.status) {
+                    Status.LOADING -> {}
+                    Status.SUCCESS -> {
+                        viewModel.saveUser(LoginResult(result.data?.data?.accessToken))
+                        StyleableToast.makeText(
+                            this,
+                            resources.data?.message,
+                            Toast.LENGTH_SHORT,
+                            R.style.MyToast_IsGreen
+                        ).show()
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                    }
 
-                Status.ERROR -> {
-                    StyleableToast.makeText(this, resources.data?.message, Toast.LENGTH_SHORT, R.style.MyToast_IsRed).show()
+                    Status.ERROR -> {
+                        StyleableToast.makeText(
+                            this,
+                            resources.data?.message,
+                            Toast.LENGTH_SHORT,
+                            R.style.MyToast_IsRed
+                        ).show()
+                    }
                 }
             }
         }

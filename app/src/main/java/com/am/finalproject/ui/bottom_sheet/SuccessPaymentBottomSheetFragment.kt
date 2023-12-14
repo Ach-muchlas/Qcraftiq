@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.bottomSheet
+package com.am.finalproject.ui.bottom_sheet
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

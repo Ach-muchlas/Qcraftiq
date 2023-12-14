@@ -5,21 +5,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.am.finalproject.data.Notification
+import com.am.finalproject.data.remote.DataItemNotification
 import com.am.finalproject.databinding.ItemNotificationBinding
 import com.am.finalproject.utils.Formatter
 import java.util.TimeZone
 
-class NotificationAdapter : ListAdapter<Notification, NotificationAdapter.MyViewHolder>(
+class NotificationAdapter : ListAdapter<DataItemNotification, NotificationAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
     inner class MyViewHolder(private val binding: ItemNotificationBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Notification) {
-            binding.textViewTagLineNotification.text = data.tagLine
-            binding.textViewTitleNotification.text = data.title
+        fun bind(data: DataItemNotification) {
+            binding.textViewTagLineNotification.text = data.title
+            binding.textViewTitleNotification.text = data.subtitle
             binding.textViewDescriptionNotification.text = data.description
-            binding.textViewTimeNowNotification.text =data.time
+            binding.textViewTimeNowNotification.text =
+                Formatter.formatDate(data.updatedAt.toString(), TimeZone.getDefault().id)
         }
     }
 
@@ -36,17 +37,17 @@ class NotificationAdapter : ListAdapter<Notification, NotificationAdapter.MyView
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Notification>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItemNotification>() {
             override fun areItemsTheSame(
-                oldItem: Notification,
-                newItem: Notification
+                oldItem: DataItemNotification,
+                newItem: DataItemNotification
             ): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: Notification,
-                newItem: Notification
+                oldItem: DataItemNotification,
+                newItem: DataItemNotification
             ): Boolean {
                 return oldItem == newItem
             }

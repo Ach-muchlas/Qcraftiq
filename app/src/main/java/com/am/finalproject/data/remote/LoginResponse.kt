@@ -19,7 +19,4 @@ data class LoginResult(
 	val accessToken: String? = null
 )
 
-data class LoginBody(
-	@field:SerializedName("emailOrPhone") val emailOrPhone : String,
-	@field:SerializedName("password") val password : String,
-)
+

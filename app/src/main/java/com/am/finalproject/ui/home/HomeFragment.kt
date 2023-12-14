@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.am.finalproject.R
 import com.am.finalproject.adapter.home.HomeCategoryAdapter
 import com.am.finalproject.adapter.home.HomePopularCourseAdapter
 import com.am.finalproject.data.local.entity.CategoryEntity
@@ -17,7 +18,7 @@ import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.local.sharepref.UserPreferences
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentHomeBinding
-import com.am.finalproject.ui.searchResult.SearchResultViewModel
+import com.am.finalproject.ui.search_result.SearchResultViewModel
 import com.am.finalproject.utils.Destination
 import com.am.finalproject.utils.DisplayLayout.setupVisibilityProgressBar
 import com.am.finalproject.utils.DisplayLayout.toastMessage
@@ -50,7 +51,7 @@ class HomeFragment : Fragment() {
         binding.edtSearch.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 binding.edtSearch.clearFocus()
-                Navigate.navigateToDestination(Destination.COURSE_TO_SEARCH, findNavController())
+                Navigate.navigateToDestination(Destination.HOME_TO_SEARCH, findNavController())
                 return@setOnTouchListener true
             }
             return@setOnTouchListener false
@@ -60,10 +61,11 @@ class HomeFragment : Fragment() {
     /*This function is to display tabs in the popular course.*/
     private fun setUpTabLayout(data: List<CategoryEntity?>?) {
         val tabLayout = binding.tabLayout
-        tabLayout.addTab(tabLayout.newTab().setText("All"))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.all)))
+        val tabTitle = mutableSetOf<String>()
         data?.forEach {
-            val tabTitle = listOf(it?.title)
-            for (title in tabTitle) {
+            val title = it?.title
+            if (tabTitle.add(title.toString())) {
                 val tab = tabLayout.newTab().setText(title)
                 tabLayout.addTab(tab)
             }
@@ -113,6 +115,7 @@ class HomeFragment : Fragment() {
 
                         Status.ERROR -> {
                             setupVisibilityProgressBar(binding.progressBarPopularCourse, false)
+                            toastMessage(requireContext(), result.message.toString(), false)
                         }
                     }
                 }
@@ -135,7 +138,7 @@ class HomeFragment : Fragment() {
 
                 Status.ERROR -> {
                     setupVisibilityProgressBar(binding.progressBar, false)
-                    toastMessage(requireContext(), " Error ${resource.message}")
+                    toastMessage(requireContext(), " Error ${resource.message}", false)
                 }
             }
 

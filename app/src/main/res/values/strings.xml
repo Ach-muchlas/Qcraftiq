@@ -213,4 +213,10 @@
     <string name="reset_password">Reset Password</string>
     <string name="enter_email">Masukkan Email</string>
     <string name="send">Kirim</string>
+    <string name="repet_new_password">Ulangi Passsword Baru</string>
+    <string name="icon_prisma">icon_prisma</string>
+    <string name="waiting">Waiting For Payment</string>
+    <string name="done">Selesai</string>
+    <string name="progress">In Progress</string>
+    <string name="all">All</string>
 </resources>

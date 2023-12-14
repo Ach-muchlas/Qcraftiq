@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.searchResult
+package com.am.finalproject.ui.search_result
 
 import android.content.Context
 import android.os.Bundle
@@ -14,6 +14,7 @@ import com.am.finalproject.adapter.course.TopicClassAdapter
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentSearchResultBinding
+import com.am.finalproject.utils.DisplayLayout
 import org.koin.android.ext.android.inject
 
 class SearchResultFragment : Fragment() {
@@ -28,6 +29,7 @@ class SearchResultFragment : Fragment() {
         _binding = FragmentSearchResultBinding.inflate(inflater, container, false)
         navigation()
         search()
+        DisplayLayout.setUpBottomNavigation(activity, true)
         displayCourse()
         return binding.root
     }
@@ -84,4 +86,8 @@ class SearchResultFragment : Fragment() {
         binding.recyclerViewCourse.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        DisplayLayout.setUpBottomNavigation(activity, false )
+    }
 }

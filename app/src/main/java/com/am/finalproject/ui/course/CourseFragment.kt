@@ -15,7 +15,7 @@ import com.am.finalproject.adapter.course.TopicClassAdapter
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentCourseBinding
-import com.am.finalproject.ui.searchResult.SearchResultViewModel
+import com.am.finalproject.ui.search_result.SearchResultViewModel
 import com.am.finalproject.utils.Destination
 import com.am.finalproject.utils.Navigate
 import com.google.android.material.tabs.TabLayout
@@ -96,7 +96,7 @@ class CourseFragment : Fragment() {
 						}
 					}
 				} else {
-					searchViewModel.searchByType(tab.text.toString())
+					searchViewModel.filterByName(tab.text.toString())
 						.observe(viewLifecycleOwner) { resource ->
 							when (resource.status) {
 								Status.LOADING -> {}

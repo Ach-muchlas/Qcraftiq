@@ -82,11 +82,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:contentDescription="@string/icon_level_course"
             android:src="@drawable/level"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/iconTime" />
+            app:layout_constraintTop_toBottomOf="@id/textViewMentor" />
 
         <TextView
             android:id="@+id/textViewLevelCourse"
@@ -102,7 +102,7 @@
             android:id="@+id/iconModule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="10dp"
             android:contentDescription="@string/icon_module"
             android:src="@drawable/modules"
             app:layout_constraintStart_toEndOf="@id/textViewLevelCourse"
@@ -123,11 +123,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:contentDescription="@string/icon_time"
             android:src="@drawable/time"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/buttonBuy" />
+            app:layout_constraintTop_toBottomOf="@id/iconLevel" />
 
         <TextView
             android:id="@+id/textViewTime"
@@ -167,7 +167,6 @@
 
         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
             android:id="@+id/progressBar"
-            android:visibility="invisible"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="150dp"
             android:layout_height="20dp"
@@ -184,7 +183,6 @@
             style="@style/TextContent.Body.MonMedium.ExtraSmallSp"
             android:layout_marginStart="5dp"
             android:text="@string/example_progress_status"
-            android:visibility="invisible"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/progressBar"
             app:layout_constraintStart_toStartOf="@id/progressBar"

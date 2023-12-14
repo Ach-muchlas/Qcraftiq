@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.am.finalproject.R
@@ -13,7 +12,6 @@ import com.am.finalproject.databinding.ActivityRegisterBinding
 import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.auth.otp.OtpActivity
 import com.am.finalproject.utils.DisplayLayout
-import io.github.muddz.styleabletoast.StyleableToast
 import org.koin.android.ext.android.inject
 
 class RegisterActivity : AppCompatActivity() {
@@ -129,12 +127,11 @@ class RegisterActivity : AppCompatActivity() {
                                     putString(KEY_PHONE, phone)
                                     putString(KEY_PASSWORD, password)
                                 }
-                                StyleableToast.makeText(
+                                DisplayLayout.toastMessage(
                                     this@RegisterActivity,
-                                    resources.data?.message,
-                                    Toast.LENGTH_SHORT,
-                                    R.style.MyToast_IsGreen
-                                ).show()
+                                    resources.message.toString(),
+                                    true
+                                )
                                 val intent =
                                     Intent(this@RegisterActivity, OtpActivity::class.java).apply {
                                         putExtras(bundle)
@@ -144,12 +141,11 @@ class RegisterActivity : AppCompatActivity() {
                             }
 
                             Status.ERROR -> {
-                                StyleableToast.makeText(
+                                DisplayLayout.toastMessage(
                                     this@RegisterActivity,
-                                    "Email Already Used",
-                                    Toast.LENGTH_SHORT,
-                                    R.style.MyToast_IsRed
-                                ).show()
+                                    resources.message.toString(),
+                                    false
+                                )
                             }
                         }
                     }

@@ -4,19 +4,20 @@ import com.am.finalproject.data.remote.CategoryResponse
 import com.am.finalproject.data.remote.CourseResponse
 import com.am.finalproject.data.remote.LoginBody
 import com.am.finalproject.data.remote.LoginResponse
+import com.am.finalproject.data.remote.NotificationResponse
 import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.remote.RegisterResponse
-import retrofit2.Call
+import com.am.finalproject.data.remote.TrackingClassResponse
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 
 interface ApiService {
-
     @GET("courses")
     suspend fun getPopularCourse(): CourseResponse
 
@@ -49,4 +50,17 @@ interface ApiService {
         @Field("email") email: String
     ): RegisterResponse
 
+    @FormUrlEncoded
+    @PUT("users/change-password")
+    suspend fun changePasswordUser(
+        @Header("Authorization") bearer: String,
+        @Field("password") password: String,
+        @Field("newPassword") newPassword: String
+    ): RegisterResponse
+
+    @GET("notification/user")
+    suspend fun getNotification(@Header("Authorization") bearer: String): NotificationResponse
+
+    @GET("courseTrackings/user")
+    suspend fun getTrackingClass(@Header("Authorization") bearer: String): TrackingClassResponse
 }
