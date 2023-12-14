@@ -4,25 +4,18 @@
 
     </style>
 
-    <style name="TabLayoutContent">
-        <item name="tabBackground">@drawable/custom_tab_selector</item>
-        <item name="tabGravity">fill</item>
-        <item name="tabMode">scrollable</item>
-        <item name="tabIndicatorAnimationMode">elastic</item>
-        <item name="tabSelectedTextColor">@color/white</item>
-        <item name="tabIndicator">@color/transparent</item>
-    </style>
-
     <style name="TextContent">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
 
+    <!--text title-->
     <style name="TextContent.Headline">
         <item name="fontFamily">@font/mon_bold</item>
         <item name="android:textAppearance">@style/TextAppearance.Material3.HeadlineMedium</item>
     </style>
 
+    <!--text body-->
     <style name="TextContent.Body">
         <item name="android:textAppearance">@style/TextAppearance.Material3.BodyMedium</item>
     </style>
@@ -45,10 +38,33 @@
         <item name="fontFamily">@font/pop_medium</item>
     </style>
 
+    <style name="TextContent.Body.PopSemiBold">
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+        <item name="fontFamily">@font/pop_semi_bold</item>
+    </style>
+
     <style name="TextContent.Body.PopBold">
         <item name="android:layout_marginLeft">28dp</item>
         <item name="android:layout_marginRight">28dp</item>
         <item name="fontFamily">@font/pop_bold</item>
+    </style>
+    
+    <style name="MyToast">
+        <item name="stFont">@font/mon_bold</item>
+        <item name="stTextSize">15sp</item>
+        <item name="stRadius">20dp</item>
+        <item name="stSolidBackground">true</item>
+    </style>
+
+    <style name="MyToast.IsRed">
+        <item name="stColorBackground">@color/red</item>
+        <item name="stTextColor">@color/white</item>
+    </style>
+
+    <style name="MyToast.IsGreen">
+        <item name="stColorBackground">@color/green</item>
+        <item name="stTextColor">@color/white</item>
     </style>
 
     <!--small sp without ignore-->
@@ -71,16 +87,6 @@
     <style name="TextContent.Headline.SmallSp">
         <item name="android:textSize">14sp</item>
     </style>
-
-
-    <style name="EditTextContent">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">60dp</item>
-        <item name="fontFamily">@font/pop_medium</item>
-        <item name="android:background">@drawable/bg_edt</item>
-        <item name="android:padding">15dp</item>
-    </style>
-
     <style name="EditTextContent2">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -90,11 +96,37 @@
         <item name="android:padding">15dp</item>
     </style>
 
+
+
+    <style name="TabLayoutContent">
+        <item name="tabBackground">@drawable/custom_tab_selector</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabIndicatorAnimationMode">elastic</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabIndicator">@color/transparent</item>
+    </style>
+
+    <style name="EditTextContent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="fontFamily">@font/pop_medium</item>
+        <item name="android:background">@drawable/custom_bg_edt</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="EditTextContentOtp">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="fontFamily">@font/pop_medium</item>
+        <item name="android:background">@drawable/custom_bg_edt_otp</item>
+        <item name="android:inputType">number</item>
+    </style>
+
     <style name="ButtonContent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">60dp</item>
-        <item name="android:background">@drawable/bg_edt</item>
-        <item name="android:backgroundTint">@color/dark_blue</item>
+        <item name="android:background">@drawable/custom_bg_edt</item>
         <item name="android:elevation">10dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">23sp</item>

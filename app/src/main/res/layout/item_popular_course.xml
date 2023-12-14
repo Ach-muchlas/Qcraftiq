@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="200dp"
+    android:layout_height="270dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginEnd="10dp"
+    app:cardCornerRadius="20dp">
+
+    <ImageView
+        android:id="@+id/imageContent"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:contentDescription="@string/image_content"
+        android:scaleType="centerCrop"
+        tool:src="@tools:sample/backgrounds/scenic" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_marginTop="100dp">
+
+        <TextView
+            android:id="@+id/textViewTagLineCategory"
+            style="@style/TextContent.Body.MonBold.ExtraSmallSp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/example_category_content2"
+            android:paddingEnd="10dp"
+            android:maxLines="2"
+            android:textColor="@color/dark_blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewRating"
+            style="@style/TextContent.Body.MonBold.ExtraSmallSp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/rating"
+            app:layout_constraintBottom_toBottomOf="@id/iconStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iconStart" />
+
+        <ImageView
+            android:id="@+id/iconStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/icon_start"
+            android:src="@drawable/baseline_star_24"
+            app:layout_constraintBottom_toBottomOf="@id/textViewTagLineCategory"
+            app:layout_constraintEnd_toStartOf="@id/textViewRating"
+            app:layout_constraintTop_toTopOf="@id/textViewTagLineCategory" />
+
+
+        <TextView
+            android:id="@+id/textViewTitleCourse"
+            style="@style/TextContent.Headline.SmallSp"
+            android:layout_marginTop="5dp"
+            android:paddingHorizontal="10dp"
+            android:lineHeight="15dp"
+            android:textAlignment="textStart"
+            android:text="@string/example_name_course"
+            android:maxLines="2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewTagLineCategory"
+            tool:ignore="UnusedAttribute" />
+
+        <TextView
+            android:id="@+id/textViewMentor"
+            style="@style/TextContent.Body.MonMedium.ExtraSmallSp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="3dp"
+            android:text="@string/example_name_mentor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewTitleCourse" />
+
+        <ImageView
+            android:id="@+id/iconLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:contentDescription="@string/icon_level_course"
+            android:src="@drawable/level"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/iconTime" />
+
+        <TextView
+            android:id="@+id/textViewLevelCourse"
+            style="@style/TextContent.Body.MonMedium.ExtraSmallSp"
+            android:layout_marginStart="5dp"
+            android:text="@string/example_level_course"
+            android:textColor="@color/dark_blue"
+            app:layout_constraintBottom_toBottomOf="@id/iconLevel"
+            app:layout_constraintStart_toEndOf="@id/iconLevel"
+            app:layout_constraintTop_toTopOf="@id/iconLevel" />
+
+        <ImageView
+            android:id="@+id/iconModule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/icon_module"
+            android:src="@drawable/modules"
+            app:layout_constraintStart_toEndOf="@id/textViewLevelCourse"
+            app:layout_constraintTop_toTopOf="@id/textViewLevelCourse"
+            app:layout_constraintBottom_toBottomOf="@id/textViewLevelCourse"/>
+
+        <TextView
+            android:id="@+id/textViewModule"
+            style="@style/TextContent.Body.MonMedium.ExtraSmallSp"
+            android:layout_marginStart="5dp"
+            android:text="@string/rating"
+            app:layout_constraintBottom_toBottomOf="@id/iconModule"
+            app:layout_constraintStart_toEndOf="@id/iconModule"
+            app:layout_constraintTop_toTopOf="@id/iconModule" />
+
+        <ImageView
+            android:id="@+id/iconTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:contentDescription="@string/icon_time"
+            android:src="@drawable/time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/buttonBuy" />
+
+        <TextView
+            android:id="@+id/textViewTime"
+            style="@style/TextContent.Body.MonMedium.ExtraSmallSp"
+            android:layout_marginStart="5dp"
+            android:text="@string/example_time"
+            app:layout_constraintBottom_toBottomOf="@id/iconTime"
+            app:layout_constraintStart_toEndOf="@id/iconTime"
+            app:layout_constraintTop_toTopOf="@id/iconTime" />
+
+        <Button
+            android:id="@+id/buttonBuy"
+            android:layout_width="180dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="12dp"
+            android:backgroundTint="@color/light_blue"
+            android:paddingHorizontal="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/example_text_button"
+            android:textAppearance="@style/TextContent.Body.MonBold.SmallSp"
+            android:textAlignment="inherit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageView
+            android:id="@+id/iconProgress"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/icon_progress"
+            android:src="@drawable/check"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+            android:id="@+id/progressBar"
+            android:visibility="invisible"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iconProgress"
+            app:rcAnimationEnable="true"
+            app:rcBackgroundColor="@color/grey"
+            app:rcProgressColor="@color/dark_blue" />
+
+        <TextView
+            android:id="@+id/textViewProgressStatus"
+            style="@style/TextContent.Body.MonMedium.ExtraSmallSp"
+            android:layout_marginStart="5dp"
+            android:text="@string/example_progress_status"
+            android:visibility="invisible"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/progressBar"
+            app:layout_constraintStart_toStartOf="@id/progressBar"
+            app:layout_constraintTop_toTopOf="@id/progressBar" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

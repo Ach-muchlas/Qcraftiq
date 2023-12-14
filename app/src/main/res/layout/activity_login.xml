@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_blue_bg">
+
+    <TextView
+        android:id="@+id/textViewMasuk"
+        style="@style/TextContent.Headline"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="170dp"
+        android:text="@string/enter"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewEmailOrPhone"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginTop="40dp"
+        android:text="@string/email_or_phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewMasuk" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edlEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="26dp"
+        android:hint="@string/example_email"
+        android:autofillHints="emailAddress"
+        android:textColorHint="@color/grey"
+        app:endIconMode="clear_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewEmailOrPhone"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtEmail"
+            style="@style/EditTextContent"
+            android:inputType="textEmailAddress|text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textViewPassword"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginTop="16dp"
+        android:text="@string/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edlEmail" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edlPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="26dp"
+        android:hint="@string/create_password"
+        android:textColorHint="@color/grey"
+        android:autofillHints="password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewPassword"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtPassword"
+            style="@style/EditTextContent"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textViewForgotPassword"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginTop="5dp"
+        android:text="@string/forgot_password"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edlPassword" />
+
+    <Button
+        style="@style/ButtonContent"
+        android:id="@+id/buttonLogin"
+        android:enabled="false"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="35dp"
+        android:fontFamily="@font/pop_medium"
+        android:text="@string/enter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewForgotPassword" />
+
+    <TextView
+        android:id="@+id/textViewDontHaveAccount"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginStart="70dp"
+        android:text="@string/don_t_have_account_yet"
+        app:layout_constraintBottom_toTopOf="@id/textViewEnterWithoutLogin"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewRegisterHere"
+        style="@style/TextContent.Body.PopBold"
+        android:layout_marginStart="8dp"
+        android:text="@string/register_here"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintBottom_toTopOf="@id/textViewEnterWithoutLogin"
+        app:layout_constraintStart_toEndOf="@id/textViewDontHaveAccount" />
+
+
+    <TextView
+        android:id="@+id/textViewEnterWithoutLogin"
+        style="@style/TextContent.Body.PopBold"
+        android:layout_marginBottom="20dp"
+        android:text="@string/enter_without_login"
+        android:textColor="@color/light_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/textViewRegisterHere"
+        app:layout_constraintStart_toStartOf="@id/textViewDontHaveAccount" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

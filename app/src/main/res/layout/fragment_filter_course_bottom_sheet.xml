@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="660dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/corner_top"
+    tools:context=".ui.bottomSheet.FilterCourseBottomSheetFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+        android:id="@+id/imageViewCloseButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/close_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/close_icon"/>
+
+        <RadioButton
+        android:id="@+id/radioButtonNewest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/mon_reg"
+        android:text="@string/newest"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCloseButton" />
+
+        <RadioButton
+        android:id="@+id/radioButtonPopular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/mon_reg"
+        android:text="@string/popular"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioButtonNewest"/>
+
+        <RadioButton
+        android:id="@+id/radioButtonPromo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/promo"
+        android:fontFamily="@font/mon_reg"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButtonPopular" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioButtonPromo">
+
+            <TextView
+                android:id="@+id/textViewTitleFilterCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mon_bold"
+                android:text="@string/category"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioButtonUiUx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ui_ux_design"
+                android:fontFamily="@font/mon_reg"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonWeb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/web_development"
+                android:fontFamily="@font/mon_reg"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonAndroid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/android_development"
+                android:fontFamily="@font/mon_reg"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ui_ux_design"
+                android:fontFamily="@font/mon_reg"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonBusiness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ui_ux_design"
+                android:fontFamily="@font/mon_reg"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/radioGroupLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupCategory">
+
+            <TextView
+                android:id="@+id/textViewTitleFilterLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mon_bold"
+                android:text="@string/difficulty_level"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioButtonAllLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/level_all"
+                android:fontFamily="@font/mon_reg"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonBeginner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/beginner_level"
+                android:fontFamily="@font/mon_reg"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonIntermediate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/intermediate_level"
+                android:fontFamily="@font/mon_reg"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonAdvanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/advanced_level"
+                android:fontFamily="@font/mon_reg"
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/buttonFilter"
+            android:layout_width="275dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/mon_bold"
+            android:text="@string/btn_filter"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/radioGroupLevel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_filter"
+            android:fontFamily="@font/mon_bold"
+            android:textSize="16sp"
+            android:textColor="@color/red"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintTop_toBottomOf="@id/buttonFilter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
