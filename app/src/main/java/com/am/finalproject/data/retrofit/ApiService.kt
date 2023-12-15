@@ -45,8 +45,9 @@ interface ApiService {
         @Field("email") email: String
     ): RegisterResponse
 
+    @FormUrlEncoded
     @PUT("auth/reset-password")
-    fun resetPassword(
+    suspend fun resetPassword(
         @Field("email") email: String
     ): RegisterResponse
 

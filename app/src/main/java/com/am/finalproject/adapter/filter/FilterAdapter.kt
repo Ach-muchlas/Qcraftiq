@@ -72,4 +72,6 @@ class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
+
+
 }

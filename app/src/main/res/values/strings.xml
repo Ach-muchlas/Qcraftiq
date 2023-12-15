@@ -219,4 +219,7 @@
     <string name="done">Selesai</string>
     <string name="progress">In Progress</string>
     <string name="all">All</string>
+    <string name="mulai_kelas">Mulai Kelas</string>
+    <string name="other_class">Kelas Lainnya</string>
+    <string name="icon_back">Icon Back</string>
 </resources>

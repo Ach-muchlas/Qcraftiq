@@ -1,4 +1,4 @@
-package com.am.finalproject.ui.details
+package com.am.finalproject.ui.details.materi
 
 import android.os.Bundle
 import android.view.LayoutInflater

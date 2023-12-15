@@ -36,27 +36,7 @@ class NotificationFragment : Fragment() {
         return binding.root
     }
 
-    /*fungsi ini digunakan untuk filter bottom sheet*/
-    private fun setupAdapter() {
-        homeViewModel.category().observe(viewLifecycleOwner) { resources ->
-            when (resources.status) {
-                Status.LOADING -> {}
-                Status.SUCCESS -> {
-                    val adapter = FilterAdapter()
-                    binding.recyclerViewNotification.adapter = adapter
-                    binding.recyclerViewNotification.layoutManager =
-                        LinearLayoutManager(requireContext())
-                    val category = resources.data
-                    if (category != null) {
-                        val data = Database.getItem(category)
-                        adapter.updateList(data)
-                    }
-                }
 
-                Status.ERROR -> {}
-            }
-        }
-    }
 
     private fun displayNotification() {
         authViewModel.init(requireContext())

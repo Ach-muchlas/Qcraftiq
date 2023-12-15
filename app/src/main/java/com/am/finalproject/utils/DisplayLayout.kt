@@ -90,4 +90,5 @@ object DisplayLayout {
             bottomNav?.visibility = View.VISIBLE
         }
     }
+
 }

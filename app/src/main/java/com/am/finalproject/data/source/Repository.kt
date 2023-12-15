@@ -217,17 +217,57 @@ class Repository(
     }
 
 
-    fun filter(query1: String? = null, query2: String? = null) = liveData(Dispatchers.IO) {
-        emit(Resource.loading(null))
-        val response = apiService.getPopularCourse()
+    suspend fun filter(query1: String? = null, query2: String? = null) {
+        _searchResult.value = Resource.loading(null)
         try {
+            val response = apiService.getPopularCourse()
             val allCourse = response.data
             val filtered = allCourse.filter {
                 it.category.id.contains(
-                    query1.toString(),
+                    query1 ?: "",
                     ignoreCase = true
-                ) && it.level.contains(query2.toString(), ignoreCase = true)
+                ) && it.level.contains(query2 ?: "", ignoreCase = true)
             }
+            _searchResult.value = Resource.success(filtered)
+        } catch (exception: Exception) {
+            _searchResult.value = Resource.error(null, exception.message ?: "Error Occurred!!")
+        }
+    }
+
+    fun filterByStatus(query: String, token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getTrackingClass("Bearer $token")
+            val allCourse = response.data
+            val filtered =
+                allCourse?.filter { it.status.toString().contains(query, ignoreCase = true) }
+            emit(Resource.success(filtered))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun searchCourseById(id: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getPopularCourse()
+            val allCourse = response.data
+            val filteredById = allCourse.filter { it.id.contains(id, ignoreCase = true) }
+            emit(Resource.success(filteredById))
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+
+    }
+
+
+    fun searchCourseByNameInClass(query: String, token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getTrackingClass("Bearer $token")
+            val allCourse = response.data
+            val filtered =
+                allCourse?.filter { it.status.toString().contains(query, ignoreCase = true) }
             emit(Resource.success(filtered))
         } catch (exception: Exception) {
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
@@ -253,29 +293,5 @@ class Repository(
         }
     }
 
-    fun filterByStatus(query: String, token: String) = liveData(Dispatchers.IO) {
-        emit(Resource.loading(null))
-        try {
-            val response = apiService.getTrackingClass("Bearer $token")
-            val allCourse = response.data
-            val filtered =
-                allCourse?.filter { it.status.toString().contains(query, ignoreCase = true) }
-            emit(Resource.success(filtered))
-        } catch (exception: Exception) {
-            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
-        }
-    }
 
-    fun searchByNameInClass(query: String, token: String) = liveData(Dispatchers.IO) {
-        emit(Resource.loading(null))
-        try {
-            val response = apiService.getTrackingClass("Bearer $token")
-            val allCourse = response.data
-            val filtered =
-                allCourse?.filter { it.status.toString().contains(query, ignoreCase = true) }
-            emit(Resource.success(filtered))
-        } catch (exception: Exception) {
-            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
-        }
-    }
 }
