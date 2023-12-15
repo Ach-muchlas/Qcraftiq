@@ -8,7 +8,10 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.R
+import com.am.finalproject.adapter.detail.StudyMaterialsAdapter
 import com.am.finalproject.adapter.detail.ViewPagerAdapter
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.source.Status
@@ -42,7 +45,6 @@ class DetailsActivity : AppCompatActivity() {
         viewModel.getDetailByIdCourse(id.toString()).observe(this) { resources ->
             when (resources.status) {
                 Status.LOADING -> {
-                    Log.e("SIMPLE_LOAD", "Load")
                 }
                 Status.SUCCESS -> {
                     val data = resources.data
@@ -50,7 +52,6 @@ class DetailsActivity : AppCompatActivity() {
                 }
 
                 Status.ERROR -> {
-                    Log.e("SIMPLE_ERROR", resources.message.toString())
                 }
             }
 
@@ -78,17 +79,47 @@ class DetailsActivity : AppCompatActivity() {
             button.setOnClickListener {
                 val uri = Uri.parse(telegramGroup)
                 val intent = Intent(Intent.ACTION_VIEW, uri)
-                Log.e("SIMPLE_CLICK", "Clicked")
                 intent.setPackage("org.telegram.messenger")
                 startActivity(intent)
             }
         }
     }
 
+//    private fun setupMaterials(){
+//        val receiveBundle = intent.extras
+//        val id = receiveBundle?.getString(KEY_ID)
+//        viewModel.getDetailByIdCourse(id.toString()).observe(this){resources ->
+//            Log.e("SIMPLE_CHECK", resources.data.toString())
+//            when(resources.status){
+//                Status.LOADING -> {
+//                    Log.e("SIMPLE_LOAD", "LOAD")
+//                }
+//                Status.SUCCESS -> {
+//                    Log.e("SIMPLE_SUCCESS", resources.data.toString())
+//                    setupStudyMaterialAdapter(resources.data)
+//                }
+//                Status.ERROR -> {
+//                    Log.e("SIMPLE_ERROR", resources.message.toString())
+//                }
+//            }
+//
+//        }
+//    }
+//
+//    private fun setupStudyMaterialAdapter(data: List<DataItemCourse>?) {
+//        val recyclerViewStudyMaterial = findViewById<RecyclerView>(R.id.recyclerViewStudyMaterials)
+//        val adapter = StudyMaterialsAdapter()
+//        adapter.submitList(data)
+//        recyclerViewStudyMaterial.adapter = adapter
+//        recyclerViewStudyMaterial.layoutManager = LinearLayoutManager(this)
+//    }
+
     private fun setupTabLayout() {
+        val receiveBundle = intent.extras
+        val id = receiveBundle?.getString(KEY_ID)
         val fragments = ArrayList<Fragment>()
         fragments.add(TentangDetailsFragment())
-        fragments.add(MateriKelasDetailsFragment())
+        fragments.add(MateriKelasDetailsFragment.newInstance(id.toString()))
 
         val titles = ArrayList<String>()
         titles.add("Tentang")

@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.am.finalproject.adapter.filter.FilterAdapter
 import com.am.finalproject.adapter.notification.NotificationAdapter
-import com.am.finalproject.data.Database
 import com.am.finalproject.data.remote.NotificationResponse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentNotificationBinding

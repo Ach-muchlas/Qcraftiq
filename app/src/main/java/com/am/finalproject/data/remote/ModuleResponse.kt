@@ -35,5 +35,9 @@ data class DataItemModule(
 	val courseId: String? = null,
 
 	@field:SerializedName("updatedAt")
-	val updatedAt: String? = null
+	val updatedAt: String? = null,
+
+	@field:SerializedName("chapter")
+	val chapter: Int
+
 )

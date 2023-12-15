@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.finalproject.adapter.filter.FilterAdapter
-import com.am.finalproject.data.Database
+import com.am.finalproject.data.multiple_list.filter.DatabaseFilter
 import com.am.finalproject.data.remote.CategoryResponse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentFilterCourseBottomSheetBinding
@@ -56,7 +56,7 @@ class FilterCourseBottomSheetFragment : BottomSheetDialogFragment() {
         binding.recyclerViewFilter.layoutManager =
             LinearLayoutManager(requireContext())
         if (data != null) {
-            val dataUpdate = Database.getItem(data)
+            val dataUpdate = DatabaseFilter.getItem(data)
             adapter.updateList(dataUpdate)
         }
     }

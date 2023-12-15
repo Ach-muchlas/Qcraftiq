@@ -17,6 +17,7 @@ class TentangDetailsFragment : Fragment() {
     private var _binding : FragmentTentangdetailsBinding? = null
     private val binding get() = _binding!!
     private val viewModel : DetailsViewModel by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

@@ -22,14 +22,5 @@ class MyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val numbersChapter1 = arrayOf("1", "2", "3")
-        val adapterChapter1 = ArrayAdapter(view.context, android.R.layout.simple_list_item_1, numbersChapter1)
-        val listViewChapter1 = view.findViewById<ListView>(R.id.list_view_chapter_1)
-        listViewChapter1.adapter = adapterChapter1
-
-        val numbersChapter2 = arrayOf("4", "5", "6")
-        val adapterChapter2 = ArrayAdapter(view.context, android.R.layout.simple_list_item_1, numbersChapter2)
-        val listViewChapter2 = view.findViewById<ListView>(R.id.list_view_chapter_2)
-        listViewChapter2.adapter = adapterChapter2
     }
 }
