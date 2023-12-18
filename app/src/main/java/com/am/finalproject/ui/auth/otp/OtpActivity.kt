@@ -117,10 +117,11 @@ class OtpActivity : AppCompatActivity() {
             password.toString(),
             getEnteredOTP()
         ).observe(this) { resources ->
-            viewModel.login(email.toString(), password.toString()).observe(this) { result ->
+            viewModel.loginUser(email.toString(), password.toString()).observe(this) { result ->
                 when (resources.status) {
                     Status.LOADING -> {}
                     Status.SUCCESS -> {
+                        viewModel.init(this)
                         viewModel.saveUser(LoginResult(result.data?.data?.accessToken))
                         StyleableToast.makeText(
                             this,

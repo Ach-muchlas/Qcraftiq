@@ -26,13 +26,7 @@ class SearchResultViewModel(private val repository: Repository) : ViewModel() {
     fun searchByNameLocalData(query: String): LiveData<List<CourseEntity>> {
         return repository.searchByNameLocalData(query).asLiveData()
     }
+    fun filterByName(query: String) = repository.filterByType(query)
 
-    fun filterByName(query: String) = repository.filterByName(query)
-
-
-    fun filter(query1: String? = null, query2: String? = null) {
-        viewModelScope.launch {
-            repository.filter(query1, query2)
-        }
-    }
+    fun searchCourseByCategory(query: String) = repository.searchCourseByCategory(query)
 }

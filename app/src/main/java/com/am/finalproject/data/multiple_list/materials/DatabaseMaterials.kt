@@ -10,22 +10,34 @@ object DatabaseMaterials {
         val items = arrayListOf<Any>()
 
         items.add(DataItemMaterials.Headers("Chapter 1 - Pendahuluan"))
+        var numberForChapterOne = 1
         for (course in data) {
             course.module?.let { modules ->
-                for (data in modules) {
-                    if (data.chapter == 1) {
-                        items.add(DataItemMaterials.Item(data.chapter, data.title.toString()))
+                for (item in modules) {
+                    if (item.chapter == 1) {
+                        items.add(
+                            DataItemMaterials.Item(
+                                numberForChapterOne++,
+                                item.title.toString()
+                            )
+                        )
                     }
                 }
             }
         }
 
         items.add(DataItemMaterials.Headers("Chapter 2 - Mulai Materi"))
+        var numberForChapterTwo = 1
         for (course in data) {
             course.module?.let { modules ->
-                for (data in modules) {
-                    if (data.chapter == 2) {
-                        items.add(DataItemMaterials.Item(data.chapter, data.title.toString()))
+                for (item in modules) {
+                    if (item.chapter == 2) {
+                        items.add(
+                            DataItemMaterials.Item(
+                                numberForChapterTwo++,
+                                item.title.toString()
+                            )
+                        )
                     }
                 }
             }

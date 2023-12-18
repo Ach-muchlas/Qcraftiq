@@ -13,7 +13,7 @@ class StudyMaterialsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ItemViewHolder(private val itemBinding: ItemStudyMaterialsBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: DataItemMaterials.Item) {
-            itemBinding.textViewNumber.text = "1"
+            itemBinding.textViewNumber.text = item.no.toString()
             itemBinding.textViewTitleVideo.text = item.title
         }
     }

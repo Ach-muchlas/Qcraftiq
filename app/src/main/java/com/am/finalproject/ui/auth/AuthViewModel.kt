@@ -13,7 +13,7 @@ class AuthViewModel(private val repository: Repository) : ViewModel() {
         sharedpref = UserPreferences(context)
     }
 
-    fun login(emailOrPhone: String, password: String) = repository.loginUser(emailOrPhone, password)
+    fun loginUser(emailOrPhone: String, password: String) = repository.loginUser(emailOrPhone, password)
 
     fun register(name: String, email: String, phone: String, password: String) =
         repository.registerUser(name, email, phone, password)

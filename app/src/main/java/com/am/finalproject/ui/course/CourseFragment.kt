@@ -2,6 +2,7 @@ package com.am.finalproject.ui.course
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.finalproject.R
 import com.am.finalproject.adapter.course.TopicClassAdapter
@@ -19,6 +21,7 @@ import com.am.finalproject.ui.bottom_sheet.FilterCourseBottomSheetFragment
 import com.am.finalproject.ui.bottom_sheet.RegistrationSuccessBottomSheetFragment
 import com.am.finalproject.ui.search_result.SearchResultViewModel
 import com.am.finalproject.utils.Destination
+import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.Navigate
 import com.google.android.material.tabs.TabLayout
 import io.github.muddz.styleabletoast.StyleableToast

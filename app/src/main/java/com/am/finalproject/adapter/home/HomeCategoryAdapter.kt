@@ -1,13 +1,19 @@
 package com.am.finalproject.adapter.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.am.finalproject.R
 import com.am.finalproject.data.local.entity.CategoryEntity
 import com.am.finalproject.databinding.ItemCategoryBinding
+import com.am.finalproject.ui.home.HomeFragment
+import com.am.finalproject.ui.home.HomeFragmentDirections
 import com.bumptech.glide.Glide
 import kotlin.math.min
 

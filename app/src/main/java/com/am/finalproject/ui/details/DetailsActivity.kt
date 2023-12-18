@@ -85,34 +85,6 @@ class DetailsActivity : AppCompatActivity() {
         }
     }
 
-//    private fun setupMaterials(){
-//        val receiveBundle = intent.extras
-//        val id = receiveBundle?.getString(KEY_ID)
-//        viewModel.getDetailByIdCourse(id.toString()).observe(this){resources ->
-//            Log.e("SIMPLE_CHECK", resources.data.toString())
-//            when(resources.status){
-//                Status.LOADING -> {
-//                    Log.e("SIMPLE_LOAD", "LOAD")
-//                }
-//                Status.SUCCESS -> {
-//                    Log.e("SIMPLE_SUCCESS", resources.data.toString())
-//                    setupStudyMaterialAdapter(resources.data)
-//                }
-//                Status.ERROR -> {
-//                    Log.e("SIMPLE_ERROR", resources.message.toString())
-//                }
-//            }
-//
-//        }
-//    }
-//
-//    private fun setupStudyMaterialAdapter(data: List<DataItemCourse>?) {
-//        val recyclerViewStudyMaterial = findViewById<RecyclerView>(R.id.recyclerViewStudyMaterials)
-//        val adapter = StudyMaterialsAdapter()
-//        adapter.submitList(data)
-//        recyclerViewStudyMaterial.adapter = adapter
-//        recyclerViewStudyMaterial.layoutManager = LinearLayoutManager(this)
-//    }
 
     private fun setupTabLayout() {
         val receiveBundle = intent.extras
