@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.am.finalproject.databinding.FragmentAccountBinding
+import com.am.finalproject.ui.account.change_password.ChangePasswordFragment
+import com.am.finalproject.ui.account.payment_history.PaymentHistoryFragment
+import com.am.finalproject.ui.account.profile.MyProfileFragment
 import com.am.finalproject.ui.auth.login.LoginFragment
 
 class AccountFragment : Fragment() {
