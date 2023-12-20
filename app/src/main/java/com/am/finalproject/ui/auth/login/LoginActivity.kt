@@ -123,46 +123,39 @@ class LoginActivity : AppCompatActivity() {
 
             /*Login*/
             buttonLogin.setOnClickListener {
-                val emailOrPhone = binding.edtEmail.text
-                val password = binding.edtPassword.text
+                val emailOrPhone = binding.edtEmail.text.toString()
+                val password = binding.edtPassword.text.toString()
 
-                viewModel.loginUser(emailOrPhone.toString(), password.toString())
-                    .observe(this@LoginActivity) { resources ->
-                        when (resources.status) {
-                            Status.LOADING -> {
-                                DisplayLayout.setupVisibilityProgressBar(binding.progressBar, true)
-                            }
+                viewModel.login(emailOrPhone, password).observe(this@LoginActivity) { resources ->
 
-                            Status.SUCCESS -> {
-                                DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
-                                viewModel.saveUser(LoginResult(resources.data?.data?.accessToken))
-                                StyleableToast.makeText(
-                                    this@LoginActivity,
-                                    resources.data?.message,
-                                    Toast.LENGTH_SHORT,
-                                    R.style.MyToast_IsGreen
-                                ).show()
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                                startActivity(intent)
-                                finish()
-                            }
+                    when (resources.status) {
+                        Status.LOADING -> {}
 
-                            Status.ERROR -> {
-                                DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
-                                StyleableToast.makeText(
-                                    this@LoginActivity,
-                                    resources.message ,
-                                    Toast.LENGTH_SHORT,
-                                    R.style.MyToast_IsRed
-                                ).show()
-                                Log.e("SIMPLE_ERROR", "errorMessage : ${resources.message} || ErrorDataMessage : ${resources.data?.message}")
-                            }
+                        Status.SUCCESS -> {
+                            viewModel.saveUser(LoginResult(resources.data?.data?.accessToken))
+                            StyleableToast.makeText(
+                                this@LoginActivity,
+                                resources.data?.message,
+                                Toast.LENGTH_SHORT,
+                                R.style.MyToast_IsGreen
+                            ).show()
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                            finish()
+                        }
+
+                        Status.ERROR -> {
+                            StyleableToast.makeText(
+                                this@LoginActivity,
+                                "Email or Phone not Registered",
+                                Toast.LENGTH_SHORT,
+                                R.style.MyToast_IsRed
+                            ).show()
+                            Log.e("CHECK", resources.data?.message.toString())
                         }
                     }
-                emailOrPhone?.clear()
-                password?.clear()
+                }
             }
 
 

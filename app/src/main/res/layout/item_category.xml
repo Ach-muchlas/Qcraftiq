@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="160dp"
-
     android:layout_height="140dp">
 
     <androidx.cardview.widget.CardView

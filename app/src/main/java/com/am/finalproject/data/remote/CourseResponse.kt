@@ -51,9 +51,6 @@ data class DataItemCourse(
 
 	@field:SerializedName("module")
 	val module: List<DataItemModule>? = null,
-
-	@field:SerializedName("telegram")
-	val telegram: String,
 )
 
 

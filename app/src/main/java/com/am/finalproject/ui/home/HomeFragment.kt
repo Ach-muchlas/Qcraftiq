@@ -39,6 +39,10 @@ class HomeFragment : Fragment() {
         displayCategory()
         displayPopularCourse()
         setupSearch()
+        sharedpref = UserPreferences(requireContext())
+        binding.textViewSeeAllPopularCourse.setOnClickListener {
+            sharedpref.clearUser()
+        }
         return binding.root
     }
 
@@ -165,9 +169,5 @@ class HomeFragment : Fragment() {
             }
             viewModel.toggleShowAllItem()
         }
-    }
-
-    companion object{
-        const val KEY_CATEGORY_TITLE = "key_category_title"
     }
 }

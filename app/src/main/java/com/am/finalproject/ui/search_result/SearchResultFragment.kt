@@ -89,6 +89,5 @@ class SearchResultFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         DisplayLayout.setUpBottomNavigation(activity, false )
-        _binding = null
     }
 }

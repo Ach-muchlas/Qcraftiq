@@ -3,23 +3,23 @@ package com.am.finalproject.adapter.filter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.am.finalproject.data.multiple_list.filter.DataItemFilter
-import com.am.finalproject.data.multiple_list.filter.DatabaseFilter.TYPE_HEADER
-import com.am.finalproject.data.multiple_list.filter.DatabaseFilter.TYPE_ITEM
+import com.am.finalproject.data.DataItem
+import com.am.finalproject.data.Database.TYPE_HEADER
+import com.am.finalproject.data.Database.TYPE_ITEM
 import com.am.finalproject.databinding.ItemFilterBinding
 import com.am.finalproject.databinding.ItemHeadersBinding
 
 class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ItemViewHolder(private val itemBinding: ItemFilterBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(item: DataItemFilter.Item) {
+        fun bind(item: DataItem.Item) {
             itemBinding.radioButtonUiUx.text = item.title
         }
     }
 
     inner class HeadersViewHolder(private val headerBinding: ItemHeadersBinding) :
         RecyclerView.ViewHolder(headerBinding.root) {
-        fun bind(header: DataItemFilter.Headers) {
+        fun bind(header: DataItem.Headers) {
             headerBinding.textViewTitleFilterCategory.text = header.text
         }
     }
@@ -53,15 +53,15 @@ class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ItemViewHolder -> holder.bind(itemList[position] as DataItemFilter.Item)
-            is HeadersViewHolder -> holder.bind(itemList[position] as DataItemFilter.Headers)
+            is ItemViewHolder -> holder.bind(itemList[position] as DataItem.Item)
+            is HeadersViewHolder -> holder.bind(itemList[position] as DataItem.Headers)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when(itemList[position]){
-            is DataItemFilter.Item -> TYPE_ITEM
-            is DataItemFilter.Headers -> TYPE_HEADER
+            is DataItem.Item -> TYPE_ITEM
+            is DataItem.Headers -> TYPE_HEADER
             else -> throw java.lang.IllegalArgumentException("Invalid item")
         }
     }
@@ -71,7 +71,5 @@ class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         itemList.addAll(updatedList)
         notifyDataSetChanged()
     }
-
-
 
 }

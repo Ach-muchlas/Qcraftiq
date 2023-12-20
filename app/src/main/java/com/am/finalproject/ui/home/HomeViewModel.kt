@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.source.Repository
 
 class HomeViewModel (private val repository: Repository): ViewModel() {
     private val _showAllItem = MutableLiveData<Boolean>()
     val showAllItem: LiveData<Boolean> get() = _showAllItem
-
 
     init {
         _showAllItem.value = false
@@ -21,4 +21,6 @@ class HomeViewModel (private val repository: Repository): ViewModel() {
     fun getCategoryLocalData() = repository.getCategoryLocalData()
     fun getCourseLocalData() = repository.getCourseLocalData()
     fun readCourseAll() = repository.readCourseALl().asLiveData()
+
+    fun category() = repository.getCategory()
 }

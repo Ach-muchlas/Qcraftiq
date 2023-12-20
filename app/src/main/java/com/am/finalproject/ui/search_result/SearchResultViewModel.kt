@@ -13,9 +13,7 @@ import kotlinx.coroutines.launch
 class SearchResultViewModel(private val repository: Repository) : ViewModel() {
     val searchCourse: LiveData<Resource<List<DataItemCourse>>> get() = repository.searchResult
 
-    fun getCourseAll() = repository.getCourse()
-
-    fun getCategoryAll() = repository.getCategory()
+    fun getCourseAll()= repository.getCourse()
 
     fun searchCourseByName(query: String) {
         viewModelScope.launch {
@@ -26,7 +24,7 @@ class SearchResultViewModel(private val repository: Repository) : ViewModel() {
     fun searchByNameLocalData(query: String): LiveData<List<CourseEntity>> {
         return repository.searchByNameLocalData(query).asLiveData()
     }
-    fun filterByName(query: String) = repository.filterByType(query)
 
-    fun searchCourseByCategory(query: String) = repository.searchCourseByCategory(query)
+    fun filterByName(query: String) = repository.filterByName(query)
+
 }

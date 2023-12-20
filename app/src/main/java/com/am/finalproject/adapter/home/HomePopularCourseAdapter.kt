@@ -1,7 +1,6 @@
 package com.am.finalproject.adapter.home
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.databinding.ItemPopularCourseBinding
-import com.am.finalproject.ui.details.DetailsActivity
 import com.am.finalproject.utils.Formatter
 import com.bumptech.glide.Glide
-import java.text.Normalizer.Form
 
 class HomePopularCourseAdapter :
     ListAdapter<CourseEntity, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
@@ -31,8 +28,9 @@ class HomePopularCourseAdapter :
             binding.progressBar.visibility = View.GONE
             binding.textViewProgressStatus.visibility = View.GONE
             binding.iconProgress.visibility = View.GONE
-            binding.textViewModule.text = Formatter.formatSizeModule(data.module)
-            binding.textViewTime.text = Formatter.formatTimeSecondToMinute(data.time)
+            binding.textViewModule.text = "${data.module} Modul"
+            binding.textViewTime.text = "${data.time} Menit"
+
         }
     }
 
@@ -41,6 +39,7 @@ class HomePopularCourseAdapter :
         val binding =
             ItemPopularCourseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
+
     }
 
 

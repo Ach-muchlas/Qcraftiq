@@ -23,7 +23,6 @@ class ResetPasswordActivity : AppCompatActivity() {
         DisplayLayout.hideAppBar(this)
         setContentView(binding.root)
         setupEditText()
-        navigation()
     }
 
     private fun setupEditText() {
@@ -84,9 +83,9 @@ class ResetPasswordActivity : AppCompatActivity() {
                             Status.ERROR -> {
                                 StyleableToast.makeText(
                                     this@ResetPasswordActivity,
-                                    result.message,
+                                    result.data?.message,
                                     Toast.LENGTH_SHORT,
-                                    R.style.MyToast_IsRed
+                                    R.style.MyToast_IsGreen
                                 ).show()
                             }
                         }

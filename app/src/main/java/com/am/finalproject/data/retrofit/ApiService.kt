@@ -9,8 +9,6 @@ import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.remote.RegisterResponse
 import com.am.finalproject.data.remote.TrackingClassResponse
-import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -29,29 +27,28 @@ interface ApiService {
     @POST("auth/login")
     suspend fun login(
         @Body loginBody: LoginBody
-    ): Response<LoginResponse>
+    ): LoginResponse
 
     @POST("auth/register")
     suspend fun register(
         @Body registerBody: RegisterBody
-    ): Response<RegisterResponse>
+    ): RegisterResponse
 
     @POST("auth/register/otp")
     suspend fun sendOTP(
         @Body registerBody: RegisterBodyWithOTP
-    ): Response<RegisterResponse>
+    ): RegisterResponse
 
     @FormUrlEncoded
     @PUT("auth/register/resend-otp")
     suspend fun resendOTP(
         @Field("email") email: String
-    ): Response<RegisterResponse>
+    ): RegisterResponse
 
-    @FormUrlEncoded
     @PUT("auth/reset-password")
-    suspend fun resetPassword(
+    fun resetPassword(
         @Field("email") email: String
-    ): Response<RegisterResponse>
+    ): RegisterResponse
 
     @FormUrlEncoded
     @PUT("users/change-password")
@@ -59,11 +56,11 @@ interface ApiService {
         @Header("Authorization") bearer: String,
         @Field("password") password: String,
         @Field("newPassword") newPassword: String
-    ): Response<RegisterResponse>
+    ): RegisterResponse
 
     @GET("notification/user")
-    suspend fun getNotification(@Header("Authorization") bearer: String): Response<NotificationResponse>
+    suspend fun getNotification(@Header("Authorization") bearer: String): NotificationResponse
 
     @GET("courseTrackings/user")
-    suspend fun getTrackingClass(@Header("Authorization") bearer: String): Response<TrackingClassResponse>
+    suspend fun getTrackingClass(@Header("Authorization") bearer: String): TrackingClassResponse
 }

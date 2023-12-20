@@ -11,7 +11,7 @@
     <View
         android:id="@+id/purpleBar"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:background="#6148FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,31 +23,34 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="16dp"
-        android:contentDescription="@string/icon_back"
+        android:src="@drawable/arrow_left"
         app:layout_constraintBottom_toBottomOf="@id/purpleBar"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/icon_back"
         app:layout_constraintTop_toTopOf="@id/purpleBar" />
 
     <!-- Text "Kelas Lainnya" -->
     <TextView
-        android:id="@+id/textViewOtherClass"
-        style="@style/TextContent.Body.MonMedium"
+        android:id="@+id/kelasLainnyaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="@string/other_class"
-        android:textColor="@color/white"
+        android:text="Kelas Lainnya"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/purpleBar"
         app:layout_constraintStart_toEndOf="@id/backButton"
         app:layout_constraintTop_toTopOf="@id/purpleBar" />
 
     <!-- VideoPlayer -->
-    <ImageView
-        android:id="@+id/imageViewContent"
+    <VideoView
+        android:id="@+id/mediaplayer_view"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/image_content"
-        app:layout_constraintTop_toBottomOf="@id/purpleBar"/>
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
@@ -57,7 +60,7 @@
         app:cardCornerRadius="20dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        app:layout_constraintTop_toBottomOf="@id/imageViewContent">
+        app:layout_constraintTop_toBottomOf="@id/mediaplayer_view">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -65,7 +68,7 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/tv_category_title"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -79,11 +82,11 @@
 
             <ImageView
                 android:id="@+id/iv_star"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="35dp"
-                android:src="@drawable/baseline_star_24"
+                android:src="@drawable/staricon"
                 android:importantForAccessibility="no"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -100,12 +103,13 @@
                 app:layout_constraintTop_toTopOf="@id/iv_star" />
 
             <TextView
-                android:id="@+id/tv_title"
-                style="@style/TextContent.Headline.SmallSp"
+                android:id="@+id/tv_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="@string/course_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_category_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
             <TextView
                 android:id="@+id/tv_creator"
@@ -115,7 +119,7 @@
                 android:text="@string/creator"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_desc" />
 
             <ImageView
                 android:id="@+id/iv_level"
@@ -124,7 +128,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:importantForAccessibility="no"
-                android:src="@drawable/level"
+                android:src="@drawable/level1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_creator"
                 tools:ignore="ImageContrastCheck" />
@@ -133,7 +137,7 @@
                 android:id="@+id/tv_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/level1"
                 android:textColor="@color/dark_blue"
                 android:textStyle="bold"
@@ -144,47 +148,45 @@
                 android:id="@+id/iv_module"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="32dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/modul"
+                app:layout_constraintStart_toEndOf="@id/tv_level"
                 app:layout_constraintTop_toTopOf="@id/iv_level"
-                app:layout_constraintBottom_toBottomOf="@id/iv_level"
-                app:layout_constraintStart_toEndOf="@id/tv_level" />
+                app:layout_goneMarginStart="20dp"
+                tools:ignore="ImageContrastCheck" />
 
             <TextView
                 android:id="@+id/tv_module"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/modul_uiux"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@id/iv_module"
-                app:layout_constraintBottom_toBottomOf="@id/iv_module"
-                app:layout_constraintTop_toTopOf="@id/iv_module" />
+                app:layout_constraintTop_toTopOf="@id/iv_level" />
 
 
             <ImageView
                 android:id="@+id/iv_time"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:importantForAccessibility="no"
-                android:src="@drawable/time"
-                app:layout_constraintBottom_toBottomOf="@id/iv_module"
-                app:layout_constraintStart_toEndOf="@id/tv_module"
-                app:layout_constraintTop_toTopOf="@id/iv_module"
+                android:src="@drawable/timelimit"
+                app:layout_constraintEnd_toStartOf="@id/tv_time"
+                app:layout_constraintTop_toTopOf="@id/iv_level"
                 tools:ignore="ImageContrastCheck" />
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/durasi_course"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@id/iv_time"
-                app:layout_constraintStart_toEndOf="@id/iv_time"
-                app:layout_constraintTop_toTopOf="@id/iv_time" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_level" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

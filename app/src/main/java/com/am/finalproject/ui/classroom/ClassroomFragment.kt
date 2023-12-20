@@ -139,8 +139,7 @@ class ClassroomFragment : Fragment() {
             submitList(data)
             binding.recyclerViewTopicClass.adapter = this
         }
-        binding.recyclerViewTopicClass.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewTopicClass.layoutManager = LinearLayoutManager(requireContext())
 
     }
 

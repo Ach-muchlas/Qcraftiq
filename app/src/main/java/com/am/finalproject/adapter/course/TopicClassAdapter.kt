@@ -1,24 +1,21 @@
 package com.am.finalproject.adapter.course
 
-import android.content.Intent
-import android.os.Bundle
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.am.finalproject.R
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.databinding.ItemClassCourseBinding
-import com.am.finalproject.ui.details.DetailsActivity
-import com.am.finalproject.utils.Formatter
 import com.bumptech.glide.Glide
 
 class TopicClassAdapter :
     ListAdapter<DataItemCourse, TopicClassAdapter.MyViewHolder>(DIFF_CALLBACK) {
     inner class MyViewHolder(private val binding: ItemClassCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(data: DataItemCourse) {
             Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
             binding.textViewTagLineCategory.text = data.category.title
@@ -27,30 +24,26 @@ class TopicClassAdapter :
             binding.textViewMentor.text = data.authorBy
             binding.textViewLevelCourse.text = data.level
 
+            val textMenit = " Menit"
+            val textModule = " Modul"
             if (!data.module.isNullOrEmpty()) {
-                binding.textViewTime.text =
-                    Formatter.formatTimeSecondToMinute(data.module.sumOf { it.time ?: 0 })
-                binding.textViewModule.text = Formatter.formatSizeModule(data.module.size)
+                val totalTime = data.module.sumOf { it.time ?: 0 }
+                val totalModule = "${data.module.size}"
+
+                binding.textViewTime.text = "$totalTime $textMenit"
+                binding.textViewModule.text = "$totalModule $textModule"
             } else {
-                binding.textViewModule.text = Formatter.formatSizeModule(0)
-                binding.textViewTime.text = Formatter.formatTimeSecondToMinute(0)
+                binding.textViewModule.text = "0 $textModule"
+                binding.textViewTime.text = "0 $textMenit"
             }
 
             if (data.type == "FREE") {
                 binding.textViewContentCard.text =
-                    binding.root.context.getString(R.string.mulai_kelas)
+                    "Mulai Kelas"
                 binding.iconContentCard.visibility = View.GONE
-                binding.cardTopicClass.setOnClickListener {
-                    val bundle = Bundle().apply {
-                        putString(DetailsActivity.KEY_ID, data.id)
-                    }
-                    val intent = Intent(itemView.context, DetailsActivity::class.java).apply {
-                        putExtras(bundle)
-                    }
-                    itemView.context.startActivity(intent)
-                }
             } else {
                 binding.textViewContentCard.text = data.type
+
             }
         }
     }
