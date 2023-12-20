@@ -99,7 +99,7 @@ class ChangePasswordFragment : Fragment() {
                         Status.SUCCESS -> {
                             StyleableToast.makeText(
                                 requireContext(),
-                                resources.data?.message,
+                                resources.message,
                                 Toast.LENGTH_SHORT,
                                 R.style.MyToast_IsGreen
                             ).show()

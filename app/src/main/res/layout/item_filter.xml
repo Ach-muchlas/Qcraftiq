@@ -4,24 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RadioGroup
-        android:id="@+id/radioGroupCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
         <RadioButton
             android:id="@+id/radioButtonUiUx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:fontFamily="@font/mon_reg"
             android:text="@string/ui_ux_design"
             android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:textSize="12sp" />
 
-    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

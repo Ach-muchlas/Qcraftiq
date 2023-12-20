@@ -1,16 +1,15 @@
 package com.am.finalproject.adapter.classroom
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.remote.DataItemTrackingClass
 import com.am.finalproject.databinding.ItemPopularCourseBinding
+import com.am.finalproject.utils.Formatter
 import com.bumptech.glide.Glide
 
 class CourseTrackIngAdapter : ListAdapter<DataItemTrackingClass, CourseTrackIngAdapter.MyViewHolder>(
@@ -29,8 +28,8 @@ class CourseTrackIngAdapter : ListAdapter<DataItemTrackingClass, CourseTrackIngA
             binding.textViewTitleCourse.text = data.course?.title
             binding.textViewMentor.text = author
             binding.textViewLevelCourse.text = data.course?.level
-            binding.textViewModule.text = "$sizeModule Modul"
-            binding.textViewTime.text = "$timeModule Menit"
+            binding.textViewModule.text = Formatter.formatSizeModule(sizeModule ?: 0)
+            binding.textViewTime.text = Formatter.formatTimeSecondToMinute(timeModule ?: 0)
             binding.buttonBuy.visibility = View.GONE
             binding.iconProgress.visibility = View.VISIBLE
             val progress = 0

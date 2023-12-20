@@ -81,7 +81,7 @@
         2. Anda yang ingin membantu perusahaan lebih optimal dalam membuat design produk
         3. Anda yang ingin latihan membangun design system
         4. Anda yang ingin latihan membangun design system</string>
-    <string name="materi_belajar">Materi Belajar</string>
+    <string name="study_materials">Materi Belajar</string>
     <string name="title_activity_details">DetailsActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -219,4 +219,10 @@
     <string name="done">Selesai</string>
     <string name="progress">In Progress</string>
     <string name="all">All</string>
+    <string name="mulai_kelas">Mulai Kelas</string>
+    <string name="other_class">Kelas Lainnya</string>
+    <string name="icon_back">Icon Back</string>
+    <string name="example_chapter">Chapter 1 - Pendahuluan</string>
+    <string name="example_title_material">Tujuan Mengikuti Kelas</string>
+    <string name="icon_video_player">icon_video_player</string>
 </resources>

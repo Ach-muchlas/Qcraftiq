@@ -37,6 +37,7 @@
             android:fontFamily="@font/mon_bold"
             android:text="@string/btn_filter"
             android:textSize="16sp"
+            android:backgroundTint="@color/dark_blue"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_marginTop="16dp"
