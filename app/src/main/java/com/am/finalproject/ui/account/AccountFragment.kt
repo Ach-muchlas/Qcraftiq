@@ -6,61 +6,56 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.am.finalproject.databinding.FragmentAccountBinding
-import com.am.finalproject.ui.account.change_password.ChangePasswordFragment
-import com.am.finalproject.ui.account.payment_history.PaymentHistoryFragment
 import com.am.finalproject.ui.account.profile.MyProfileFragment
-import com.am.finalproject.ui.auth.login.LoginFragment
+import com.am.finalproject.ui.auth.login.LoginActivity
+import com.am.finalproject.utils.Destination
+import com.am.finalproject.utils.Navigate
+import org.koin.android.ext.android.inject
 
 class AccountFragment : Fragment() {
-
-	private lateinit var binding: FragmentAccountBinding
+	private var _binding: FragmentAccountBinding? = null
+	private val binding get() = _binding!!
+	private val viewModel: AccountViewModel by inject()
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		binding = FragmentAccountBinding.inflate(inflater, container, false)
+		_binding = FragmentAccountBinding.inflate(inflater, container, false)
 		navigation()
 
 		return binding.root
 	}
 
 	private fun navigation() {
-		binding.imageViewEditProfile.setOnClickListener {
-			val intent = Intent(requireContext(), MyProfileFragment::class.java)
-			startActivity(intent)
-		}
-		binding.textViewMyProfile.setOnClickListener {
-			val intent = Intent(requireContext(), MyProfileFragment::class.java)
-			startActivity(intent)
-		}
+		binding.apply {
+			binding.textViewMyProfile.setOnClickListener {
+				val intent = Intent(requireContext(), MyProfileFragment::class.java)
+				startActivity(intent)
+			}
 
-		binding.imageViewChangePassword.setOnClickListener {
-			val intent = Intent(requireContext(), ChangePasswordFragment::class.java)
-			startActivity(intent)
-		}
-		binding.textViewChangePassword.setOnClickListener {
-			val intent = Intent(requireContext(), ChangePasswordFragment::class.java)
-			startActivity(intent)
-		}
+			textViewPaymentHistory.setOnClickListener {
+				Navigate.navigateToDestination(
+					Destination.ACCOUNT_TO_HISTORY_PAYMENT,
+					findNavController()
+				)
+			}
 
-		binding.imageViewPaymentHistory.setOnClickListener {
-			val intent = Intent(requireContext(), PaymentHistoryFragment::class.java)
-			startActivity(intent)
-		}
-		binding.textViewPaymentHistory.setOnClickListener {
-			val intent = Intent(requireContext(), PaymentHistoryFragment::class.java)
-			startActivity(intent)
-		}
+			textViewChangePassword.setOnClickListener {
+				Navigate.navigateToDestination(
+					Destination.ACCOUNT_TO_CHANGE_PASSWORD,
+					findNavController()
+				)
+			}
 
-		binding.imageViewLogout.setOnClickListener {
-			val intent = Intent(requireContext(), LoginFragment::class.java)
-			startActivity(intent)
-		}
-		binding.textViewLogout.setOnClickListener {
-			val intent = Intent(requireContext(), LoginFragment::class.java)
-			startActivity(intent)
+			textViewLogout.setOnClickListener {
+				viewModel.init(requireContext())
+				viewModel.logout()
+				Navigate.intentActivity(requireContext(), LoginActivity::class.java)
+			}
+
 		}
 	}
 }

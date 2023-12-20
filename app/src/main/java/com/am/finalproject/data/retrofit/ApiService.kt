@@ -5,11 +5,12 @@ import com.am.finalproject.data.remote.CourseResponse
 import com.am.finalproject.data.remote.LoginBody
 import com.am.finalproject.data.remote.LoginResponse
 import com.am.finalproject.data.remote.NotificationResponse
+import com.am.finalproject.data.remote.PaymentBody
+import com.am.finalproject.data.remote.PaymentResponse
 import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.remote.RegisterResponse
 import com.am.finalproject.data.remote.TrackingClassResponse
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -40,6 +41,13 @@ interface ApiService {
     suspend fun sendOTP(
         @Body registerBody: RegisterBodyWithOTP
     ): Response<RegisterResponse>
+    @FormUrlEncoded
+    @POST("orders")
+    suspend fun orders(
+        @Header("Authorization") bearer: String,
+        @Field("payment") payment: String,
+        @Body paymentBody: PaymentBody
+    ): Response<PaymentResponse>
 
     @FormUrlEncoded
     @PUT("auth/register/resend-otp")
@@ -66,4 +74,6 @@ interface ApiService {
 
     @GET("courseTrackings/user")
     suspend fun getTrackingClass(@Header("Authorization") bearer: String): Response<TrackingClassResponse>
+
+
 }

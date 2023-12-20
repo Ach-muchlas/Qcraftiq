@@ -10,6 +10,8 @@ import com.am.finalproject.data.local.room.dao.CategoryDao
 import com.am.finalproject.data.local.room.dao.CourseDao
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.remote.LoginBody
+import com.am.finalproject.data.remote.Payment
+import com.am.finalproject.data.remote.PaymentBody
 import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.retrofit.ApiService
@@ -17,6 +19,8 @@ import com.am.finalproject.utils.AppExecutors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
+import java.time.temporal.TemporalAmount
+import java.util.Date
 
 class Repository(
     private val apiService: ApiService,
@@ -375,4 +379,24 @@ class Repository(
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
         }
     }
+
+    fun sendOrders(token: String, courseId : Int, amount: Int, cardName: String, cardNumber: String, cvv: Int, expiryDate: String) =
+        liveData(Dispatchers.IO) {
+            emit(Resource.loading(null))
+            try {
+                val user = PaymentBody(courseId, Payment(amount, cardName, cardNumber, cvv, expiryDate))
+                val response = apiService.orders("Bearer $token", user)
+                if (response.isSuccessful) {
+                    emit(Resource.success(response.body()))
+                } else {
+                    response.errorBody()?.let {
+                        val errorResponse = JSONObject(it.string())
+                        val errorMessage = errorResponse.getString("message")
+                        emit(Resource.error(null, errorMessage))
+                    }
+                }
+            } catch (exception: Exception) {
+                emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+            }
+        }
 }
