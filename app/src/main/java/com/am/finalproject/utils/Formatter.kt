@@ -19,4 +19,13 @@ object Formatter {
         val decimal = DecimalFormat("#,###.##")
         return "Rp. " + decimal.format(amount)
     }
+
+    fun formatTimeSecondToMinute(time : Int): String{
+        val minutes = time / 60
+        return "$minutes Menit"
+    }
+
+    fun formatSizeModule(module : Int) : String{
+        return "$module Modul"
+    }
 }

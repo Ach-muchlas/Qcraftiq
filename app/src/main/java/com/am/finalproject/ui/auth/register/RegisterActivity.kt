@@ -10,8 +10,10 @@ import com.am.finalproject.R
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.ActivityRegisterBinding
 import com.am.finalproject.ui.auth.AuthViewModel
+import com.am.finalproject.ui.auth.login.LoginActivity
 import com.am.finalproject.ui.auth.otp.OtpActivity
 import com.am.finalproject.utils.DisplayLayout
+import com.am.finalproject.utils.Navigate
 import org.koin.android.ext.android.inject
 
 class RegisterActivity : AppCompatActivity() {
@@ -129,7 +131,7 @@ class RegisterActivity : AppCompatActivity() {
                                 }
                                 DisplayLayout.toastMessage(
                                     this@RegisterActivity,
-                                    resources.message.toString(),
+                                    resources.data?.message.toString(),
                                     true
                                 )
                                 val intent =
@@ -137,7 +139,6 @@ class RegisterActivity : AppCompatActivity() {
                                         putExtras(bundle)
                                     }
                                 startActivity(intent)
-
                             }
 
                             Status.ERROR -> {
@@ -149,6 +150,11 @@ class RegisterActivity : AppCompatActivity() {
                             }
                         }
                     }
+            }
+
+            /*Back to Login*/
+            imageViewButtonBack.setOnClickListener {
+                Navigate.intentActivity(this@RegisterActivity, LoginActivity::class.java)
             }
         }
     }

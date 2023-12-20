@@ -9,6 +9,8 @@ import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.remote.RegisterResponse
 import com.am.finalproject.data.remote.TrackingClassResponse
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -27,28 +29,29 @@ interface ApiService {
     @POST("auth/login")
     suspend fun login(
         @Body loginBody: LoginBody
-    ): LoginResponse
+    ): Response<LoginResponse>
 
     @POST("auth/register")
     suspend fun register(
         @Body registerBody: RegisterBody
-    ): RegisterResponse
+    ): Response<RegisterResponse>
 
     @POST("auth/register/otp")
     suspend fun sendOTP(
         @Body registerBody: RegisterBodyWithOTP
-    ): RegisterResponse
+    ): Response<RegisterResponse>
 
     @FormUrlEncoded
     @PUT("auth/register/resend-otp")
     suspend fun resendOTP(
         @Field("email") email: String
-    ): RegisterResponse
+    ): Response<RegisterResponse>
 
+    @FormUrlEncoded
     @PUT("auth/reset-password")
-    fun resetPassword(
+    suspend fun resetPassword(
         @Field("email") email: String
-    ): RegisterResponse
+    ): Response<RegisterResponse>
 
     @FormUrlEncoded
     @PUT("users/change-password")
@@ -56,11 +59,11 @@ interface ApiService {
         @Header("Authorization") bearer: String,
         @Field("password") password: String,
         @Field("newPassword") newPassword: String
-    ): RegisterResponse
+    ): Response<RegisterResponse>
 
     @GET("notification/user")
-    suspend fun getNotification(@Header("Authorization") bearer: String): NotificationResponse
+    suspend fun getNotification(@Header("Authorization") bearer: String): Response<NotificationResponse>
 
     @GET("courseTrackings/user")
-    suspend fun getTrackingClass(@Header("Authorization") bearer: String): TrackingClassResponse
+    suspend fun getTrackingClass(@Header("Authorization") bearer: String): Response<TrackingClassResponse>
 }

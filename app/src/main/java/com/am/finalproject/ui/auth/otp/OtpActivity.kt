@@ -51,14 +51,25 @@ class OtpActivity : AppCompatActivity() {
             Navigate.intentActivity(this, RegisterActivity::class.java)
         }
         binding.textViewRequestNewCode.setOnClickListener {
-            viewModel.resendOTP("haloachmad534@gmail.com").observe(this) { resources ->
+            viewModel.resendOTP(email.toString()).observe(this) { resources ->
                 when (resources.status) {
                     Status.LOADING -> {}
                     Status.SUCCESS -> {
-                        StyleableToast.makeText(this, resources.data?.message, Toast.LENGTH_SHORT, R.style.MyToast_IsGreen).show()
+                        StyleableToast.makeText(
+                            this,
+                            resources.data?.message,
+                            Toast.LENGTH_SHORT,
+                            R.style.MyToast_IsGreen
+                        ).show()
                     }
+
                     Status.ERROR -> {
-                        StyleableToast.makeText(this, resources.data?.message, Toast.LENGTH_SHORT, R.style.MyToast_IsRed).show()
+                        StyleableToast.makeText(
+                            this,
+                            resources.data?.message,
+                            Toast.LENGTH_SHORT,
+                            R.style.MyToast_IsRed
+                        ).show()
                     }
                 }
             }
@@ -106,10 +117,11 @@ class OtpActivity : AppCompatActivity() {
             password.toString(),
             getEnteredOTP()
         ).observe(this) { resources ->
-            viewModel.login(email.toString(), password.toString()).observe(this) { result ->
+            viewModel.loginUser(email.toString(), password.toString()).observe(this) { result ->
                 when (resources.status) {
                     Status.LOADING -> {}
                     Status.SUCCESS -> {
+                        viewModel.init(this)
                         viewModel.saveUser(LoginResult(result.data?.data?.accessToken))
                         StyleableToast.makeText(
                             this,

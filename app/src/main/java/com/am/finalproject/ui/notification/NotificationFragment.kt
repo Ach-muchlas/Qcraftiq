@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.am.finalproject.adapter.filter.FilterAdapter
 import com.am.finalproject.adapter.notification.NotificationAdapter
-import com.am.finalproject.data.Database
 import com.am.finalproject.data.remote.NotificationResponse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentNotificationBinding
@@ -36,27 +34,7 @@ class NotificationFragment : Fragment() {
         return binding.root
     }
 
-    /*fungsi ini digunakan untuk filter bottom sheet*/
-    private fun setupAdapter() {
-        homeViewModel.category().observe(viewLifecycleOwner) { resources ->
-            when (resources.status) {
-                Status.LOADING -> {}
-                Status.SUCCESS -> {
-                    val adapter = FilterAdapter()
-                    binding.recyclerViewNotification.adapter = adapter
-                    binding.recyclerViewNotification.layoutManager =
-                        LinearLayoutManager(requireContext())
-                    val category = resources.data
-                    if (category != null) {
-                        val data = Database.getItem(category)
-                        adapter.updateList(data)
-                    }
-                }
 
-                Status.ERROR -> {}
-            }
-        }
-    }
 
     private fun displayNotification() {
         authViewModel.init(requireContext())

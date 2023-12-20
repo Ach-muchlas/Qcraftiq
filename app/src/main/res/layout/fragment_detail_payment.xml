@@ -459,5 +459,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="VisualLintButtonSize"/>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
