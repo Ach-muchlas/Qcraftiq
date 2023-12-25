@@ -8,10 +8,7 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.R
-import com.am.finalproject.adapter.detail.StudyMaterialsAdapter
 import com.am.finalproject.adapter.detail.ViewPagerAdapter
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.source.Status
@@ -22,6 +19,8 @@ import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.Formatter
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import org.koin.android.ext.android.inject
 
 class DetailsActivity : AppCompatActivity() {
@@ -35,6 +34,7 @@ class DetailsActivity : AppCompatActivity() {
         DisplayLayout.hideAppBar(this)
         setupTabLayout()
         displayDetail()
+        youtubeVideo()
     }
 
     private fun displayDetail() {
@@ -56,6 +56,20 @@ class DetailsActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun youtubeVideo(){
+        val youTubePlayerView = binding.youTubePlayerView
+        lifecycle.addObserver(youTubePlayerView)
+
+        youTubePlayerView.enableAutomaticInitialization = false
+
+        youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                val videoId = "ixOd42SEUF0"
+                youTubePlayer.loadVideo(videoId, 0F)
+            }
+        })
     }
 
     @SuppressLint("QueryPermissionsNeeded")
