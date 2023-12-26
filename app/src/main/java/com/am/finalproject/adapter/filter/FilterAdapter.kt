@@ -13,7 +13,11 @@ class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ItemViewHolder(private val itemBinding: ItemFilterBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: DataItemFilter.Item) {
-            itemBinding.radioButtonUiUx.text = item.title
+            itemBinding.checkboxFilter.text = item.title
+            itemBinding.checkboxFilter.isChecked = item.isChecked
+            itemBinding.checkboxFilter.setOnCheckedChangeListener { _, isChecked ->
+                item.isChecked = isChecked
+            }
         }
     }
 
@@ -24,7 +28,7 @@ class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    private val itemList = arrayListOf<Any>()
+     val itemList = arrayListOf<Any>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {

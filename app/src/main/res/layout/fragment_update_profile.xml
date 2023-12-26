@@ -34,26 +34,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageViewPhotoProfile" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardName"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:elevation="10dp"
+    <EditText
+        android:id="@+id/edtName"
+        style="@style/EditTextContent2"
         android:layout_marginHorizontal="26dp"
         android:layout_marginTop="5dp"
+        android:autofillHints="name"
+        android:inputType="textPersonName"
+        android:text="@string/example_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewName">
-
-        <TextView
-            android:id="@+id/textViewValueName"
-            style="@style/TextContent.Body.PopMedium"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="@string/example_name" />
-    </androidx.cardview.widget.CardView>
-
+        app:layout_constraintTop_toBottomOf="@id/textViewName" />
 
     <TextView
         android:id="@+id/textViewEmail"
@@ -61,28 +52,19 @@
         android:layout_marginTop="10dp"
         android:text="@string/email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardName" />
+        app:layout_constraintTop_toBottomOf="@id/edtName" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardEmail"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/bg_edt"
-        android:elevation="10dp"
+    <EditText
+        android:id="@+id/edtEmail"
+        style="@style/EditTextContent2"
         android:layout_marginHorizontal="26dp"
         android:layout_marginTop="5dp"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"
+        android:text="@string/example_email_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewEmail">
-
-        <TextView
-            android:id="@+id/textViewValueEmail"
-            style="@style/TextContent.Body.PopMedium"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="@string/example_email" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@id/textViewEmail" />
 
     <TextView
         android:id="@+id/textViewPhone"
@@ -90,28 +72,19 @@
         android:layout_marginTop="10dp"
         android:text="@string/phone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardEmail" />
+        app:layout_constraintTop_toBottomOf="@id/edtEmail" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardPhone"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/bg_edt"
-        android:elevation="10dp"
+    <EditText
+        android:id="@+id/edtPhone"
+        style="@style/EditTextContent2"
         android:layout_marginHorizontal="26dp"
         android:layout_marginTop="5dp"
+        android:autofillHints="phone"
+        android:inputType="phone"
+        android:text="@string/example_phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewPhone">
-
-        <TextView
-            android:id="@+id/textViewValuePhone"
-            style="@style/TextContent.Body.PopMedium"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="@string/example_phone" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@id/textViewPhone" />
 
     <TextView
         android:id="@+id/textViewCountry"
@@ -119,28 +92,19 @@
         android:layout_marginTop="10dp"
         android:text="@string/country"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardPhone" />
+        app:layout_constraintTop_toBottomOf="@id/edtPhone" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardCountry"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/bg_edt"
-        android:elevation="10dp"
+    <EditText
+        android:id="@+id/edtCountry"
+        style="@style/EditTextContent2"
         android:layout_marginHorizontal="26dp"
         android:layout_marginTop="5dp"
+        android:autofillHints="country"
+        android:hint="@string/input_country_of_residence"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewCountry">
-
-        <TextView
-            android:id="@+id/textViewValueCountry"
-            style="@style/TextContent.Body.PopMedium"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="@string/example_country" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@id/textViewCountry" />
 
     <TextView
         android:id="@+id/textViewCity"
@@ -148,39 +112,30 @@
         android:layout_marginTop="10dp"
         android:text="@string/city"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardCountry" />
+        app:layout_constraintTop_toBottomOf="@id/edtCountry" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardCity"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/bg_edt"
-        android:elevation="10dp"
+    <EditText
+        android:id="@+id/edtCity"
+        style="@style/EditTextContent2"
         android:layout_marginHorizontal="26dp"
         android:layout_marginTop="5dp"
+        android:autofillHints="city"
+        android:hint="@string/input_city_of_residence"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewCity">
-
-        <TextView
-            android:id="@+id/textViewValueCity"
-            style="@style/TextContent.Body.PopMedium"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:text="@string/example_city" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@id/textViewCity" />
 
     <Button
-        android:id="@+id/buttonEditMyProfile"
+        android:id="@+id/buttonSaveMyProfile"
         style="@style/ButtonContent"
         android:layout_marginHorizontal="26dp"
         android:layout_marginTop="35dp"
         android:elevation="20dp"
         android:textAppearance="@style/TextContent.Body.MonMedium"
-        android:text="@string/update_profile"
+        android:text="@string/save_my_profile"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardCity" />
+        app:layout_constraintTop_toBottomOf="@id/edtCity" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/textViewTagLineCategory"
-            style="@style/TextContent.Body.MonBold.ExtraSmallSp"
+            style="@style/TextContent.Body.MonBold.SmallSp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:text="@string/example_category_content"
@@ -87,7 +87,8 @@
 
         <TextView
             android:id="@+id/textViewLevelCourse"
-            style="@style/TextContent.Body.MonMedium.ExtraSmallSp"
+            style="@style/TextContent.Body.MonMedium"
+            android:textSize="12sp"
             android:layout_marginStart="5dp"
             android:text="@string/example_level_course"
             android:textColor="@color/dark_blue"
@@ -99,7 +100,7 @@
             android:id="@+id/iconModule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:contentDescription="@string/icon_module"
             android:src="@drawable/modules"
@@ -108,8 +109,9 @@
 
         <TextView
             android:id="@+id/textViewModule"
-            style="@style/TextContent.Body.MonMedium.ExtraSmallSp"
+            style="@style/TextContent.Body.MonMedium"
             android:layout_marginStart="5dp"
+            android:textSize="12sp"
             android:text="@string/example_module"
             app:layout_constraintBottom_toBottomOf="@id/iconModule"
             app:layout_constraintStart_toEndOf="@id/iconModule"
@@ -119,7 +121,7 @@
             android:id="@+id/iconTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:contentDescription="@string/icon_time"
             android:src="@drawable/time"
@@ -128,7 +130,8 @@
 
         <TextView
             android:id="@+id/textViewTime"
-            style="@style/TextContent.Body.MonMedium.ExtraSmallSp"
+            style="@style/TextContent.Body.MonMedium"
+            android:textSize="12sp"
             android:layout_marginStart="5dp"
             android:text="@string/example_time"
             app:layout_constraintBottom_toBottomOf="@id/iconTime"
@@ -139,6 +142,7 @@
             android:id="@+id/cardStatus"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
+            android:padding="10dp"
             android:backgroundTint="@color/light_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="10dp"
@@ -151,14 +155,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|center_vertical"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:contentDescription="@string/icon_prisma"
                 android:src="@drawable/icon_prisma" />
 
             <TextView
                 android:id="@+id/textViewContentCard"
                 style="@style/TextContent.Body.MonMedium.SmallSp"
-                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="30dp"
                 android:text="@string/waiting"
                 android:textColor="@color/white" />
         </androidx.cardview.widget.CardView>

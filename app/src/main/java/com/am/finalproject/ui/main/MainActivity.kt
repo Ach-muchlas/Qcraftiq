@@ -2,6 +2,7 @@ package com.am.finalproject.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.am.finalproject.R
@@ -24,4 +25,6 @@ class MainActivity : AppCompatActivity() {
         val navHostController = findNavController(R.id.navHostFragmentActivityMain)
         navView.setupWithNavController(navHostController)
     }
+
+
 }

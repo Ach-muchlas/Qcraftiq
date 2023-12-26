@@ -13,6 +13,7 @@ object Navigate {
                 Destination.HOME_TO_SEARCH -> it.navigate(R.id.action_navigation_home_to_searchResultFragment)
                 Destination.ACCOUNT_TO_HISTORY_PAYMENT -> it.navigate(R.id.action_navigation_account_to_paymentHistoryFragment)
                 Destination.ACCOUNT_TO_CHANGE_PASSWORD -> it.navigate(R.id.action_navigation_account_to_changePasswordFragment)
+                Destination.ACCOUNT_TO_PROFILE -> it.navigate(R.id.action_navigation_account_to_myProfileFragment)
             }
         }
     }

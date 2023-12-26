@@ -27,6 +27,12 @@ class AccountFragment : Fragment() {
 
     private fun navigation() {
         binding.apply {
+            /*To Profile user*/
+            textViewMyProfile.setOnClickListener {
+                Navigate.navigateToDestination(Destination.ACCOUNT_TO_PROFILE, findNavController())
+            }
+
+            /*To History Payment User*/
             textViewPaymentHistory.setOnClickListener {
                 Navigate.navigateToDestination(
                     Destination.ACCOUNT_TO_HISTORY_PAYMENT,
@@ -34,6 +40,7 @@ class AccountFragment : Fragment() {
                 )
             }
 
+            /*To Change Password User*/
             textViewChangePassword.setOnClickListener {
                 Navigate.navigateToDestination(
                     Destination.ACCOUNT_TO_CHANGE_PASSWORD,
@@ -41,6 +48,7 @@ class AccountFragment : Fragment() {
                 )
             }
 
+            /*Log Out user*/
             textViewLogout.setOnClickListener {
                 viewModel.init(requireContext())
                 viewModel.logout()

@@ -47,6 +47,7 @@ class ChangePasswordFragment : Fragment() {
     ): View {
         _binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
         setupEditText()
+        DisplayLayout.setUpBottomNavigation(activity, true)
         changePassword()
         navigation()
         return binding.root
@@ -130,5 +131,10 @@ class ChangePasswordFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+        DisplayLayout.setUpBottomNavigation(activity, false)
+    }
 
 }

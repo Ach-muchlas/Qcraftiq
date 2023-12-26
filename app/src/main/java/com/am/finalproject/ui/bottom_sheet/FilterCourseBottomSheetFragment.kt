@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.am.finalproject.R
 import com.am.finalproject.adapter.filter.FilterAdapter
+import com.am.finalproject.data.multiple_list.filter.DataItemFilter
 import com.am.finalproject.data.multiple_list.filter.DatabaseFilter
 import com.am.finalproject.data.remote.CategoryResponse
 import com.am.finalproject.data.source.Status
@@ -58,6 +62,20 @@ class FilterCourseBottomSheetFragment : BottomSheetDialogFragment() {
         if (data != null) {
             val dataUpdate = DatabaseFilter.getItem(data)
             adapter.updateList(dataUpdate)
+        }
+
+        binding.buttonFilter.setOnClickListener {
+            val checkedItem =
+                adapter.itemList.filter { it is DataItemFilter.Item && it.isChecked } as List<DataItemFilter.Item>
+            val categoryId = checkedItem.filter { it.type == "Category" }.map { it.title }
+            viewModel.filter(categoryId.joinToString())
+            Toast.makeText(
+                requireContext(),
+                "categoryId : $categoryId",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            dismissNow()
         }
     }
 

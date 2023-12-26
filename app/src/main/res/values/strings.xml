@@ -225,4 +225,10 @@
     <string name="example_chapter">Chapter 1 - Pendahuluan</string>
     <string name="example_title_material">Tujuan Mengikuti Kelas</string>
     <string name="icon_video_player">icon_video_player</string>
+    <string name="example_city">Medan</string>
+    <string name="example_country">Indonesia</string>
+    <string name="update_profile">Edit Profile Saya</string>
+    <string name="pilih_salah_satu">Pilih Salah Satu</string>
+    <string name="galeri">Galeri</string>
+    <string name="camera">Camera</string>
 </resources>

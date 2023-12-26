@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "426359323074",
+    "firebase_url": "https://final-project-d72be-default-rtdb.firebaseio.com",
+    "project_id": "final-project-d72be",
+    "storage_bucket": "final-project-d72be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426359323074:android:60a2faf668df99d3ad3e5b",
+        "android_client_info": {
+          "package_name": "com.am.finalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrxHSHbyOrymBkihEIsUgbow-BY5URQT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

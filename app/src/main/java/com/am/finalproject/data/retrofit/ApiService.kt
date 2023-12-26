@@ -2,6 +2,7 @@ package com.am.finalproject.data.retrofit
 
 import com.am.finalproject.data.remote.CategoryResponse
 import com.am.finalproject.data.remote.CourseResponse
+import com.am.finalproject.data.remote.CurrentUserResponse
 import com.am.finalproject.data.remote.LoginBody
 import com.am.finalproject.data.remote.LoginResponse
 import com.am.finalproject.data.remote.NotificationResponse
@@ -9,7 +10,7 @@ import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.remote.RegisterResponse
 import com.am.finalproject.data.remote.TrackingClassResponse
-import retrofit2.Call
+import com.am.finalproject.data.remote.UserBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -66,4 +67,13 @@ interface ApiService {
 
     @GET("courseTrackings/user")
     suspend fun getTrackingClass(@Header("Authorization") bearer: String): Response<TrackingClassResponse>
+
+    @GET("auth/current-user")
+    suspend fun getCurrentUser(@Header("Authorization") bearer: String): Response<CurrentUserResponse>
+
+    @PUT("users")
+    suspend fun updateUser(
+        @Header("Authorization") bearer: String,
+        @Body userBody: UserBody
+    ): Response<LoginResponse>
 }

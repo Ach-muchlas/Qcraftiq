@@ -36,9 +36,10 @@ class AuthViewModel(private val repository: Repository) : ViewModel() {
         return sharedpref.getUser()
     }
 
-    fun isOnBoardingCompleted(): Boolean{
+    fun isOnBoardingCompleted(): Boolean {
         return sharedpref.isOnBoardingCompleted()
     }
 
     fun markOnBoardingCompleted() = sharedpref.markOnBoardingCompleted()
+
 }

@@ -80,7 +80,7 @@ class SearchResultFragment : Fragment() {
     }
 
     private fun setupDataAdapter(data: List<DataItemCourse>?) {
-        val adapter = TopicClassAdapter()
+        val adapter = TopicClassAdapter(childFragmentManager)
         adapter.submitList(data)
         binding.recyclerViewCourse.adapter = adapter
         binding.recyclerViewCourse.layoutManager = LinearLayoutManager(requireContext())

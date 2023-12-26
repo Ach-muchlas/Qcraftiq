@@ -2,20 +2,23 @@ package com.am.finalproject.adapter.course
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.R
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.databinding.ItemClassCourseBinding
+import com.am.finalproject.ui.bottom_sheet.OrdersBottomSheetFragment
 import com.am.finalproject.ui.details.DetailsActivity
 import com.am.finalproject.utils.Formatter
 import com.bumptech.glide.Glide
 
-class TopicClassAdapter :
+class TopicClassAdapter(private val fragmentManager: FragmentManager) :
     ListAdapter<DataItemCourse, TopicClassAdapter.MyViewHolder>(DIFF_CALLBACK) {
     inner class MyViewHolder(private val binding: ItemClassCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -51,6 +54,9 @@ class TopicClassAdapter :
                 }
             } else {
                 binding.textViewContentCard.text = data.type
+                binding.cardTopicClass.setOnClickListener {
+                    OrdersBottomSheetFragment.show(fragmentManager, data.id)
+                }
             }
         }
     }

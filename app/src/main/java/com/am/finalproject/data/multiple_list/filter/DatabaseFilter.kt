@@ -11,12 +11,12 @@ object DatabaseFilter {
 
         items.add(DataItemFilter.Headers("Category"))
         for (category in categoryResponse.data) {
-            items.add(DataItemFilter.Item(category.title))
+            items.add(DataItemFilter.Item(category.id, "Category", category.title, false))
         }
 
         items.add(DataItemFilter.Headers("Level"))
-        items.add(DataItemFilter.Item("Beginner"))
-        items.add(DataItemFilter.Item("Advance"))
+        items.add(DataItemFilter.Item("1", "Level", "Beginner", false))
+        items.add(DataItemFilter.Item("2", "Level", "Advance", false))
 
         return items
     }

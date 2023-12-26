@@ -62,7 +62,7 @@ data class DataItemTrackingClass(
 	val createdAt: String? = null,
 
 	@field:SerializedName("course")
-	val course: DataItemCourse? = null,
+	val course: DataItemCourse,
 
 	@field:SerializedName("id")
 	val id: String? = null,

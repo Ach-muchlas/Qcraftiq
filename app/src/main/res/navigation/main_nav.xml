@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_navigation_account_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_navigation_account_to_myProfileFragment"
+            app:destination="@id/myProfileFragment" />
     </fragment>
 
     <fragment
@@ -67,5 +70,25 @@
         android:name="com.am.finalproject.ui.account.change_password.ChangePasswordFragment"
         android:label="ChangePasswordFragment"
         tools:layout="@layout/fragment_change_password"/>
+
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.am.finalproject.ui.account.profile.MyProfileFragment"
+        tools:layout="@layout/fragment_my_profile"
+        android:label="MyProfileFragment" >
+        <action
+            android:id="@+id/action_myProfileFragment_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.am.finalproject.ui.account.profile.UpdateProfileFragment"
+        android:label="fragment_update_profile"
+        tools:layout="@layout/fragment_update_profile" >
+        <argument
+            android:name="object_parcelable"
+            app:argType="com.am.finalproject.data.remote.DataUser" />
+    </fragment>
+
 
 </navigation>

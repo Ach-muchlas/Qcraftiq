@@ -4,6 +4,8 @@ plugins {
     id "androidx.navigation.safeargs"
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -46,6 +48,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.firebase:firebase-crashlytics:18.3.2'
+    implementation 'com.google.firebase:firebase-analytics:21.2.0'
+    implementation 'com.google.firebase:firebase-database:20.3.0'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.3.0'
+    implementation 'com.google.firebase:firebase-storage:20.1.0'
 
     /*Unit Test*/
     testImplementation 'junit:junit:4.13.2'
@@ -95,4 +102,8 @@ dependencies {
 
     /*eliminate request api*/
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4"
+
+    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
+    implementation("com.firebaseui:firebase-ui-database:8.0.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

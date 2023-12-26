@@ -18,7 +18,7 @@ object DatabaseMaterials {
                         items.add(
                             DataItemMaterials.Item(
                                 numberForChapterOne++,
-                                item.title.toString()
+                                item.title.toString(),
                             )
                         )
                     }

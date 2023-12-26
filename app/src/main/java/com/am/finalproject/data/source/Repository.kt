@@ -12,11 +12,13 @@ import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.remote.LoginBody
 import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
+import com.am.finalproject.data.remote.UserBody
 import com.am.finalproject.data.retrofit.ApiService
 import com.am.finalproject.utils.AppExecutors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
+import retrofit2.HttpException
 
 class Repository(
     private val apiService: ApiService,
@@ -241,6 +243,11 @@ class Repository(
     val searchResult: LiveData<Resource<List<DataItemCourse>>>
         get() = _searchResult
 
+    /*This variable is used as a container for search results*/
+    private val _filterResult = MutableLiveData<Resource<List<DataItemCourse>>>()
+    val filterResult: LiveData<Resource<List<DataItemCourse>>>
+        get() = _filterResult
+
     /*fungsi ini digunakan untuk mencari course pada search result fragment*/
     /*search ini melakukan filter sesuai nama course yang diinputkan user*/
     suspend fun searchCourse(query: String) {
@@ -255,20 +262,29 @@ class Repository(
         }
     }
 
-    suspend fun filter(query1: String? = null, query2: String? = null) {
-        _searchResult.value = Resource.loading(null)
+//    fun filter(id: String) = liveData(Dispatchers.IO) {
+//        emit(Resource.loading(null))
+//        try {
+//            val response = apiService.getPopularCourse()
+//            val allCourse = response.data
+//            val filtered = allCourse.filter { it.category.id.contains(id, ignoreCase = true) }
+//            emit(Resource.success(filtered))
+//        } catch (exception: Exception) {
+//            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+//        }
+//    }
+
+    suspend fun filter(query1: String) {
+        _filterResult.value = Resource.loading(null)
         try {
             val response = apiService.getPopularCourse()
             val allCourse = response.data
             val filtered = allCourse.filter {
-                it.category.id.contains(
-                    query1 ?: "",
-                    ignoreCase = true
-                ) && it.level.contains(query2 ?: "", ignoreCase = true)
+                it.category.id.contains(query1, ignoreCase = true)
             }
-            _searchResult.value = Resource.success(filtered)
+            _filterResult.value = Resource.success(filtered)
         } catch (exception: Exception) {
-            _searchResult.value = Resource.error(null, exception.message ?: "Error Occurred!!")
+            _filterResult.value = Resource.error(null, exception.message ?: "Error Occurred!!")
         }
     }
 
@@ -358,6 +374,73 @@ class Repository(
     }
 
     fun getTrackingClass(token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getTrackingClass("Bearer $token")
+
+            if (response.isSuccessful) {
+                emit(Resource.success(response.body()))
+            } else {
+                response.errorBody()?.let {
+                    val errorResponse = JSONObject(it.string())
+                    val errorMessage = errorResponse.getString("message")
+                    emit(Resource.error(null, errorMessage))
+                }
+            }
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+
+    fun getCurrentUser(token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getCurrentUser("Bearer $token")
+
+            if (response.isSuccessful) {
+                emit(Resource.success(response.body()))
+            } else {
+                response.errorBody()?.let {
+                    val errorResponse = JSONObject(it.string())
+                    val errorMessage = errorResponse.getString("message")
+                    emit(Resource.error(null, errorMessage))
+                }
+            }
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun updateUser(
+        token: String,
+        name: String,
+        email: String,
+        phone: String,
+        country: String,
+        city: String,
+        image: String
+    ) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val user = UserBody(name, email, phone, country, city, image)
+            val response = apiService.updateUser("Bearer $token", user)
+
+            if (response.isSuccessful) {
+                emit(Resource.success(response.body()))
+            } else {
+                response.errorBody()?.let {
+                    val errorResponse = JSONObject(it.string())
+                    val errorMessage = errorResponse.getString("message")
+                    emit(Resource.error(null, errorMessage))
+                }
+            }
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun getPaymentHistory(token: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
         try {
             val response = apiService.getTrackingClass("Bearer $token")
