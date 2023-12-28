@@ -17,7 +17,6 @@ class VideoPlayerActivity : AppCompatActivity() {
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             if (isFullscreen) {
-                // if the player is in fullscreen, exit fullscreen
                 youTubePlayer.toggleFullscreen()
             } else {
                 finish()
