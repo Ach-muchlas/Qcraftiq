@@ -54,7 +54,6 @@ class DetailsActivity : AppCompatActivity() {
                 Status.ERROR -> {
                 }
             }
-
         }
     }
 
@@ -71,7 +70,6 @@ class DetailsActivity : AppCompatActivity() {
             }
         })
     }
-
     @SuppressLint("QueryPermissionsNeeded")
     private fun setupData(data: List<DataItemCourse>?) {
         data?.forEach { course ->
