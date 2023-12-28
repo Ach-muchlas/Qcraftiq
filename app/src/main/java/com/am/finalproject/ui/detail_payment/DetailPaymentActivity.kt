@@ -9,18 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.am.finalproject.R
+import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentDetailPaymentBinding
 import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.auth.otp.OtpActivity
-import com.am.finalproject.ui.auth.register.RegisterActivity
 import com.am.finalproject.utils.DisplayLayout
+import com.bumptech.glide.Glide
 import org.koin.android.ext.android.inject
+import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class DetailPaymentFragment : Fragment() {
+class DetailPaymentActivity : Fragment() {
 	private lateinit var _binding: FragmentDetailPaymentBinding
 	private val binding get() = _binding
 	private val viewModel: AuthViewModel by inject()
@@ -34,7 +37,11 @@ class DetailPaymentFragment : Fragment() {
 		// Inflate the layout for this fragment
 		_binding = FragmentDetailPaymentBinding.inflate(inflater, container, false)
 		setupEditText()
-		navigation()
+		showData(data)
+		updatePayment()
+//		val receiveBundle = intent.extras
+//		val id = receiveBundle?.getString(OrdersBottomSheetFragment.KEY_ID)
+
 		return binding.root
 	}
 
@@ -44,6 +51,7 @@ class DetailPaymentFragment : Fragment() {
 			}
 
 			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+				binding.edtCardNumber.error = getString(R.string.warning_text_field_empty)
 			}
 
 			override fun afterTextChanged(s: Editable?) {
@@ -60,29 +68,29 @@ class DetailPaymentFragment : Fragment() {
 
 		binding.edtCardHolder.addTextChangedListener(object : TextWatcher {
 			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-				TODO("Not yet implemented")
+
 			}
 
 			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-				TODO("Not yet implemented")
+				binding.edtCardHolder.error = getString(R.string.warning_text_field_empty)
 			}
 
 			override fun afterTextChanged(s: Editable?) {
-				TODO("Not yet implemented")
+
 			}
 		})
 
 		binding.edtCardCvv.addTextChangedListener(object : TextWatcher {
 			override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-				TODO("Not yet implemented")
+
 			}
 
 			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-				TODO("Not yet implemented")
+				binding.edtCardCvv.error = getString(R.string.warning_text_field_empty)
 			}
 
 			override fun afterTextChanged(s: Editable?) {
-				TODO("Not yet implemented")
+
 			}
 		})
 
@@ -91,6 +99,7 @@ class DetailPaymentFragment : Fragment() {
 			}
 
 			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+				binding.edtExpire.error = getString(R.string.warning_text_field_empty)
 			}
 
 			override fun afterTextChanged(s: Editable?) {
@@ -118,50 +127,84 @@ class DetailPaymentFragment : Fragment() {
 		}
 	}
 
-    private fun navigation() {
-        binding.apply {
+	private fun updatePayment() {
+		binding.apply {
 
-            /*To Validate*/
-            buttonPayment.setOnClickListener {
-                val cardHolder = binding.edtCardHolder.text.toString()
-                val cardNumber = binding.edtCardNumber.text.toString()
-                val cardCvv = binding.edtCardCvv.text.toString()
-                val expiryDate = binding.edtExpire.text.toString()
+			/*To Validate*/
+			buttonPayment.setOnClickListener {
+				val cardName = binding.edtCardHolder.text.toString()
+				val cardNumber = binding.edtCardNumber.text.toString()
+				val cardCvv = binding.edtCardCvv.text.toString()
+				val expiryDate = binding.edtExpire.text.toString()
 
-                viewModel.register(cardHolder, cardNumber, cardCvv, expiryDate)
-                    .observe(this@DetailPaymentFragment) { resources ->
-                        when (resources.status) {
-                            Status.LOADING -> {}
-                            Status.SUCCESS -> {
-                                val bundle = Bundle().apply {
-                                    putString(RegisterActivity.KEY_NAME, cardHolder)
-                                    putString(RegisterActivity.KEY_EMAIL, cardNumber)
-                                    putString(RegisterActivity.KEY_PHONE, cardCvv)
-                                    putString(RegisterActivity.KEY_PASSWORD, expiryDate)
-                                }
-                                DisplayLayout.toastMessage(
-                                    this@DetailPaymentFragment,
-                                    resources.data?.message.toString(),
-                                    true
-                                )
-                                val intent =
-                                    Intent(this@DetailPaymentFragment OtpActivity::class.java).apply {
-                                        putExtras(bundle)
-                                    }
-                                startActivity(intent)
-                            }
+				viewModel.sendOrders(cardName,cardNumber,cardCvv,expiryDate
+				)
+					.observe(viewLifecycleOwner) { resources ->
+						when (resources.status) {
+							Status.LOADING -> {}
+							Status.SUCCESS -> {
+								val bundle = Bundle().apply {
+									putString(KEY_CARDNAME, cardName)
+									putString(KEY_CARDNUMBER, cardNumber)
+									putString(KEY_CARDCVV, cardCvv)
+									putString(KEY_EXPIRYDATE, expiryDate)
+								}
+								DisplayLayout.toastMessage(
+									this@DetailPaymentActivity,
+									resources.data?.message.toString(),
+									true
+								)
+//								val intent =
+//									Intent(this@DetailPaymentActivity OtpActivity ::class.java).apply {
+//										putExtras(bundle)
+//									}
+//								startActivity(intent)
+							}
 
-                            Status.ERROR -> {
-                                DisplayLayout.toastMessage(
-                                    this@DetailPaymentFragment,
-                                    resources.message.toString(),
-                                    false
-                                )
-                            }
-                        }
-                    }
-            }
-        }
-    }
+							Status.ERROR -> {
+								DisplayLayout.toastMessage(
+									this@DetailPaymentActivity,
+									resources.message.toString(),
+									false
+								)
+							}
+						}
+					}
+			}
+		}
+	}
+
+	private fun showData(data: DataItemCourse) {
+		Glide.with(this)
+			.load(data.image)
+			.fitCenter()
+			.into(binding.imageViewCourse)
+		val hargaAwal: Int = data.price
+		val ppn: Double = data.price.times(0.11)
+		val totalHarga: Int = hargaAwal.plus(ppn.toInt())
+
+		binding.textViewTitleCourse.text = data.category.title
+		binding.textViewPrice.text = formatCurrency(hargaAwal)
+		binding.textViewTotal.text= formatCurrency(totalHarga)
+		binding.textViewPpn.text = formatCurrency(ppn.toInt())
+		binding.textViewDesc.text = data.title
+		binding.textViewAuthor.text = data.authorBy
+
+	}
+
+	private fun formatCurrency(amount: Int?): String {
+		if (amount == null) {
+			return ""
+		}
+		val decimal = DecimalFormat("#,###")
+		return "Rp. " + decimal.format(amount)
+	}
+
+	companion object {
+		const val KEY_CARDNAME = "key_cardname"
+		const val KEY_CARDNUMBER = "key_cardnumber"
+		const val KEY_CARDCVV = "key_cardcvv"
+		const val KEY_EXPIRYDATE = "key_expirydate"
+	}
 
 }

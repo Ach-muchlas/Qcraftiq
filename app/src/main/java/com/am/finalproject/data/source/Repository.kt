@@ -380,7 +380,7 @@ class Repository(
         }
     }
 
-    fun sendOrders(token: String, courseId : Int, amount: Int, cardName: String, cardNumber: String, cvv: Int, expiryDate: String) =
+    fun sendOrders(token: String, courseId : Int, amount: Int, cardName: String, cardNumber: String, cvv: String, expiryDate: String) =
         liveData(Dispatchers.IO) {
             emit(Resource.loading(null))
             try {

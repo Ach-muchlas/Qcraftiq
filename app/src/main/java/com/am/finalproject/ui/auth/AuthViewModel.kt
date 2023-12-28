@@ -41,4 +41,7 @@ class AuthViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun markOnBoardingCompleted() = sharedpref.markOnBoardingCompleted()
+
+    fun sendOrders (token: String, courseId: Int, amount: Int, cardName: String, cardNumber: String, cvv: String, expiryDate: String) =
+        repository.sendOrders(token, courseId, amount, cardName, cardNumber, cvv, expiryDate)
 }

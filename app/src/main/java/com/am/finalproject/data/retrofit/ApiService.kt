@@ -41,6 +41,7 @@ interface ApiService {
     suspend fun sendOTP(
         @Body registerBody: RegisterBodyWithOTP
     ): Response<RegisterResponse>
+
     @FormUrlEncoded
     @POST("orders")
     suspend fun orders(

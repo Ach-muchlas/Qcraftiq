@@ -11,7 +11,7 @@ data class Payment(
     @field:SerializedName("cardNumber")
     val cardNumber: String,
     @field:SerializedName("cvv")
-    val cvv: Int,
+    val cvv: String,
     @field:SerializedName("expiryDate")
     val expiryDate: String
 )

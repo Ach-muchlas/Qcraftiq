@@ -69,7 +69,7 @@
         tools:layout="@layout/fragment_change_password"/>
     <fragment
         android:id="@+id/detailPaymentFragment"
-        android:name="com.am.finalproject.ui.detail_payment.DetailPaymentFragment"
+        android:name="com.am.finalproject.ui.detail_payment.DetailPaymentActivity"
         android:label="fragment_detail_payment"
         tools:layout="@layout/fragment_detail_payment" />
 
