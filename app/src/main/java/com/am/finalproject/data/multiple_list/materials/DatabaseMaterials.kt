@@ -18,7 +18,8 @@ object DatabaseMaterials {
                         items.add(
                             DataItemMaterials.Item(
                                 numberForChapterOne++,
-                                item.title.toString()
+                                item.title.toString(),
+                                item.video.toString()
                             )
                         )
                     }
@@ -35,7 +36,8 @@ object DatabaseMaterials {
                         items.add(
                             DataItemMaterials.Item(
                                 numberForChapterTwo++,
-                                item.title.toString()
+                                item.title.toString(),
+                                item.video.toString()
                             )
                         )
                     }

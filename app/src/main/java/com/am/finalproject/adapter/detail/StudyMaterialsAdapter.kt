@@ -15,6 +15,7 @@ class StudyMaterialsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(item: DataItemMaterials.Item) {
             itemBinding.textViewNumber.text = item.no.toString()
             itemBinding.textViewTitleVideo.text = item.title
+            itemBinding.imageViewVideoPlayer.id = item.video.length
         }
     }
 

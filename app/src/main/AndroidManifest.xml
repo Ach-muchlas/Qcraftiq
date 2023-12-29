@@ -16,6 +16,9 @@
         android:theme="@style/Theme.FinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".ui.details.video_player.VideoPlayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.auth.reset_password.ResetPasswordActivity"
             android:exported="false" />
         <activity

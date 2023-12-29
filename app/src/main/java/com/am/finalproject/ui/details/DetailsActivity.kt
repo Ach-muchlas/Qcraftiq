@@ -8,12 +8,10 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.R
-import com.am.finalproject.adapter.detail.StudyMaterialsAdapter
 import com.am.finalproject.adapter.detail.ViewPagerAdapter
 import com.am.finalproject.data.remote.DataItemCourse
+import com.am.finalproject.data.remote.DataItemModule
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.ActivityDetailsBinding
 import com.am.finalproject.ui.details.materi.MateriKelasDetailsFragment
@@ -22,6 +20,9 @@ import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.Formatter
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import org.koin.android.ext.android.inject
 
 class DetailsActivity : AppCompatActivity() {
@@ -54,7 +55,6 @@ class DetailsActivity : AppCompatActivity() {
                 Status.ERROR -> {
                 }
             }
-
         }
     }
 
@@ -82,7 +82,31 @@ class DetailsActivity : AppCompatActivity() {
                 intent.setPackage("org.telegram.messenger")
                 startActivity(intent)
             }
+
+            val youTubePlayerView: YouTubePlayerView = binding.youTubePlayerView
+            lifecycle.addObserver(youTubePlayerView)
+            youTubePlayerView.addYouTubePlayerListener(object: AbstractYouTubePlayerListener(){
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    super.onReady(youTubePlayer)
+
+                    val module: DataItemModule? = course.module?.getOrNull(0)
+                    val urlVideo = extractYouTubeId(module?.video ?: "")
+
+                    Log.d("VIDEOID", urlVideo.toString())
+                    youTubePlayer.loadVideo(urlVideo.toString(), 0F)
+                }
+            })
         }
+    }
+
+    private fun extractYouTubeId(youTubeUrl: String): String? {
+        var videoId:String? = null
+        val pattern = Regex("^https?://.*(?:youtu.be/|v/|u/\\w/|embed/|watch?v=)([^#&?]*).*$", RegexOption.IGNORE_CASE)
+        val matcher = pattern.find(youTubeUrl)
+        if (matcher != null && matcher.groupValues.size > 1) {
+            videoId = matcher.groupValues[1]
+        }
+        return videoId
     }
 
 
