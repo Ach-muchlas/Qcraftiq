@@ -2,6 +2,7 @@ package com.am.finalproject.ui.onboarding
 
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import com.am.finalproject.adapter.onboarding.IntroSliderAdapter
 import com.am.finalproject.data.intro.IntroSlideData
 import com.am.finalproject.databinding.ActivityOnboardingBinding
 import com.am.finalproject.ui.auth.login.LoginActivity
+import com.am.finalproject.ui.auth.register.RegisterActivity
 import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.Navigate
 
@@ -42,15 +44,15 @@ class OnBoardingActivity : AppCompatActivity() {
         introSliderAdapter = IntroSliderAdapter(
             listOf(
                 IntroSlideData(
-                    "dari Pengalaman Terbaik!",
+                    "Belajar dari Pengalaman Terbaik!",
                     R.drawable.image_splash_one
                 ),
                 IntroSlideData(
-                    "dari Praktisi Terbaik!",
+                    "Belajar dari Praktisi Terbaik!",
                     R.drawable.image_splash_two
                 ),
                 IntroSlideData(
-                    "darimana Saja!",
+                    "Belajar darimana Saja!",
                     R.drawable.image_splash_three
                 )
             )
@@ -67,6 +69,13 @@ class OnBoardingActivity : AppCompatActivity() {
         })
         (onBoardingViewPager.getChildAt(0) as RecyclerView).overScrollMode =
             RecyclerView.OVER_SCROLL_NEVER
+        findViewById<ImageButton>(R.id.btn_splash).setOnClickListener {
+            if (onBoardingViewPager.currentItem + 1 < introSliderAdapter.itemCount) {
+                onBoardingViewPager.currentItem += 1
+            } else {
+                Navigate.intentActivity(this, RegisterActivity::class.java)
+            }
+        }
     }
 
     private fun setupIndicator(){
