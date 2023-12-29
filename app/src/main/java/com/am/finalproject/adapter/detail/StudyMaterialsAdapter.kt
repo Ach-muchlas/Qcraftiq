@@ -10,11 +10,17 @@ import com.am.finalproject.databinding.ItemStudyMaterialsBinding
 
 
 class StudyMaterialsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var callBackYoutubeView: ((String) -> Unit?)? = null
+
     inner class ItemViewHolder(private val itemBinding: ItemStudyMaterialsBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: DataItemMaterials.Item) {
             itemBinding.textViewNumber.text = item.no.toString()
             itemBinding.textViewTitleVideo.text = item.title
+            itemBinding.viewMaterials.setOnClickListener {
+                callBackYoutubeView?.invoke(item.urlYoutube)
+            }
         }
     }
 
@@ -22,6 +28,7 @@ class StudyMaterialsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         RecyclerView.ViewHolder(headerBinding.root) {
         fun bind(header: DataItemMaterials.Headers) {
             headerBinding.textViewChapter.text = header.text
+            headerBinding.textViewTime.text = header.amount
         }
     }
 

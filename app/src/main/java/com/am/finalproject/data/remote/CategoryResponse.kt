@@ -1,6 +1,8 @@
 package com.am.finalproject.data.remote
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class CategoryResponse(
 
@@ -14,6 +16,7 @@ data class CategoryResponse(
 	val status: String? = null
 )
 
+@Parcelize
 data class DataItemCategory(
 
 	@field:SerializedName("image")
@@ -24,4 +27,4 @@ data class DataItemCategory(
 
 	@field:SerializedName("title")
 	val title: String
-)
+) : Parcelable

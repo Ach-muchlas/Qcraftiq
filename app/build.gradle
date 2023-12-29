@@ -97,6 +97,9 @@ dependencies {
 
     /*video player*/
     implementation 'androidx.media3:media3-ui:1.2.0'
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28")
+
     /*Styleable Toast*/
     implementation 'io.github.muddz:styleabletoast:2.4.0'
 

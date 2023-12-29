@@ -97,7 +97,6 @@
     </style>
 
 
-
     <style name="TabLayoutContent">
         <item name="tabBackground">@drawable/custom_tab_selector</item>
         <item name="tabGravity">fill</item>

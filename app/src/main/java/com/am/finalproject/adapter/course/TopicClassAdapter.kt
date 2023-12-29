@@ -1,33 +1,32 @@
 package com.am.finalproject.adapter.course
 
-import android.content.Intent
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.R
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.databinding.ItemClassCourseBinding
-import com.am.finalproject.ui.bottom_sheet.OrdersBottomSheetFragment
-import com.am.finalproject.ui.details.DetailsActivity
 import com.am.finalproject.utils.Formatter
 import com.bumptech.glide.Glide
 
-class TopicClassAdapter(private val fragmentManager: FragmentManager) :
+class TopicClassAdapter :
     ListAdapter<DataItemCourse, TopicClassAdapter.MyViewHolder>(DIFF_CALLBACK) {
+
+    var callBackOpenOrdersBottomSheet: ((DataItemCourse) -> Unit)? = null
+    var callBackToDetail: ((String) -> Unit)? = null
+
     inner class MyViewHolder(private val binding: ItemClassCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: DataItemCourse) {
+            val author = "By " + data.authorBy
             Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
             binding.textViewTagLineCategory.text = data.category.title
             binding.textViewTitleCourse.text = data.title
             binding.textViewRate.text = data.rating.toString()
-            binding.textViewMentor.text = data.authorBy
+            binding.textViewMentor.text = author
             binding.textViewLevelCourse.text = data.level
 
             if (!data.module.isNullOrEmpty()) {
@@ -44,18 +43,12 @@ class TopicClassAdapter(private val fragmentManager: FragmentManager) :
                     binding.root.context.getString(R.string.mulai_kelas)
                 binding.iconContentCard.visibility = View.GONE
                 binding.cardTopicClass.setOnClickListener {
-                    val bundle = Bundle().apply {
-                        putString(DetailsActivity.KEY_ID, data.id)
-                    }
-                    val intent = Intent(itemView.context, DetailsActivity::class.java).apply {
-                        putExtras(bundle)
-                    }
-                    itemView.context.startActivity(intent)
+                    callBackToDetail?.invoke(data.id)
                 }
             } else {
                 binding.textViewContentCard.text = data.type
                 binding.cardTopicClass.setOnClickListener {
-                    OrdersBottomSheetFragment.show(fragmentManager, data.id)
+                    callBackOpenOrdersBottomSheet?.invoke(data)
                 }
             }
         }

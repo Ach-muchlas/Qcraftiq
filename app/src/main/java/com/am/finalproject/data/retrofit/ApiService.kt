@@ -3,9 +3,11 @@ package com.am.finalproject.data.retrofit
 import com.am.finalproject.data.remote.CategoryResponse
 import com.am.finalproject.data.remote.CourseResponse
 import com.am.finalproject.data.remote.CurrentUserResponse
+import com.am.finalproject.data.remote.HistoryOrdersResponse
 import com.am.finalproject.data.remote.LoginBody
 import com.am.finalproject.data.remote.LoginResponse
 import com.am.finalproject.data.remote.NotificationResponse
+import com.am.finalproject.data.remote.PaymentBody
 import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.remote.RegisterResponse
@@ -76,4 +78,15 @@ interface ApiService {
         @Header("Authorization") bearer: String,
         @Body userBody: UserBody
     ): Response<LoginResponse>
+
+    @POST("orders")
+    suspend fun orderCourse(
+        @Header("Authorization") bearer: String,
+        @Body paymentBody: PaymentBody
+    ) : Response<RegisterResponse>
+
+    @GET("orders/user")
+    suspend fun getHistoryOrders(
+        @Header("Authorization") bearer: String
+    ) : Response<HistoryOrdersResponse>
 }

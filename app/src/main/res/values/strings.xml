@@ -140,11 +140,11 @@
     <string name="simon_doe_author">Simon Doe</string>
     <string name="price">Harga</string>
     <string name="rupiah">Rp.</string>
-    <string name="_349_000">349.000</string>
+    <string name="_349_000">Rp. 349.000</string>
     <string name="_38_390">38.390</string>
     <string name="ppn_11">PPN 11%</string>
     <string name="total">Total</string>
-    <string name="_387_390">387.390</string>
+    <string name="_387_390">Rp. 387.390</string>
     <string name="text_button_payment">Bayar dan Ikuti Kelas Selamanya</string>
     <string name="bank_transfer">Bank Transfer</string>
     <string name="credit_card">Credit Card</string>
@@ -231,4 +231,8 @@
     <string name="pilih_salah_satu">Pilih Salah Satu</string>
     <string name="galeri">Galeri</string>
     <string name="camera">Camera</string>
+    <string name="selangkah_lagi_menuju">Selangkah lagi Menuju</string>
+    <string name="kelas_premium">Kelas Premium</string>
+    <string name="buy_now">Beli Sekarang</string>
+    <string name="youtube_view">Youtube View</string>
 </resources>

@@ -10,6 +10,8 @@ import com.am.finalproject.data.local.room.dao.CategoryDao
 import com.am.finalproject.data.local.room.dao.CourseDao
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.remote.LoginBody
+import com.am.finalproject.data.remote.Payment
+import com.am.finalproject.data.remote.PaymentBody
 import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.remote.UserBody
@@ -18,7 +20,6 @@ import com.am.finalproject.utils.AppExecutors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
-import retrofit2.HttpException
 
 class Repository(
     private val apiService: ApiService,
@@ -262,18 +263,6 @@ class Repository(
         }
     }
 
-//    fun filter(id: String) = liveData(Dispatchers.IO) {
-//        emit(Resource.loading(null))
-//        try {
-//            val response = apiService.getPopularCourse()
-//            val allCourse = response.data
-//            val filtered = allCourse.filter { it.category.id.contains(id, ignoreCase = true) }
-//            emit(Resource.success(filtered))
-//        } catch (exception: Exception) {
-//            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
-//        }
-//    }
-
     suspend fun filter(query1: String) {
         _filterResult.value = Resource.loading(null)
         try {
@@ -456,6 +445,55 @@ class Repository(
             }
         } catch (exception: Exception) {
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun paymentOrders(
+        token: String,
+        expiredDate: String,
+        cvv: Int,
+        amount: Int,
+        cardName: String,
+        cardNumber: String,
+        courseId: String
+    ) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val paymentBody =
+                PaymentBody(Payment(expiredDate, cvv, amount, cardName, cardNumber), courseId)
+            val response = apiService.orderCourse("Bearer $token", paymentBody)
+
+            if (response.isSuccessful) {
+                emit(Resource.success(response.body()))
+            } else {
+                response.errorBody()?.let {
+                    val errorResponse = JSONObject(it.string())
+                    val errorMessage = errorResponse.getString("message")
+                    emit(Resource.error(null, errorMessage))
+                }
+            }
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+        }
+    }
+
+    fun getHistoryOrders(token: String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(null))
+        try {
+            val response = apiService.getHistoryOrders("Bearer $token")
+
+            if (response.isSuccessful) {
+                emit(Resource.success(response.body()))
+            } else {
+                response.errorBody()?.let {
+                    val errorResponse = JSONObject(it.string())
+                    val errorMessage = errorResponse.getString("message")
+                    emit(Resource.error(null, errorMessage))
+                }
+            }
+        } catch (exception: Exception) {
+            emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+
         }
     }
 }

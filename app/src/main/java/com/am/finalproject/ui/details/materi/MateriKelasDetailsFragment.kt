@@ -1,7 +1,7 @@
 package com.am.finalproject.ui.details.materi
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,10 @@ import com.am.finalproject.data.multiple_list.materials.DatabaseMaterials
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentMaterikelasdetailsBinding
+import com.am.finalproject.ui.details.DetailsActivity
 import com.am.finalproject.ui.details.DetailsViewModel
+import com.am.finalproject.ui.details.youtube.YoutubeViewActivity
+import com.am.finalproject.utils.DisplayLayout
 import org.koin.android.ext.android.inject
 
 
@@ -29,7 +32,6 @@ class MateriKelasDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMaterikelasdetailsBinding.inflate(inflater, container, false)
-        Log.e("SIMPLE_CHECK_ID", "$args")
         displayMaterials()
         return binding.root
     }
@@ -37,17 +39,13 @@ class MateriKelasDetailsFragment : Fragment() {
     private fun displayMaterials() {
         viewModel.getDetailByIdCourse(args.toString()).observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
-                Status.LOADING -> {
-                    Log.e("SIMPLE_LOAD", "Load in Material Fragmnet")
-                }
-
+                Status.LOADING -> {}
                 Status.SUCCESS -> {
                     setupData(resource.data)
-                    Log.e("SIMPLE_SUCCESS", "${resource.data}")
                 }
 
                 Status.ERROR -> {
-                    Log.e("SIMPLE_LOAD", "${resource.message}")
+                    DisplayLayout.toastMessage(requireContext(), resource.message.toString(), false)
                 }
             }
         }
@@ -57,6 +55,15 @@ class MateriKelasDetailsFragment : Fragment() {
         val adapter = StudyMaterialsAdapter()
         binding.recyclerViewStudyMaterials.adapter = adapter
         binding.recyclerViewStudyMaterials.layoutManager = LinearLayoutManager(requireContext())
+        adapter.callBackYoutubeView = {url ->
+            val bundle = Bundle().apply {
+                putString(YoutubeViewActivity.KEY_URL, url)
+            }
+            val intent = Intent(requireContext(), YoutubeViewActivity::class.java).apply {
+                putExtras(bundle)
+            }
+            startActivity(intent)
+        }
         if (data != null) {
             val dataUpdate = DatabaseMaterials.getItem(data)
             adapter.updateList(dataUpdate)

@@ -14,6 +14,7 @@ import com.am.finalproject.adapter.course.TopicClassAdapter
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentSearchResultBinding
+import com.am.finalproject.ui.bottom_sheet.OrdersBottomSheetFragment
 import com.am.finalproject.utils.DisplayLayout
 import org.koin.android.ext.android.inject
 
@@ -80,10 +81,14 @@ class SearchResultFragment : Fragment() {
     }
 
     private fun setupDataAdapter(data: List<DataItemCourse>?) {
-        val adapter = TopicClassAdapter(childFragmentManager)
+        val adapter = TopicClassAdapter()
         adapter.submitList(data)
         binding.recyclerViewCourse.adapter = adapter
         binding.recyclerViewCourse.layoutManager = LinearLayoutManager(requireContext())
+
+        adapter.callBackOpenOrdersBottomSheet = {
+            OrdersBottomSheetFragment.show(childFragmentManager, it)
+        }
     }
 
     override fun onDestroy() {

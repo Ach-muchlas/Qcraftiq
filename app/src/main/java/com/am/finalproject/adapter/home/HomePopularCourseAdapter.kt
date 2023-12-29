@@ -1,7 +1,6 @@
 package com.am.finalproject.adapter.home
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,22 +9,20 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.databinding.ItemPopularCourseBinding
-import com.am.finalproject.ui.details.DetailsActivity
 import com.am.finalproject.utils.Formatter
 import com.bumptech.glide.Glide
-import java.text.Normalizer.Form
 
 class HomePopularCourseAdapter :
     ListAdapter<CourseEntity, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
     inner class MyViewHolder(private val binding: ItemPopularCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("SetTextI18n")
         fun bindContentPopularCourse(data: CourseEntity) {
+            val author = "By " + data.authorBy
             binding.textViewTagLineCategory.text = data.categoryTitle
             binding.textViewTitleCourse.text = data.title
             Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
             binding.textViewRating.text = data.rating.toString()
-            binding.textViewMentor.text = data.authorBy
+            binding.textViewMentor.text = author
             binding.textViewLevelCourse.text = data.level
             binding.buttonBuy.text = Formatter.formatCurrency(data.price)
             binding.progressBar.visibility = View.GONE

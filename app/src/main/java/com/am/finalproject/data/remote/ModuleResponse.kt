@@ -1,6 +1,8 @@
 package com.am.finalproject.data.remote
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class ModuleResponse(
 
@@ -14,6 +16,7 @@ data class ModuleResponse(
 	val status: String? = null
 )
 
+@Parcelize
 data class DataItemModule(
 
 	@field:SerializedName("createdAt")
@@ -40,4 +43,4 @@ data class DataItemModule(
 	@field:SerializedName("chapter")
 	val chapter: Int
 
-)
+) : Parcelable

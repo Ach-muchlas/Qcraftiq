@@ -11,7 +11,7 @@
     <View
         android:id="@+id/purpleBar"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="#6148FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +20,8 @@
     <!-- Back Button -->
     <ImageView
         android:id="@+id/backButton"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="26dp"
         android:layout_marginStart="16dp"
         android:contentDescription="@string/icon_back"
         app:layout_constraintBottom_toBottomOf="@id/purpleBar"
@@ -33,6 +33,7 @@
     <TextView
         android:id="@+id/textViewOtherClass"
         style="@style/TextContent.Body.MonMedium"
+        android:textSize="18sp"
         android:layout_marginStart="16dp"
         android:text="@string/other_class"
         android:textColor="@color/white"
@@ -41,12 +42,11 @@
         app:layout_constraintTop_toTopOf="@id/purpleBar" />
 
     <!-- VideoPlayer -->
-    <ImageView
-        android:id="@+id/imageViewContent"
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youTubePlayerView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/image_content"
+        android:layout_height="250dp"
+        android:contentDescription="@string/youtube_view"
         app:layout_constraintTop_toBottomOf="@id/purpleBar"/>
 
     <androidx.cardview.widget.CardView
@@ -57,7 +57,7 @@
         app:cardCornerRadius="20dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        app:layout_constraintTop_toBottomOf="@id/imageViewContent">
+        app:layout_constraintTop_toBottomOf="@id/youTubePlayerView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

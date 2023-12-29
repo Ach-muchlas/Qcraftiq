@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.am.finalproject.R
 import com.am.finalproject.adapter.filter.FilterAdapter
 import com.am.finalproject.data.multiple_list.filter.DataItemFilter
 import com.am.finalproject.data.multiple_list.filter.DatabaseFilter
@@ -19,7 +17,8 @@ import com.am.finalproject.ui.search_result.SearchResultViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.android.ext.android.inject
 
-class FilterCourseBottomSheetFragment : BottomSheetDialogFragment() {
+class FilterCourseBottomSheetFragment(private val callBackFilter: (String) -> Unit) :
+    BottomSheetDialogFragment() {
     private var _binding: FragmentFilterCourseBottomSheetBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SearchResultViewModel by inject()
@@ -35,7 +34,7 @@ class FilterCourseBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun navigation() {
-        /*menutup bottom sheet*/
+        /*close the bottom sheet*/
         binding.imageViewCloseButton.setOnClickListener {
             dismiss()
         }
@@ -67,8 +66,8 @@ class FilterCourseBottomSheetFragment : BottomSheetDialogFragment() {
         binding.buttonFilter.setOnClickListener {
             val checkedItem =
                 adapter.itemList.filter { it is DataItemFilter.Item && it.isChecked } as List<DataItemFilter.Item>
-            val categoryId = checkedItem.filter { it.type == "Category" }.map { it.title }
-            viewModel.filter(categoryId.joinToString())
+            val categoryId = checkedItem.filter { it.type == "Category" }.map { it.id }
+            callBackFilter.invoke(categoryId.joinToString())
             Toast.makeText(
                 requireContext(),
                 "categoryId : $categoryId",
@@ -80,8 +79,8 @@ class FilterCourseBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     companion object {
-        fun show(fragmentManager: FragmentManager) {
-            val bottomSheetFilter = FilterCourseBottomSheetFragment()
+        fun show(fragmentManager: FragmentManager, callBackDataFilter: (String) -> Unit) {
+            val bottomSheetFilter = FilterCourseBottomSheetFragment(callBackDataFilter)
             bottomSheetFilter.show(fragmentManager, bottomSheetFilter.tag)
         }
     }

@@ -1,6 +1,8 @@
 package com.am.finalproject.data.remote
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class CourseResponse(
 
@@ -14,6 +16,7 @@ data class CourseResponse(
 	val status: String? = null
 )
 
+@Parcelize
 data class DataItemCourse(
 
 	@field:SerializedName("image")
@@ -54,6 +57,6 @@ data class DataItemCourse(
 
 	@field:SerializedName("telegram")
 	val telegram: String,
-)
+) : Parcelable
 
 

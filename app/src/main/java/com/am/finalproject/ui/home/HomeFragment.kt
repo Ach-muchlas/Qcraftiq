@@ -15,7 +15,7 @@ import com.am.finalproject.adapter.home.HomeCategoryAdapter
 import com.am.finalproject.adapter.home.HomePopularCourseAdapter
 import com.am.finalproject.data.local.entity.CategoryEntity
 import com.am.finalproject.data.local.entity.CourseEntity
-import com.am.finalproject.data.local.sharepref.UserPreferences
+import com.am.finalproject.data.remote.DataItemCategory
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentHomeBinding
 import com.am.finalproject.ui.search_result.SearchResultViewModel
@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by inject()
     private val searchViewModel: SearchResultViewModel by inject()
-    private lateinit var sharedpref: UserPreferences
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -58,20 +58,23 @@ class HomeFragment : Fragment() {
     private fun setUpTabLayout(data: List<CategoryEntity?>?) {
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.all)))
+
         val tabTitle = mutableSetOf<String>()
         data?.forEach {
             val title = it?.title
             if (tabTitle.add(title.toString())) {
                 val tab = tabLayout.newTab().setText(title)
                 tabLayout.addTab(tab)
+
             }
         }
+
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (tab.text.toString() == "All") {
                     getALlCourseLocalData()
-                }else {
+                } else {
                     searchViewModel.searchByNameLocalData(tab.text.toString())
                         .observe(viewLifecycleOwner) { data ->
                             setupPopularCourseAdapter(data)
@@ -125,10 +128,11 @@ class HomeFragment : Fragment() {
                 Status.LOADING -> {
                     setupVisibilityProgressBar(binding.progressBar, true)
                 }
-
                 Status.SUCCESS -> {
                     setUpCategoryAdapter(resource.data!!)
-                    setUpTabLayout(resource.data)
+                    if (resource.data != null){
+                        setUpTabLayout(resource.data)
+                    }
                     setupVisibilityProgressBar(binding.progressBar, false)
                 }
 

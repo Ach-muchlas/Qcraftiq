@@ -8,17 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.finalproject.adapter.account.PaymentHistoryAdapter
-import com.am.finalproject.data.remote.TrackingClassResponse
+import com.am.finalproject.data.remote.HistoryOrdersResponse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentPaymentHistoryBinding
-import com.am.finalproject.ui.account.AccountViewModel
+import com.am.finalproject.ui.detail_payment.PaymentViewModel
 import com.am.finalproject.utils.DisplayLayout
 import org.koin.android.ext.android.inject
 
 class PaymentHistoryFragment : Fragment() {
     private var _binding: FragmentPaymentHistoryBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: AccountViewModel by inject()
+    private val viewModel: PaymentViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,21 +39,27 @@ class PaymentHistoryFragment : Fragment() {
 
     private fun displayCourse() {
         viewModel.init(requireContext())
-        val token = viewModel.getUser()?.accessToken
-        viewModel.getPaymentHistory(token.toString()).observe(viewLifecycleOwner) { resources ->
+        val token = viewModel.getUser()?.accessToken.toString()
+        viewModel.getHistoryOrderCourse(token.toString()).observe(viewLifecycleOwner) { resources ->
             when (resources.status) {
                 Status.LOADING -> {}
                 Status.SUCCESS -> {
                     setupPaymentHistoryAdapter(resources.data)
                 }
 
-                Status.ERROR -> {}
+                Status.ERROR -> {
+                    DisplayLayout.toastMessage(
+                        requireContext(),
+                        resources.message.toString(),
+                        false
+                    )
+                }
             }
 
         }
     }
 
-    private fun setupPaymentHistoryAdapter(data: TrackingClassResponse?) {
+    private fun setupPaymentHistoryAdapter(data: HistoryOrdersResponse?) {
         val adapter = PaymentHistoryAdapter()
         adapter.submitList(data?.data)
         binding.recyclerPaymentHistory.adapter = adapter

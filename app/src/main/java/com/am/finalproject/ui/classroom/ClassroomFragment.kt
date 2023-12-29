@@ -1,6 +1,7 @@
 package com.am.finalproject.ui.classroom
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.am.finalproject.data.remote.DataItemTrackingClass
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentClassroomBinding
 import com.am.finalproject.ui.auth.AuthViewModel
+import com.am.finalproject.ui.details.DetailsActivity
 import com.am.finalproject.ui.home.HomeViewModel
 import com.am.finalproject.utils.DisplayLayout
 import com.google.android.material.tabs.TabLayout
@@ -141,6 +143,16 @@ class ClassroomFragment : Fragment() {
         }
         binding.recyclerViewTopicClass.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        adapter.callBackToDetail = { id ->
+            val bundle = Bundle().apply {
+                putString(DetailsActivity.KEY_ID, id)
+            }
+            val intent = Intent(requireContext(), DetailsActivity::class.java).apply {
+                putExtras(bundle)
+            }
+            startActivity(intent)
+        }
 
     }
 

@@ -1,30 +1,28 @@
 package com.am.finalproject.ui.course
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.am.finalproject.R
 import com.am.finalproject.adapter.course.TopicClassAdapter
 import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentCourseBinding
 import com.am.finalproject.ui.bottom_sheet.FilterCourseBottomSheetFragment
+import com.am.finalproject.ui.bottom_sheet.OrdersBottomSheetFragment
+import com.am.finalproject.ui.details.DetailsActivity
 import com.am.finalproject.ui.search_result.SearchResultViewModel
 import com.am.finalproject.utils.Destination
 import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.Navigate
 import com.google.android.material.tabs.TabLayout
-import io.github.muddz.styleabletoast.StyleableToast
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CourseFragment : Fragment() {
 	private var _binding: FragmentCourseBinding? = null
@@ -38,15 +36,37 @@ class CourseFragment : Fragment() {
 		displayViewTopicClass()
 		setupSearch()
 		navigation()
+		setupFilterCourse()
 		return binding.root
 	}
 
-	private fun navigation(){
+	private fun navigation() {
 		binding.textViewFilter.setOnClickListener {
-			FilterCourseBottomSheetFragment.show(childFragmentManager)
+			FilterCourseBottomSheetFragment.show(childFragmentManager) {
+				searchViewModel.filter(it)
+			}
 		}
 	}
 
+	private fun setupFilterCourse() {
+		searchViewModel.filterCourse.observe(viewLifecycleOwner) { resources ->
+			when (resources.status) {
+				Status.LOADING -> {}
+				Status.SUCCESS -> {
+					val filteredData = resources.data
+					setupDataTopicClassAdapter(filteredData)
+				}
+
+				Status.ERROR -> {
+					DisplayLayout.toastMessage(
+						requireContext(),
+						resources.message.toString(),
+						false
+					)
+				}
+			}
+		}
+	}
 
 	@SuppressLint("ClickableViewAccessibility")
 	private fun setupSearch() {
@@ -124,71 +144,23 @@ class CourseFragment : Fragment() {
 		})
 	}
 
-	override fun onPause() {
-		super.onPause()
-		Log.e("SIMPLE_PAUSE", "PAUSE")
-		searchViewModel.filterCourse.observe(viewLifecycleOwner) { resources ->
-			when (resources.status) {
-				Status.LOADING -> {}
-				Status.SUCCESS -> {
-					val filteredData = resources.data
-					setupDataTopicClassAdapter(filteredData)
-					DisplayLayout.toastMessage(requireContext(), "data : $filteredData", true)
-					Log.e("SIMPLE_FILTER_COURSE", "data Course :$filteredData")
-				}
-
-				Status.ERROR -> {
-					StyleableToast.makeText(
-						requireContext(),
-						resources.message,
-						Toast.LENGTH_SHORT,
-						R.style.MyToast_IsRed
-					).show()
-				}
-			}
-		}
-	}
-
-	override fun onDestroy() {
-		super.onDestroy()
-		Log.e("SIMPLE_DESTROY", "DESTROY")
-	}
-
-	override fun onResume() {
-		super.onResume()
-		Log.e("SIMPLE_RESUME", "RESUME")
-		searchViewModel.filterCourse.observe(viewLifecycleOwner) { resources ->
-			Log.e("SIMPLE_FILTER_COURSE 1", "data Course :${resources.data}")
-			when (resources.status) {
-				Status.LOADING -> {}
-				Status.SUCCESS -> {
-					val filteredData = resources.data
-					setupDataTopicClassAdapter(filteredData)
-					DisplayLayout.toastMessage(requireContext(), "data : $filteredData", true)
-					Log.e("SIMPLE_FILTER_COURSE", "data Course :$filteredData")
-				}
-
-				Status.ERROR -> {
-					StyleableToast.makeText(
-						requireContext(),
-						resources.message,
-						Toast.LENGTH_SHORT,
-						R.style.MyToast_IsRed
-					).show()
-				}
-			}
-		}
-	}
-
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		Log.e("SIMPLE_CREATE", "CREATE")
-	}
-
 	private fun setupDataTopicClassAdapter(data: List<DataItemCourse>?) {
-		val adapter = TopicClassAdapter(childFragmentManager)
+		val adapter = TopicClassAdapter()
 		adapter.submitList(data)
 		binding.recyclerViewTopicClass.adapter = adapter
 		binding.recyclerViewTopicClass.layoutManager = LinearLayoutManager(requireContext())
+
+		adapter.callBackOpenOrdersBottomSheet = {
+			OrdersBottomSheetFragment.show(childFragmentManager, it)
+		}
+		adapter.callBackToDetail = {id ->
+			val bundle = Bundle().apply {
+				putString(DetailsActivity.KEY_ID, id)
+			}
+			val intent = Intent(requireContext(), DetailsActivity::class.java).apply {
+				putExtras(bundle)
+			}
+			startActivity(intent)
+		}
 	}
 }
