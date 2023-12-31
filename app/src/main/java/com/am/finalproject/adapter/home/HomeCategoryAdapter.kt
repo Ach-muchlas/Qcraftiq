@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.am.finalproject.R
 import com.am.finalproject.data.local.entity.CategoryEntity
+import com.am.finalproject.data.remote.DataItemCategory
 import com.am.finalproject.databinding.ItemCategoryBinding
 import com.am.finalproject.ui.home.HomeFragment
 import com.am.finalproject.ui.home.HomeFragmentDirections
@@ -18,14 +19,18 @@ import com.bumptech.glide.Glide
 import kotlin.math.min
 
 class HomeCategoryAdapter :
-    ListAdapter<CategoryEntity, HomeCategoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<DataItemCategory, HomeCategoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
     var showAllItems: Boolean = false
-
+    var callBackSearchByIdCategory : ((String) -> Unit)? = null
     inner class MyViewHolder(private val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: CategoryEntity) {
+        fun bind(data: DataItemCategory) {
             binding.textViewTitle.text = data.title
             Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
+            binding.itemViewCategory.setOnClickListener {
+                callBackSearchByIdCategory?.invoke(data.title)
+            }
+
         }
     }
 
@@ -49,18 +54,18 @@ class HomeCategoryAdapter :
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CategoryEntity>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItemCategory>() {
             override fun areItemsTheSame(
-                oldItem: CategoryEntity,
-                newItem: CategoryEntity
+                oldItem: DataItemCategory,
+                newItem: DataItemCategory
             ): Boolean {
                 return oldItem == newItem
             }
 
             @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(
-                oldItem: CategoryEntity,
-                newItem: CategoryEntity
+                oldItem: DataItemCategory,
+                newItem: DataItemCategory
             ): Boolean {
                 return oldItem == newItem
             }

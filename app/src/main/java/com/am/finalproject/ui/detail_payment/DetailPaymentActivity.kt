@@ -123,11 +123,6 @@ class DetailPaymentActivity : AppCompatActivity() {
 
 
             binding.buttonPayment.setOnClickListener {
-                Log.e("SIMPLE", "CLICK")
-                val response =
-                    " expired : $formattedDate  cvv : ${cvv.toString()} + total : $total + card Name ${cardName.toString()} + number : ${cardNumber.toString()} + id : $courseId"
-                Log.e("SIMPLE", "Data : $response")
-                DisplayLayout.toastMessage(this, response, true)
                 viewModel.postOrderCourse(
                     token,
                     formattedDate,
@@ -138,17 +133,19 @@ class DetailPaymentActivity : AppCompatActivity() {
                     courseId
                 ).observe(this) { resources ->
                     when (resources.status) {
-                        Status.LOADING -> {
-                        }
-
+                        Status.LOADING -> {}
                         Status.SUCCESS -> {
                             DisplayLayout.toastMessage(
                                 this,
                                 resources.data?.message.toString(),
                                 true
                             )
-                            Log.e("SIMPLE_SUCCESS", resources.data?.message.toString())
-                            val intent = Intent(this, DetailsActivity::class.java)
+                            val bundle = Bundle().apply {
+                                putString(DetailsActivity.KEY_ID, courseId)
+                            }
+                            val intent = Intent(this, DetailsActivity::class.java).apply {
+                                putExtras(bundle)
+                            }
                             intent.flags =
                                 Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                             startActivity(intent)
@@ -157,7 +154,6 @@ class DetailPaymentActivity : AppCompatActivity() {
 
                         Status.ERROR -> {
                             DisplayLayout.toastMessage(this, resources.message.toString(), false)
-                            Log.e("SIMPLE_ERROR", "error : ${resources.message}")
                         }
                     }
                 }

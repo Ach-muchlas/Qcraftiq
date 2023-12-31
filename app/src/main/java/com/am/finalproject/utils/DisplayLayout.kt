@@ -65,6 +65,7 @@ object DisplayLayout {
         return false
     }
 
+
     fun buttonEnabled(button: Button, editText: EditText, context: Context) {
         if (button.isEnabled) {
             ContextCompat.getDrawable(context, R.drawable.custom_bg_button) as Drawable
@@ -74,7 +75,24 @@ object DisplayLayout {
 
         val editTextEmail = editText.text
         button.isEnabled =
-            editTextEmail != null && editTextEmail.isNotEmpty()
+            editTextEmail != null && editTextEmail.isNotEmpty() && isValidEmail(editTextEmail)
+    }
+
+    fun isEnableButtonLogin(
+        emailEditText: CharSequence,
+        passwordEditText: CharSequence,
+        button: Button,
+        context: Context
+    ) {
+        if (button.isEnabled) {
+            ContextCompat.getDrawable(context, R.drawable.custom_bg_button) as Drawable
+        } else {
+            ContextCompat.getDrawable(context, R.drawable.custom_bg_button_disable) as Drawable
+        }
+
+        button.isEnabled = emailEditText.isNotEmpty() && isValidEmail(emailEditText) &&
+                passwordEditText.isNotEmpty() && containsSpecialCharacter(passwordEditText) &&
+                containsUpperCase(passwordEditText) && passwordEditText.length >= 5
     }
 
     fun hideAppBar(activity: AppCompatActivity) {

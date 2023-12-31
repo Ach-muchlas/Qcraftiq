@@ -164,6 +164,7 @@ class Repository(
                     val sizeModule = course.module?.size
                     CourseEntity(
                         course.title,
+                        course.id,
                         course.image,
                         course.level,
                         course.authorBy,
@@ -171,7 +172,7 @@ class Repository(
                         course.price,
                         course.category.title,
                         timeModule ?: 0,
-                        sizeModule ?: 0
+                        sizeModule ?: 0,
                     )
                 }
                 courseDao.delete()
@@ -278,18 +279,19 @@ class Repository(
     }
 
 
-    fun searchCourseByCategory(query: String) = liveData(Dispatchers.IO) {
+    fun searchCourseByCategory(categoryId: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
         try {
             val response = apiService.getPopularCourse()
             val allCategory = response.data
             val filtered =
-                allCategory.filter { it.category.title.contains(query, ignoreCase = true) }
+                allCategory.filter { it.category.title.contains(categoryId, ignoreCase = true) }
             emit(Resource.success(filtered))
         } catch (exception: Exception) {
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
         }
     }
+
 
     fun filterByType(query: String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))

@@ -38,5 +38,5 @@ class SearchResultViewModel(private val repository: Repository) : ViewModel() {
 
     fun filterByName(query: String) = repository.filterByType(query)
 
-    fun searchCourseByCategory(query: String) = repository.searchCourseByCategory(query)
+    fun searchCourseByCategory(categoryId: String) = repository.searchCourseByCategory(categoryId)
 }

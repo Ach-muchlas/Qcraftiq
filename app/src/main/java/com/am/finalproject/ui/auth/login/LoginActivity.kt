@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.am.finalproject.R
@@ -16,15 +14,17 @@ import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.auth.register.RegisterActivity
 import com.am.finalproject.ui.auth.reset_password.ResetPasswordActivity
 import com.am.finalproject.ui.main.MainActivity
-import com.am.finalproject.ui.onboarding.OnBoardingActivity
 import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.Navigate
-import io.github.muddz.styleabletoast.StyleableToast
 import org.koin.android.ext.android.inject
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: AuthViewModel by inject()
+    private val editText by lazy {
+        binding.edtEmail
+        binding.edtPassword
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +56,6 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     binding.edlEmail.error = null
                 }
-                DisplayLayout.buttonEnabled(
-                    binding.buttonLogin,
-                    binding.edtEmail,
-                    this@LoginActivity
-                )
             }
 
             override fun afterTextChanged(text: Editable) {
@@ -92,19 +87,25 @@ class LoginActivity : AppCompatActivity() {
 
             override fun afterTextChanged(p0: Editable?) {}
         })
+
+        /*fungsi ini mengambil function addtextchange dari 2 edittext*/
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val email = binding.edtEmail.text.toString()
+                val password = binding.edtPassword.text.toString()
+                DisplayLayout.isEnableButtonLogin(
+                    email, password, binding.buttonLogin, this@LoginActivity
+                )
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+        })
     }
 
 
     private fun navigation() {
-        if (!viewModel.isOnBoardingCompleted()) {
-            Navigate.intentActivity(this@LoginActivity, OnBoardingActivity::class.java)
-            viewModel.markOnBoardingCompleted()
-        }
-        if (viewModel.isUserLogin()) Navigate.intentActivity(
-            this@LoginActivity,
-            MainActivity::class.java
-        )
-
         binding.apply {
             /*To register*/
             textViewRegisterHere.setOnClickListener {
@@ -123,49 +124,48 @@ class LoginActivity : AppCompatActivity() {
 
             /*Login*/
             buttonLogin.setOnClickListener {
-                val emailOrPhone = binding.edtEmail.text
-                val password = binding.edtPassword.text
-
-                viewModel.loginUser(emailOrPhone.toString(), password.toString())
-                    .observe(this@LoginActivity) { resources ->
-                        when (resources.status) {
-                            Status.LOADING -> {
-                                DisplayLayout.setupVisibilityProgressBar(binding.progressBar, true)
-                            }
-
-                            Status.SUCCESS -> {
-                                DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
-                                viewModel.saveUser(LoginResult(resources.data?.data?.accessToken))
-                                StyleableToast.makeText(
-                                    this@LoginActivity,
-                                    resources.data?.message,
-                                    Toast.LENGTH_SHORT,
-                                    R.style.MyToast_IsGreen
-                                ).show()
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                                startActivity(intent)
-                                finish()
-                            }
-
-                            Status.ERROR -> {
-                                DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
-                                StyleableToast.makeText(
-                                    this@LoginActivity,
-                                    resources.message ,
-                                    Toast.LENGTH_SHORT,
-                                    R.style.MyToast_IsRed
-                                ).show()
-                                Log.e("SIMPLE_ERROR", "errorMessage : ${resources.message} || ErrorDataMessage : ${resources.data?.message}")
-                            }
-                        }
-                    }
-                emailOrPhone?.clear()
-                password?.clear()
+                loginUser()
             }
-
-
         }
     }
+
+    private fun loginUser() {
+        val emailOrPhone = binding.edtEmail.text
+        val password = binding.edtPassword.text
+        viewModel.loginUser(emailOrPhone.toString(), password.toString())
+            .observe(this@LoginActivity) { resources ->
+                when (resources.status) {
+                    Status.LOADING -> {
+                        DisplayLayout.setupVisibilityProgressBar(binding.progressBar, true)
+                    }
+
+                    Status.SUCCESS -> {
+                        DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
+                        viewModel.saveUser(LoginResult(resources.data?.data?.accessToken))
+                        DisplayLayout.toastMessage(
+                            this@LoginActivity,
+                            resources.data?.message.toString(),
+                            true
+                        )
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+
+                    Status.ERROR -> {
+                        DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
+                        DisplayLayout.toastMessage(
+                            this@LoginActivity,
+                            resources.message.toString(),
+                            false
+                        )
+                        emailOrPhone?.clear()
+                        password?.clear()
+                    }
+                }
+            }
+    }
+
 }

@@ -11,8 +11,9 @@
         android:id="@+id/imageViewAppLogo"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/logo_app"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="60dp"
+        android:src="@drawable/new_logo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:contentDescription="@string/logo_app" />
@@ -21,13 +22,13 @@
         android:id="@+id/textViewStudy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/study"
+        android:text="@string/name_app"
         android:textColor="@color/dark_blue"
         android:fontFamily="@font/pop_bold"
         android:textSize="36sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewAppLogo"/>
+        app:layout_constraintBottom_toBottomOf="@id/imageViewAppLogo"
+        app:layout_constraintStart_toEndOf="@id/imageViewAppLogo"
+        />
 
     <TextView
         android:id="@+id/textViewHaveAccount"
@@ -50,8 +51,8 @@
 
     <ImageButton
         android:id="@+id/btn_splash"
-        android:layout_width="63dp"
-        android:layout_height="48dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="25dp"
         android:src="@drawable/arrow_right_white"
         android:background="@drawable/bg_btn_splash"

@@ -20,4 +20,7 @@ class HomeViewModel (private val repository: Repository): ViewModel() {
     fun getCourseLocalData() = repository.getCourseLocalData()
     fun readCourseAll() = repository.readCourseALl().asLiveData()
     fun getCategory() = repository.getCategory()
+
+    fun getCourse() = repository.getCourse()
+
 }

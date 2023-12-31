@@ -10,6 +10,9 @@ class CourseEntity(
     @field:PrimaryKey
     val title: String,
 
+    @field:ColumnInfo("id")
+    val id : String,
+
     @field:ColumnInfo("image")
     val image: String,
 
@@ -33,5 +36,4 @@ class CourseEntity(
 
     @field:ColumnInfo("module")
     val module: Int,
-
     )

@@ -2,6 +2,7 @@ package com.am.finalproject.ui.onboarding
 
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -67,6 +68,13 @@ class OnBoardingActivity : AppCompatActivity() {
         })
         (onBoardingViewPager.getChildAt(0) as RecyclerView).overScrollMode =
             RecyclerView.OVER_SCROLL_NEVER
+        findViewById<ImageButton>(R.id.btn_splash).setOnClickListener {
+            if (onBoardingViewPager.currentItem + 1 < introSliderAdapter.itemCount) {
+                onBoardingViewPager.currentItem += 1
+            } else {
+                Navigate.intentActivity(this, LoginActivity::class.java)
+            }
+        }
     }
 
     private fun setupIndicator(){

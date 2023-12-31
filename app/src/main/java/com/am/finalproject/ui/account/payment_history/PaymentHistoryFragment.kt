@@ -42,12 +42,17 @@ class PaymentHistoryFragment : Fragment() {
         val token = viewModel.getUser()?.accessToken.toString()
         viewModel.getHistoryOrderCourse(token.toString()).observe(viewLifecycleOwner) { resources ->
             when (resources.status) {
-                Status.LOADING -> {}
+                Status.LOADING -> {
+                    DisplayLayout.setupVisibilityProgressBar(binding.progressBar, true)
+                }
+
                 Status.SUCCESS -> {
+                    DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
                     setupPaymentHistoryAdapter(resources.data)
                 }
 
                 Status.ERROR -> {
+                    DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
                     DisplayLayout.toastMessage(
                         requireContext(),
                         resources.message.toString(),
@@ -55,7 +60,6 @@ class PaymentHistoryFragment : Fragment() {
                     )
                 }
             }
-
         }
     }
 

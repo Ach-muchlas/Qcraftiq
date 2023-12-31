@@ -49,7 +49,7 @@
     <string name="warning_text_field_less_8">Oops! Kolom ini tidak boleh kurang dari 8 karakter</string>
     <string name="tentang_kelas">Tentang Kelas</string>
     <string name="warning_password_uppercase">Oops! Kata sandi harus mengandung setidaknya 1 huruf besar.</string>
-    <string name="warning_password_special_character">Oops! Kata sandi harus mengandung setidaknya 1 karakter khusus.</string>
+    <string name="warning_password_special_character">Oops! Kata sandi harus mengandung setidaknya 1 karakter khusus (!,*,#,%,@).</string>
     <string name="input_otp">Masukkan OTP</string>
     <string name="the_6_digit_code_sent">Ketik 6 digit yang dikirimkan ke</string>
     <string name="example_destination_otp">achmad00@gmai.com</string>
@@ -235,4 +235,5 @@
     <string name="kelas_premium">Kelas Premium</string>
     <string name="buy_now">Beli Sekarang</string>
     <string name="youtube_view">Youtube View</string>
+    <string name="name_app">CraftIQ</string>
 </resources>

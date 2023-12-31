@@ -13,13 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.finalproject.R
 import com.am.finalproject.adapter.home.HomeCategoryAdapter
 import com.am.finalproject.adapter.home.HomePopularCourseAdapter
-import com.am.finalproject.data.local.entity.CategoryEntity
-import com.am.finalproject.data.local.entity.CourseEntity
+import com.am.finalproject.data.remote.CategoryResponse
 import com.am.finalproject.data.remote.DataItemCategory
+import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentHomeBinding
+import com.am.finalproject.ui.bottom_sheet.OrdersBottomSheetFragment
 import com.am.finalproject.ui.search_result.SearchResultViewModel
 import com.am.finalproject.utils.Destination
+import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.DisplayLayout.setupVisibilityProgressBar
 import com.am.finalproject.utils.DisplayLayout.toastMessage
 import com.am.finalproject.utils.Navigate
@@ -55,7 +57,7 @@ class HomeFragment : Fragment() {
     }
 
     /*This function is to display tabs in the popular course.*/
-    private fun setUpTabLayout(data: List<CategoryEntity?>?) {
+    private fun setUpTabLayout(data: List<DataItemCategory?>?) {
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.all)))
 
@@ -73,12 +75,9 @@ class HomeFragment : Fragment() {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (tab.text.toString() == "All") {
-                    getALlCourseLocalData()
+                    displayPopularCourse()
                 } else {
-                    searchViewModel.searchByNameLocalData(tab.text.toString())
-                        .observe(viewLifecycleOwner) { data ->
-                            setupPopularCourseAdapter(data)
-                        }
+                    getCourseByCategoryTitle(tab.text.toString())
                 }
             }
 
@@ -90,32 +89,43 @@ class HomeFragment : Fragment() {
 
 
     /*Function to retrieve popular course data from the local database.*/
-    private fun getALlCourseLocalData() {
-        viewModel.readCourseAll().observe(viewLifecycleOwner) { data ->
-            setupPopularCourseAdapter(data)
-        }
+    private fun getCourseByCategoryTitle(categoryTitle: String) {
+        searchViewModel.searchCourseByCategory(categoryTitle)
+            .observe(viewLifecycleOwner) { resources ->
+                when (resources.status) {
+                    Status.LOADING -> {
+                        DisplayLayout.setupVisibilityProgressBar(binding.progressBarPopularCourse, true)
+                    }
+                    Status.SUCCESS -> {
+                        DisplayLayout.setupVisibilityProgressBar(binding.progressBarPopularCourse, false)
+                        setupPopularCourseAdapter(resources.data)
+                    }
+
+                    Status.ERROR -> {
+                        DisplayLayout.toastMessage(requireContext(), resources.message.toString(), false)
+                    }
+                }
+            }
     }
 
     /*Function to display popular courses.*/
     /*This function has implemented offline first.*/
     private fun displayPopularCourse() {
-        viewModel.getCourseLocalData()
-            .observe(viewLifecycleOwner) { result ->
-                if (result != null) {
-                    when (result.status) {
-                        Status.LOADING -> {
-                            setupVisibilityProgressBar(binding.progressBarPopularCourse, true)
-                        }
+        viewModel.getCourse()
+            .observe(viewLifecycleOwner) { resources ->
+                when (resources.status) {
+                    Status.LOADING -> {
+                        setupVisibilityProgressBar(binding.progressBarPopularCourse, true)
+                    }
 
-                        Status.SUCCESS -> {
-                            setupVisibilityProgressBar(binding.progressBarPopularCourse, false)
-                            setupPopularCourseAdapter(data = result.data!!)
-                        }
+                    Status.SUCCESS -> {
+                        setupVisibilityProgressBar(binding.progressBarPopularCourse, false)
+                        setupPopularCourseAdapter(data = resources.data?.data)
+                    }
 
-                        Status.ERROR -> {
-                            setupVisibilityProgressBar(binding.progressBarPopularCourse, false)
-                            toastMessage(requireContext(), result.message.toString(), false)
-                        }
+                    Status.ERROR -> {
+                        setupVisibilityProgressBar(binding.progressBarPopularCourse, false)
+                        toastMessage(requireContext(), resources.message.toString(), false)
                     }
                 }
             }
@@ -123,16 +133,15 @@ class HomeFragment : Fragment() {
 
     /*This function is used to display categories.*/
     private fun displayCategory() {
-        viewModel.getCategoryLocalData().observe(viewLifecycleOwner) { resource ->
+        viewModel.getCategory().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.LOADING -> {
                     setupVisibilityProgressBar(binding.progressBar, true)
                 }
+
                 Status.SUCCESS -> {
-                    setUpCategoryAdapter(resource.data!!)
-                    if (resource.data != null){
-                        setUpTabLayout(resource.data)
-                    }
+                    setUpCategoryAdapter(resource.data)
+                    setUpTabLayout(resource.data?.data)
                     setupVisibilityProgressBar(binding.progressBar, false)
                 }
 
@@ -146,22 +155,25 @@ class HomeFragment : Fragment() {
     }
 
     /*The function is used to set up a data adapter for popular courses.*/
-    private fun setupPopularCourseAdapter(data: List<CourseEntity>) {
+    private fun setupPopularCourseAdapter(data: List<DataItemCourse>?) {
         val adapter = HomePopularCourseAdapter()
         adapter.submitList(data)
         binding.recyclerViewPopularCourse.adapter = adapter
         binding.recyclerViewPopularCourse.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        adapter.callBackOpenBottomSheetPayment = {
+            OrdersBottomSheetFragment.show(childFragmentManager, it)
+        }
     }
 
 
     /*The function is used to set up a data adapter for popular courses. */
     @SuppressLint("NotifyDataSetChanged")
-    private fun setUpCategoryAdapter(data: List<CategoryEntity>) {
+    private fun setUpCategoryAdapter(data: CategoryResponse?) {
         val adapter = HomeCategoryAdapter()
         binding.recyclerViewCategory.adapter = adapter
         binding.recyclerViewCategory.layoutManager = GridLayoutManager(requireContext(), 2)
-        adapter.submitList(data)
+        adapter.submitList(data?.data)
         binding.textViewSeeAllCategory.setOnClickListener {
             viewModel.showAllItem.observe(viewLifecycleOwner) { showALlItem ->
                 adapter.showAllItems = showALlItem
@@ -169,9 +181,19 @@ class HomeFragment : Fragment() {
             }
             viewModel.toggleShowAllItem()
         }
+
+        adapter.callBackSearchByIdCategory = { categoryId ->
+            val bundle = Bundle().apply {
+                putString(KEY_CATEGORY_ID, categoryId)
+            }
+            findNavController().navigate(
+                R.id.action_navigation_home_to_searchResultFragment,
+                bundle
+            )
+        }
     }
 
     companion object{
-        const val KEY_CATEGORY_TITLE = "key_category_title"
+        const val KEY_CATEGORY_ID = "key_category_title"
     }
 }

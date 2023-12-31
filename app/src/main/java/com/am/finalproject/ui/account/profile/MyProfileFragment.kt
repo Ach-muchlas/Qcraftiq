@@ -1,6 +1,7 @@
 package com.am.finalproject.ui.account.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,6 +56,7 @@ class MyProfileFragment : Fragment() {
 
 	private fun setupDataProfile(data: DataUser?) {
 		binding.apply {
+			Log.e("SIMPLE", "data image : ${data?.image}")
 			Glide.with(root.context).load(data?.image).transform(CircleCrop())
 				.into(imageViewPhotoProfile)
 			textViewValueName.text = data?.name

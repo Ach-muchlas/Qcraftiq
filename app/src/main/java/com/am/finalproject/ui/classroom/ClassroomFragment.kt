@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.finalproject.R
 import com.am.finalproject.adapter.classroom.CourseTrackIngAdapter
 import com.am.finalproject.adapter.home.HomeCategoryAdapter
-import com.am.finalproject.data.local.entity.CategoryEntity
+import com.am.finalproject.data.remote.CategoryResponse
 import com.am.finalproject.data.remote.DataItemTrackingClass
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentClassroomBinding
@@ -71,7 +71,7 @@ class ClassroomFragment : Fragment() {
     }
 
     private fun displayCategory() {
-        homeViewModel.getCategoryLocalData().observe(viewLifecycleOwner) { resource ->
+        homeViewModel.getCategory().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.LOADING -> {
                     DisplayLayout.setupVisibilityProgressBar(binding.progressBarCategory, true)
@@ -158,11 +158,11 @@ class ClassroomFragment : Fragment() {
 
     /*The function is used to set up a data adapter for popular courses. */
     @SuppressLint("NotifyDataSetChanged")
-    private fun setUpCategoryAdapter(data: List<CategoryEntity>) {
+    private fun setUpCategoryAdapter(data: CategoryResponse?) {
         val adapter = HomeCategoryAdapter()
         binding.recyclerViewCategory.adapter = adapter
         binding.recyclerViewCategory.layoutManager = GridLayoutManager(requireContext(), 2)
-        adapter.submitList(data)
+        adapter.submitList(data?.data)
         binding.textViewSeeAllCategory.setOnClickListener {
             homeViewModel.showAllItem.observe(viewLifecycleOwner) { showALlItem ->
                 adapter.showAllItems = showALlItem

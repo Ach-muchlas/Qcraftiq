@@ -7,18 +7,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.am.finalproject.data.local.entity.CourseEntity
+import com.am.finalproject.data.remote.DataItemCourse
 import com.am.finalproject.databinding.ItemPopularCourseBinding
 import com.am.finalproject.utils.Formatter
 import com.bumptech.glide.Glide
 
 class HomePopularCourseAdapter :
-    ListAdapter<CourseEntity, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<DataItemCourse, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
+
+    var callBackOpenBottomSheetPayment: ((DataItemCourse) -> Unit)? = null
+
     inner class MyViewHolder(private val binding: ItemPopularCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindContentPopularCourse(data: CourseEntity) {
+        fun bindContentPopularCourse(data: DataItemCourse) {
             val author = "By " + data.authorBy
-            binding.textViewTagLineCategory.text = data.categoryTitle
+            binding.textViewTagLineCategory.text = data.category.title
             binding.textViewTitleCourse.text = data.title
             Glide.with(binding.root.context).load(data.image).into(binding.imageContent)
             binding.textViewRating.text = data.rating.toString()
@@ -28,8 +31,22 @@ class HomePopularCourseAdapter :
             binding.progressBar.visibility = View.GONE
             binding.textViewProgressStatus.visibility = View.GONE
             binding.iconProgress.visibility = View.GONE
-            binding.textViewModule.text = Formatter.formatSizeModule(data.module)
-            binding.textViewTime.text = Formatter.formatTimeSecondToMinute(data.time)
+
+            if (!data.module.isNullOrEmpty()) {
+                binding.textViewTime.text =
+                    Formatter.formatTimeSecondToMinute(data.module.sumOf { it.time ?: 0 })
+                binding.textViewModule.text = Formatter.formatSizeModule(data.module.size)
+            } else {
+                binding.textViewModule.text = Formatter.formatSizeModule(0)
+                binding.textViewTime.text = Formatter.formatTimeSecondToMinute(0)
+            }
+
+
+            binding.card.setOnClickListener {
+                callBackOpenBottomSheetPayment?.invoke(
+                    data
+                )
+            }
         }
     }
 
@@ -47,17 +64,17 @@ class HomePopularCourseAdapter :
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CourseEntity>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItemCourse>() {
             override fun areItemsTheSame(
-                oldItem: CourseEntity,
-                newItem: CourseEntity
+                oldItem: DataItemCourse,
+                newItem: DataItemCourse
             ): Boolean {
                 return oldItem == newItem
             }
 
             @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(
-                oldItem: CourseEntity, newItem: CourseEntity
+                oldItem: DataItemCourse, newItem: DataItemCourse
             ): Boolean {
                 return oldItem == newItem
             }

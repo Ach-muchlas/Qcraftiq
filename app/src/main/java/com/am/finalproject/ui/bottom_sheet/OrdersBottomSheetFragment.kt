@@ -59,16 +59,14 @@ class OrdersBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun navigation(){
         binding.buttonBuy.setOnClickListener {
-//            val intent = Intent(requireContext(), DetailPaymentActivity::class.java)
-//            startActivity(intent)
             val parsingData = Bundle().apply {
                 putParcelable(DetailPaymentActivity.KEY_BUNDLE, receiveCourse)
             }
             val intent = Intent(requireContext(), DetailPaymentActivity::class.java).apply {
                 putExtras(parsingData)
             }
-
             startActivity(intent)
+            dismiss()
         }
 
         binding.imageViewCloseButton.setOnClickListener {
