@@ -196,6 +196,8 @@ class Repository(
         }
     }
 
+    suspend fun getDetailById(token: String, courseId: String) = apiService.getCourseById("Bearer $token" ,courseId)
+
     /*Category*/
     /*fungsi ini digunakan untuk mendapatkan data category*/
     /*namun fungsi ini menerapkan mengambil data dari internet ketika ada internet*/

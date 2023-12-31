@@ -19,10 +19,17 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface ApiService {
     @GET("courses")
     suspend fun getPopularCourse(): CourseResponse
+
+    @GET("course/{courseId}")
+    suspend fun getCourseById(
+        @Header("Authorization") bearer: String,
+        @Path("courseId") courseId: String
+    ): CourseResponse
 
     @GET("categories")
     suspend fun getCategoryCourse(): CategoryResponse
