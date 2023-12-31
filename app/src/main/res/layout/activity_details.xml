@@ -11,7 +11,7 @@
     <View
         android:id="@+id/purpleBar"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="#6148FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +20,8 @@
     <!-- Back Button -->
     <ImageView
         android:id="@+id/backButton"
-        android:layout_width="30dp"
-        android:layout_height="26dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="16dp"
         android:contentDescription="@string/icon_back"
         app:layout_constraintBottom_toBottomOf="@id/purpleBar"
@@ -33,7 +33,6 @@
     <TextView
         android:id="@+id/textViewOtherClass"
         style="@style/TextContent.Body.MonMedium"
-        android:textSize="18sp"
         android:layout_marginStart="16dp"
         android:text="@string/other_class"
         android:textColor="@color/white"

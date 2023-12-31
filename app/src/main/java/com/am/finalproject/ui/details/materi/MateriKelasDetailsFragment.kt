@@ -70,7 +70,6 @@ class MateriKelasDetailsFragment : Fragment() {
         }
     }
 
-
     companion object {
         const val KEY_ARGS = "key_args"
         fun newInstance(id: String): MateriKelasDetailsFragment {
