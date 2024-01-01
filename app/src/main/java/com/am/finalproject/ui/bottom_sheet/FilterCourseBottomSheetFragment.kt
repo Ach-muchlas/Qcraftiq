@@ -68,11 +68,6 @@ class FilterCourseBottomSheetFragment(private val callBackFilter: (String) -> Un
                 adapter.itemList.filter { it is DataItemFilter.Item && it.isChecked } as List<DataItemFilter.Item>
             val categoryId = checkedItem.filter { it.type == "Category" }.map { it.id }
             callBackFilter.invoke(categoryId.joinToString())
-            Toast.makeText(
-                requireContext(),
-                "categoryId : $categoryId",
-                Toast.LENGTH_SHORT
-            ).show()
 
             dismissNow()
         }

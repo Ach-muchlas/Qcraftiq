@@ -14,9 +14,7 @@ import com.bumptech.glide.Glide
 class CourseTrackIngAdapter : ListAdapter<DataItemTrackingClass, CourseTrackIngAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
-
     var callBackToDetail: ((String) -> Unit)? = null
-
     inner class MyViewHolder(val binding: ItemPopularCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: DataItemTrackingClass) {

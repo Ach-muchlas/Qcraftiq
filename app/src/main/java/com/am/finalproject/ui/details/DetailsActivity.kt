@@ -93,10 +93,8 @@ class DetailsActivity : AppCompatActivity() {
             youTubePlayerView.addYouTubePlayerListener(object: AbstractYouTubePlayerListener(){
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     super.onReady(youTubePlayer)
-
                     val module: DataItemModule? = course.module?.getOrNull(0)
                     val urlVideo = Formatter.extractYouTubeId(module?.video ?: "")
-
                     youTubePlayer.loadVideo(urlVideo.toString(), 0F)
                 }
             })

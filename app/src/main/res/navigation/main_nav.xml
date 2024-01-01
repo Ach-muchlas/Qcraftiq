@@ -35,7 +35,11 @@
         android:id="@+id/navigation_class"
         android:name="com.am.finalproject.ui.classroom.ClassroomFragment"
         android:label="@string/title_class"
-        tools:layout="@layout/fragment_classroom" />
+        tools:layout="@layout/fragment_classroom" >
+        <action
+            android:id="@+id/action_navigation_class_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_course"

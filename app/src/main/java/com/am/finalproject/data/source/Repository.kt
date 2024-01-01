@@ -173,6 +173,7 @@ class Repository(
                         course.category.title,
                         timeModule ?: 0,
                         sizeModule ?: 0,
+                        course.type
                     )
                 }
                 courseDao.delete()
@@ -236,7 +237,15 @@ class Repository(
 
     /*Search*/
     fun searchByNameLocalData(query: String): Flow<List<CourseEntity>> {
-        return courseDao.searchCourse(query)
+        return courseDao.searchCourseByCategoryTitle(query)
+    }
+
+    fun searchCourseByTitleLocalData(title : String) : Flow<List<CourseEntity>>{
+        return courseDao.searchCourseByTitle(title)
+    }
+
+    fun searchCourseByTypeLocalData(typeCourse : String) : Flow<List<CourseEntity>>{
+        return courseDao.searchCourseByType(typeCourse)
     }
 
 

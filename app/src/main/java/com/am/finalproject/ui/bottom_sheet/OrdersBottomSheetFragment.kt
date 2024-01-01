@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
-import com.am.finalproject.data.remote.DataItemCourse
+import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.databinding.FragmentOrderBottomSheetBinding
 import com.am.finalproject.ui.detail_payment.DetailPaymentActivity
 import com.am.finalproject.utils.Formatter
@@ -18,7 +18,7 @@ class OrdersBottomSheetFragment : BottomSheetDialogFragment() {
 
     private var _binding : FragmentOrderBottomSheetBinding? = null
     private val binding get() = _binding!!
-    private var receiveCourse  : DataItemCourse? = null
+    private var receiveCourse: CourseEntity? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +36,7 @@ class OrdersBottomSheetFragment : BottomSheetDialogFragment() {
         receiveCourse?.let { course ->
             binding.containerItemCourse.apply {
                 Glide.with(requireContext()).load(course.image).into(imageContent)
-                textViewTagLineCategory.text = course.category.title
+                textViewTagLineCategory.text = course.categoryTitle
                 textViewRate.text = course.rating.toString()
                 textViewTitleCourse.text = course.title
                 textViewRate.text = course.rating.toString()
@@ -44,16 +44,9 @@ class OrdersBottomSheetFragment : BottomSheetDialogFragment() {
                 textViewLevelCourse.text = course.level
                 textViewContentCard.text = Formatter.formatCurrency(course.price)
                 iconContentCard.visibility = View.GONE
-
-                if (!course.module.isNullOrEmpty()) {
-                    textViewTime.text =
-                        Formatter.formatTimeSecondToMinute(course.module.sumOf { it.time ?: 0 })
-                    textViewModule.text = Formatter.formatSizeModule(course.module.size)
-                } else {
-                    textViewModule.text = Formatter.formatSizeModule(0)
-                    textViewTime.text = Formatter.formatTimeSecondToMinute(0)
+                textViewModule.text = Formatter.formatSizeModule(course.module)
+                textViewTime.text = Formatter.formatTimeSecondToMinute(course.time)
                 }
-            }
         }
     }
 
@@ -76,7 +69,7 @@ class OrdersBottomSheetFragment : BottomSheetDialogFragment() {
     }
     companion object {
         const val KEY_ID = "key_id"
-        fun show(fragmentManager: FragmentManager, data: DataItemCourse) {
+        fun show(fragmentManager: FragmentManager, data: CourseEntity) {
             val bottomSheetFilter = OrdersBottomSheetFragment()
             val bundle = Bundle()
             bundle.putParcelable(KEY_ID, data)

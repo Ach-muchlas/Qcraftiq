@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.am.finalproject.data.remote.DataItemCourse
+import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.ActivityDetailPaymentBinding
 import com.am.finalproject.ui.details.DetailsActivity
@@ -22,7 +22,7 @@ import java.util.Locale
 
 class DetailPaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailPaymentBinding
-    private var receiveDataBundle: DataItemCourse? = null
+    private var receiveDataBundle: CourseEntity? = null
     private val calendar = Calendar.getInstance()
     private val viewModel: PaymentViewModel by inject()
     private var isContainerTransferBankVisible = false
@@ -89,7 +89,7 @@ class DetailPaymentActivity : AppCompatActivity() {
             binding.containerItemCourse.apply {
                 val ppn = course.price * 0.11
                 Glide.with(this@DetailPaymentActivity).load(course.image).into(imageViewCourse)
-                textViewTaglineCourse.text = course.category.title
+                textViewTaglineCourse.text = course.categoryTitle
                 textViewTitleCourse.text = course.title
                 textViewAuthor.text = course.authorBy
                 textViewPrice.text = Formatter.formatPrice(course.price)
@@ -148,23 +148,13 @@ class DetailPaymentActivity : AppCompatActivity() {
 
                         Status.ERROR -> {
                             DisplayLayout.toastMessage(this, resources.message.toString(), false)
+                            finish()
                         }
                     }
                 }
             }
 
         }
-    }
-
-    private fun updateTextViewWithSelectedDate() {
-        // Example: Update a TextView with the selected date
-        val formattedDate = SimpleDateFormat(
-            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-            Locale.getDefault()
-        ).format(selectedDate)
-
-        // Update your UI element (replace with your actual UI element)
-        binding.containerCreditCard.edtExpire.setText(formattedDate)
     }
 
     private fun visiblePaymentMethod() {

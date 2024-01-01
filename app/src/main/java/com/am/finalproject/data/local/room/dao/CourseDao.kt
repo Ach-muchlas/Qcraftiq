@@ -18,9 +18,14 @@ interface CourseDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCourse(popularCourse: List<CourseEntity>)
 
-    @Query("SELECT * FROM course WHERE categoryTitle LIKE :query ")
-    fun searchCourse(query: String):Flow<List<CourseEntity>>
+    @Query("SELECT * FROM course WHERE categoryTitle LIKE :categoryTitle ")
+    fun searchCourseByCategoryTitle(categoryTitle: String):Flow<List<CourseEntity>>
 
+    @Query("SELECT * FROM course WHERE title LIKE :titleCourse ")
+    fun searchCourseByTitle(titleCourse: String):Flow<List<CourseEntity>>
+
+    @Query("SELECT * FROM course WHERE type LIKE :typeCourse ")
+    fun searchCourseByType(typeCourse: String):Flow<List<CourseEntity>>
     @Query("SELECT * FROM course ORDER BY title DESC")
     fun readCourseAll() : Flow<List<CourseEntity>>
 

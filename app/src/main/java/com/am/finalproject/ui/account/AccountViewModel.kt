@@ -21,6 +21,11 @@ class AccountViewModel(private val repository: Repository) : ViewModel() {
 
     fun getUser() = sharedpref.getUser()
 
+    fun isUserLogin(): Boolean {
+        return sharedpref.isUserLogin()
+    }
+
+
     fun changePasswordUser(password: String, newPassword: String, token: String) =
         repository.changePassword(password, newPassword, token)
 
@@ -34,6 +39,4 @@ class AccountViewModel(private val repository: Repository) : ViewModel() {
         city: String,
         image: String
     ) = repository.updateUser(token, name, email, phone, country, city, image)
-
-    fun getPaymentHistory(token: String) = repository.getPaymentHistory(token)
 }

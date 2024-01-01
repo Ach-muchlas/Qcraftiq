@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Final Project</string>
+    <string name="app_name">Qcraftiq</string>
     <string name="email_or_phone">email / Nomor Telepon</string>
     <string name="example_email">Contoh:achmad78@gmail.com</string>
     <string name="enter">Masuk</string>
@@ -237,4 +237,6 @@
     <string name="youtube_view">Youtube View</string>
     <string name="name_app">CraftIQ</string>
     <string name="vector_login_required">vector login required</string>
+    <string name="fullscreen_toggle">full</string>
+    <string name="video_materi">Back</string>
 </resources>

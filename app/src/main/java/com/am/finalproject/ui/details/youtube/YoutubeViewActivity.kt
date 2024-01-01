@@ -35,19 +35,16 @@ class YoutubeViewActivity : AppCompatActivity() {
         setContentView(binding.root)
         DisplayLayout.hideAppBar(this)
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
-
         val receiveBundleUrl = intent.getStringExtra(KEY_URL)
-        Log.e("SIMPLE", receiveBundleUrl.toString())
-
         val youTubePlayerView = binding.youtubePlayerView
         val fullScreenContainer = binding.fullScreenContainer
+
         val iFramePlayerOptions = IFramePlayerOptions.Builder()
             .controls(1)
-            .fullscreen(1) // enable full screen button
+            .fullscreen(1)
             .build()
 
         youTubePlayerView.enableAutomaticInitialization = false
-
 
         lifecycle.addObserver(youTubePlayerView)
 
@@ -65,7 +62,7 @@ class YoutubeViewActivity : AppCompatActivity() {
                 isFullscreen = true
 
                 youTubePlayerView.visibility = View.GONE
-                fullScreenContainer.visibility = View.GONE
+                fullScreenContainer.visibility = View.VISIBLE
                 fullScreenContainer.addView(fullscreenView)
             }
 
@@ -83,8 +80,17 @@ class YoutubeViewActivity : AppCompatActivity() {
                 this@YoutubeViewActivity.youTubePlayer = youTubePlayer
                 val videoId = extractYouTubeId(receiveBundleUrl)
                 youTubePlayer.loadVideo(videoId, 0f)
+
+                val fullscreenButton = binding.fullscreenButton
+                fullscreenButton.setOnClickListener {
+                    youTubePlayer.toggleFullscreen()
+                }
             }
         }, iFramePlayerOptions)
+
+        binding.imageViewBack.setOnClickListener {
+            navigateBack()
+        }
     }
 
     private fun extractYouTubeId(youtubeUrl: String?): String {
@@ -97,6 +103,15 @@ class YoutubeViewActivity : AppCompatActivity() {
             matcher.group(1)!!
         } else {
             ""
+        }
+    }
+
+    private fun navigateBack() {
+        val fragmentManager = supportFragmentManager
+        if (fragmentManager.backStackEntryCount > 0) {
+            fragmentManager.popBackStack()
+        } else {
+            finish()
         }
     }
 

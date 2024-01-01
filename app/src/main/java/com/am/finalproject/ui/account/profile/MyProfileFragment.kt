@@ -11,6 +11,7 @@ import com.am.finalproject.data.remote.DataUser
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentMyProfileBinding
 import com.am.finalproject.ui.account.AccountViewModel
+import com.am.finalproject.ui.bottom_sheet.IsLoginRequiredBottomSheet
 import com.am.finalproject.utils.DisplayLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -32,14 +33,20 @@ class MyProfileFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View {
 		_binding = FragmentMyProfileBinding.inflate(inflater, container, false)
+		viewModel.init(requireContext())
 		displayProfileUser()
 		navigation()
+		setupIsLoginRequired()
 		DisplayLayout.setUpBottomNavigation(activity, true)
 		return binding.root
 	}
 
+	private fun setupIsLoginRequired(){
+		if (!viewModel.isUserLogin()){
+			IsLoginRequiredBottomSheet.show(childFragmentManager)
+		}
+	}
 	private fun displayProfileUser() {
-		viewModel.init(requireContext())
 		val token = viewModel.getUser()?.accessToken
 		viewModel.getCurrentUser(token.toString()).observe(viewLifecycleOwner) { resources ->
 			when (resources.status) {

@@ -3,7 +3,6 @@ package com.am.finalproject.ui.home
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -16,7 +15,7 @@ import com.am.finalproject.R
 import com.am.finalproject.adapter.home.HomeCategoryAdapter
 import com.am.finalproject.adapter.home.HomePopularCourseAdapter
 import com.am.finalproject.data.local.entity.CategoryEntity
-import com.am.finalproject.data.remote.DataItemCourse
+import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentHomeBinding
 import com.am.finalproject.ui.auth.AuthViewModel
@@ -51,7 +50,6 @@ class HomeFragment : Fragment() {
         displayCategory()
         displayPopularCourse()
         setupSearch()
-
         return binding.root
     }
 
@@ -87,9 +85,12 @@ class HomeFragment : Fragment() {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (tab.text.toString() == "All") {
-                    displayPopularCourse()
+                    getALlCourseLocalData()
                 } else {
-                    getCourseByCategoryTitle(tab.text.toString())
+                    searchViewModel.searchByNameLocalData(tab.text.toString())
+                        .observe(viewLifecycleOwner) { data ->
+                            setupPopularCourseAdapter(data)
+                        }
                 }
             }
 
@@ -101,29 +102,17 @@ class HomeFragment : Fragment() {
 
 
     /*Function to retrieve popular course data from the local database.*/
-    private fun getCourseByCategoryTitle(categoryTitle: String) {
-        searchViewModel.searchCourseByCategory(categoryTitle)
-            .observe(viewLifecycleOwner) { resources ->
-                when (resources.status) {
-                    Status.LOADING -> {
-                        setupVisibilityProgressBar(binding.progressBarPopularCourse, true)
-                    }
-                    Status.SUCCESS -> {
-                        setupVisibilityProgressBar(binding.progressBarPopularCourse, false)
-                        setupPopularCourseAdapter(resources.data)
-                    }
-
-                    Status.ERROR -> {
-                        toastMessage(requireContext(), resources.message.toString(), false)
-                    }
-                }
-            }
+    private fun getALlCourseLocalData() {
+        viewModel.readCourseAll().observe(viewLifecycleOwner) { data ->
+            setupPopularCourseAdapter(data)
+        }
     }
+
 
     /*Function to display popular courses.*/
     /*This function has implemented offline first.*/
     private fun displayPopularCourse() {
-        viewModel.getCourse()
+        viewModel.getCourseLocalData()
             .observe(viewLifecycleOwner) { resources ->
                 when (resources.status) {
                     Status.LOADING -> {
@@ -132,7 +121,7 @@ class HomeFragment : Fragment() {
 
                     Status.SUCCESS -> {
                         setupVisibilityProgressBar(binding.progressBarPopularCourse, false)
-                        setupPopularCourseAdapter(data = resources.data?.data)
+                        setupPopularCourseAdapter(resources.data)
                     }
 
                     Status.ERROR -> {
@@ -160,14 +149,13 @@ class HomeFragment : Fragment() {
                 Status.ERROR -> {
                     setupVisibilityProgressBar(binding.progressBar, false)
                     toastMessage(requireContext(), " Error ${resource.message}", false)
-                    Log.e("SIMPLE", "${resource.message}")
                 }
             }
 
         }
     }
 
-    private fun orderCourse(dataItem: DataItemCourse) {
+    private fun orderCourse(dataItem: CourseEntity) {
         val token = authViewModel.getUser()?.accessToken
         val formattedDate = SimpleDateFormat(
             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
@@ -200,13 +188,7 @@ class HomeFragment : Fragment() {
                         resources.data?.message.toString(),
                         true
                     )
-                    val bundle = Bundle().apply {
-                        putString(DetailsActivity.KEY_ID, dataItem.id)
-                    }
-                    val intent = Intent(requireContext(), DetailsActivity::class.java).apply {
-                        putExtras(bundle)
-                    }
-                    startActivity(intent)
+                    navigateToDetailActivity(dataItem.id)
                 }
             }
 
@@ -214,7 +196,7 @@ class HomeFragment : Fragment() {
     }
 
     /*The function is used to set up a data adapter for popular courses.*/
-    private fun setupPopularCourseAdapter(data: List<DataItemCourse>?) {
+    private fun setupPopularCourseAdapter(data: List<CourseEntity>?) {
         val adapter = HomePopularCourseAdapter()
         adapter.submitList(data)
         binding.recyclerViewPopularCourse.layoutManager =
@@ -288,9 +270,9 @@ class HomeFragment : Fragment() {
             viewModel.toggleShowAllItem()
         }
 
-        adapter.callBackSearchByIdCategory = { categoryId ->
+        adapter.callBackSearchByIdCategory = { categoryTitle ->
             val bundle = Bundle().apply {
-                putString(KEY_CATEGORY_ID, categoryId)
+                putString(KEY_CATEGORY_TITle, categoryTitle)
             }
             findNavController().navigate(
                 R.id.action_navigation_home_to_searchResultFragment,
@@ -308,6 +290,6 @@ class HomeFragment : Fragment() {
 
 
     companion object {
-        const val KEY_CATEGORY_ID = "key_category_title"
+        const val KEY_CATEGORY_TITle = "key_category_title"
     }
 }

@@ -156,6 +156,9 @@ class RegisterActivity : AppCompatActivity() {
             imageViewButtonBack.setOnClickListener {
                 Navigate.intentActivity(this@RegisterActivity, LoginActivity::class.java)
             }
+            textViewRegister.setOnClickListener {
+                Navigate.intentActivity(this@RegisterActivity, LoginActivity::class.java)
+            }
         }
     }
 

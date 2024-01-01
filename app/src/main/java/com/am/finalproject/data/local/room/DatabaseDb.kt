@@ -11,7 +11,7 @@ import com.am.finalproject.data.local.room.dao.CourseDao
 
 @Database(
     entities = [CourseEntity::class, CategoryEntity::class],
-    version = 4,
+    version = 5,
     exportSchema = false,
 )
 abstract class DatabaseDb : RoomDatabase() {

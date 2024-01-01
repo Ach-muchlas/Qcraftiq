@@ -7,19 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.finalproject.R
 import com.am.finalproject.adapter.classroom.CourseTrackIngAdapter
 import com.am.finalproject.adapter.home.HomeCategoryAdapter
 import com.am.finalproject.data.local.entity.CategoryEntity
-import com.am.finalproject.data.remote.CategoryResponse
 import com.am.finalproject.data.remote.DataItemTrackingClass
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentClassroomBinding
 import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.bottom_sheet.IsLoginRequiredBottomSheet
 import com.am.finalproject.ui.details.DetailsActivity
+import com.am.finalproject.ui.home.HomeFragment
 import com.am.finalproject.ui.home.HomeViewModel
 import com.am.finalproject.utils.DisplayLayout
 import com.google.android.material.tabs.TabLayout
@@ -115,10 +116,14 @@ class ClassroomFragment : Fragment() {
                     "All" -> {
                         displayTopicClass()
                     }
+
                     "In Progress" -> {
                         "PROGRESS".progressTopicClass()
                     }
-                    "Done" -> {}
+
+                    "Done" -> {
+                        "DONE".progressTopicClass()
+                    }
                 }
             }
 
@@ -177,6 +182,16 @@ class ClassroomFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
             homeViewModel.toggleShowAllItem()
+        }
+
+        adapter.callBackSearchByIdCategory = { categoryTitle ->
+            val bundle = Bundle().apply {
+                putString(HomeFragment.KEY_CATEGORY_TITle, categoryTitle)
+            }
+            findNavController().navigate(
+                R.id.action_navigation_class_to_searchResultFragment,
+                bundle
+            )
         }
     }
 }

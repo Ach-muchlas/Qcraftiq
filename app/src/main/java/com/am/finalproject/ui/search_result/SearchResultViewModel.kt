@@ -16,9 +16,9 @@ class SearchResultViewModel(private val repository: Repository) : ViewModel() {
     val filterCourse: LiveData<Resource<List<DataItemCourse>>> get() = repository.filterResult
 
     fun getCourseAll() = repository.getCourse()
-
+    fun readCourseAll() = repository.readCourseALl().asLiveData()
     fun getCategoryAll() = repository.getCategory()
-
+    fun getCourseLocalData() = repository.getCourseLocalData()
     fun searchCourseByName(query: String) {
         viewModelScope.launch {
             repository.searchCourse(query)
@@ -27,14 +27,20 @@ class SearchResultViewModel(private val repository: Repository) : ViewModel() {
 
     fun filter(categoryId: String) {
         viewModelScope.launch {
-            Log.e("SIMPLE_VIEW_MODEL", "Data : $categoryId")
             repository.filter(categoryId)
         }
     }
 
+
     fun searchByNameLocalData(query: String): LiveData<List<CourseEntity>> {
         return repository.searchByNameLocalData(query).asLiveData()
     }
+
+    fun searchCourseByTitleLocalData(title: String): LiveData<List<CourseEntity>> =
+        repository.searchCourseByTitleLocalData(title).asLiveData()
+
+    fun searchCourseByTypeLocalData(typeCourse : String) : LiveData<List<CourseEntity>> =
+        repository.searchCourseByTypeLocalData(typeCourse).asLiveData()
 
     fun filterByName(query: String) = repository.filterByType(query)
 

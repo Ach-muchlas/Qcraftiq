@@ -1,9 +1,12 @@
 package com.am.finalproject.data.local.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "course")
 class CourseEntity(
     @field:ColumnInfo(name = "title")
@@ -36,4 +39,7 @@ class CourseEntity(
 
     @field:ColumnInfo("module")
     val module: Int,
-    )
+
+    @field:ColumnInfo("type")
+    val type: String
+) : Parcelable

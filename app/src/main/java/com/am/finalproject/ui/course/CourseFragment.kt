@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.finalproject.adapter.course.TopicClassAdapter
-import com.am.finalproject.data.remote.DataItemCourse
+import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentCourseBinding
+import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.bottom_sheet.FilterCourseBottomSheetFragment
+import com.am.finalproject.ui.bottom_sheet.IsLoginRequiredBottomSheet
 import com.am.finalproject.ui.bottom_sheet.OrdersBottomSheetFragment
+import com.am.finalproject.ui.detail_payment.PaymentViewModel
 import com.am.finalproject.ui.details.DetailsActivity
 import com.am.finalproject.ui.search_result.SearchResultViewModel
 import com.am.finalproject.utils.Destination
@@ -23,20 +26,28 @@ import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.Navigate
 import com.google.android.material.tabs.TabLayout
 import org.koin.android.ext.android.inject
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class CourseFragment : Fragment() {
 	private var _binding: FragmentCourseBinding? = null
 	private val binding get() = _binding!!
 	private val searchViewModel: SearchResultViewModel by inject()
+	private val authViewModel: AuthViewModel by inject()
+	private val paymentViewModel: PaymentViewModel by inject()
+	private val calender = Calendar.getInstance()
+
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
 		_binding = FragmentCourseBinding.inflate(inflater, container, false)
 		displayViewTopicClass()
-		setupSearch()
 		navigation()
 		setupFilterCourse()
+		authViewModel.init(requireContext())
+		setupSearch()
 		return binding.root
 	}
 
@@ -53,8 +64,24 @@ class CourseFragment : Fragment() {
 			when (resources.status) {
 				Status.LOADING -> {}
 				Status.SUCCESS -> {
-					val filteredData = resources.data
-					setupDataTopicClassAdapter(filteredData)
+					val list = resources.data?.map { course ->
+						val timeModule = course.module?.sumOf { it.time ?: 0 }
+						val sizeModule = course.module?.size
+						CourseEntity(
+							course.title,
+							course.id,
+							course.image,
+							course.level,
+							course.authorBy,
+							course.rating,
+							course.price,
+							course.category.title,
+							timeModule ?: 0,
+							sizeModule ?: 0,
+							course.type
+						)
+					}
+					setupDataTopicClassAdapter(list)
 				}
 
 				Status.ERROR -> {
@@ -83,22 +110,33 @@ class CourseFragment : Fragment() {
 
 	private fun displayViewTopicClass() {
 		/*displays recyclerview topic class*/
-		searchViewModel.getCourseAll().observe(viewLifecycleOwner) { resources ->
+		searchViewModel.getCourseLocalData().observe(viewLifecycleOwner) { resources ->
 			when (resources.status) {
-				Status.LOADING -> {}
-				Status.SUCCESS -> {
-					setupDataTopicClassAdapter(resources.data?.data)
-					setUpTabLayout(data = resources.data?.data)
+				Status.LOADING -> {
+					DisplayLayout.setupVisibilityProgressBar(binding.progressBar, true)
 				}
+
+				Status.SUCCESS -> {
+					DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
+					setupDataTopicClassAdapter(resources.data)
+					setUpTabLayout(resources.data)
+				}
+
 				Status.ERROR -> {
-					DisplayLayout.toastMessage(requireContext(), resources.message.toString(), false)
+					DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
+					DisplayLayout.toastMessage(
+						requireContext(),
+						resources.message.toString(),
+						false
+					)
 				}
 			}
 		}
 	}
 
-	private fun setUpTabLayout(data: List<DataItemCourse>?) {
+	private fun setUpTabLayout(data: List<CourseEntity>?) {
 		val tabLayout = binding.tabLayoutTopicClass
+		tabLayout.removeAllTabs()
 		tabLayout.addTab(tabLayout.newTab().setText("All"))
 		val tabTitle = mutableSetOf<String>()
 		data?.forEach {
@@ -112,28 +150,11 @@ class CourseFragment : Fragment() {
 		tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 			override fun onTabSelected(tab: TabLayout.Tab) {
 				if (tab.text.toString() == "All") {
-					searchViewModel.getCourseAll().observe(viewLifecycleOwner) { resources ->
-						when (resources.status) {
-							Status.LOADING -> {}
-							Status.SUCCESS -> {
-								setupDataTopicClassAdapter(resources.data?.data)
-							}
-
-							Status.ERROR -> {}
-						}
-					}
+					getALlCourseLocalData()
 				} else {
-					searchViewModel.filterByName(tab.text.toString())
+					searchViewModel.searchCourseByTypeLocalData(tab.text.toString())
 						.observe(viewLifecycleOwner) { resource ->
-							when (resource.status) {
-								Status.LOADING -> {}
-								Status.SUCCESS -> {
-									setupDataTopicClassAdapter(resource.data)
-								}
-
-								Status.ERROR -> {}
-							}
-
+							setupDataTopicClassAdapter(resource)
 						}
 				}
 			}
@@ -144,23 +165,126 @@ class CourseFragment : Fragment() {
 		})
 	}
 
-	private fun setupDataTopicClassAdapter(data: List<DataItemCourse>?) {
-		val adapter = TopicClassAdapter()
-		adapter.submitList(data)
-		binding.recyclerViewTopicClass.adapter = adapter
-		binding.recyclerViewTopicClass.layoutManager = LinearLayoutManager(requireContext())
-
-		adapter.callBackOpenOrdersBottomSheet = {
-			OrdersBottomSheetFragment.show(childFragmentManager, it)
-		}
-		adapter.callBackToDetail = {id ->
-			val bundle = Bundle().apply {
-				putString(DetailsActivity.KEY_ID, id)
-			}
-			val intent = Intent(requireContext(), DetailsActivity::class.java).apply {
-				putExtras(bundle)
-			}
-			startActivity(intent)
+	private fun getALlCourseLocalData() {
+		searchViewModel.readCourseAll().observe(viewLifecycleOwner) { data ->
+			setupDataTopicClassAdapter(data)
 		}
 	}
+
+	private fun setupDataTopicClassAdapter(data: List<CourseEntity>?) {
+		val adapter = TopicClassAdapter()
+		adapter.submitList(data)
+		binding.recyclerViewTopicClass.layoutManager =
+			LinearLayoutManager(requireContext())
+		val token = authViewModel.getUser()?.accessToken.toString()
+		adapter.onClick = { dataItemCourse ->
+			if (authViewModel.isUserLogin()) {
+				paymentViewModel.getHistoryOrderCourse(token)
+					.observe(viewLifecycleOwner) { resources ->
+						when (resources.status) {
+							Status.LOADING -> {
+								DisplayLayout.toastMessage(
+									requireContext(),
+									"Mohon tunggu sebentar",
+									true
+								)
+							}
+
+							Status.SUCCESS -> {
+								val courseAlreadyPurchased =
+									resources.data?.data?.any {
+										it?.course?.id == dataItemCourse.id && it.status in listOf(
+											"WAITING",
+											"APPROVED"
+										)
+									}
+								when (dataItemCourse.type) {
+									"FREE" -> {
+										if (courseAlreadyPurchased == true) {
+											navigateToDetailActivity(dataItemCourse.id)
+										} else {
+											orderCourse(dataItemCourse)
+										}
+									}
+
+									"PREMIUM" -> {
+										if (courseAlreadyPurchased == true) {
+											navigateToDetailActivity(dataItemCourse.id)
+										} else {
+											OrdersBottomSheetFragment.show(
+												childFragmentManager,
+												dataItemCourse
+											)
+										}
+									}
+								}
+							}
+
+							Status.ERROR -> {
+								DisplayLayout.toastMessage(
+									requireContext(),
+									resources.message.toString(),
+									false
+								)
+							}
+						}
+
+					}
+			} else {
+				IsLoginRequiredBottomSheet.show(childFragmentManager)
+			}
+		}
+		binding.recyclerViewTopicClass.adapter = adapter
+	}
+
+	private fun orderCourse(dataItem: CourseEntity) {
+		val token = authViewModel.getUser()?.accessToken
+		val formattedDate = SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+			Locale.getDefault()
+		).format(calender.time)
+		val ppn = dataItem.price * 0.11
+		val total = dataItem.price * ppn
+
+		paymentViewModel.postOrderCourse(
+			token.toString(),
+			formattedDate,
+			0,
+			total.toInt(),
+			"",
+			"",
+			dataItem.id
+		).observe(viewLifecycleOwner) { resources ->
+			when (resources.status) {
+				Status.LOADING -> {
+					DisplayLayout.toastMessage(requireContext(), "Mohon tunggu sebentar", true)
+				}
+
+				Status.ERROR -> {
+					DisplayLayout.toastMessage(
+						requireContext(),
+						resources.message.toString(),
+						false
+					)
+				}
+
+				Status.SUCCESS -> {
+					DisplayLayout.toastMessage(
+						requireContext(),
+						resources.data?.message.toString(),
+						true
+					)
+					navigateToDetailActivity(dataItem.id)
+				}
+			}
+		}
+	}
+
+	private fun navigateToDetailActivity(courseId: String?) {
+		val intent = Intent(context, DetailsActivity::class.java).apply {
+			putExtra(DetailsActivity.KEY_ID, courseId)
+		}
+		startActivity(intent)
+	}
+
 }
