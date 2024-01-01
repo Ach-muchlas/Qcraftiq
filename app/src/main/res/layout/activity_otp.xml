@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.otp.OtpActivity">
+
+    <ImageView
+        android:id="@+id/imageViewButtonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="14dp"
+        android:contentDescription="@string/button_back"
+        android:src="@drawable/arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewInputOtp"
+        style="@style/TextContent.Headline"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/input_otp"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewButtonBack" />
+
+    <TextView
+        android:id="@+id/textViewSendOtp"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginTop="24dp"
+        android:text="@string/the_6_digit_code_sent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewInputOtp" />
+
+    <TextView
+        android:id="@+id/textViewDestinationOtp"
+        style="@style/TextContent.Body.PopMedium"
+        android:text="@string/example_destination_otp"
+        app:layout_constraintEnd_toEndOf="@id/textViewSendOtp"
+        app:layout_constraintStart_toStartOf="@id/textViewSendOtp"
+        app:layout_constraintTop_toBottomOf="@id/textViewSendOtp" />
+
+    <EditText
+        android:id="@+id/edtOtp1"
+        style="@style/EditTextContentOtp"
+        android:maxLength="1"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="30dp"
+        android:autofillHints="postalCode"
+        android:hint="@string/_0"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewDestinationOtp"
+        tools:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/edtOtp2"
+        style="@style/EditTextContentOtp"
+        android:maxLength="1"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:autofillHints="postalCode"
+        android:hint="@string/_0"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@id/edtOtp1"
+        app:layout_constraintTop_toBottomOf="@id/textViewDestinationOtp"
+        tools:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/edtOtp3"
+        style="@style/EditTextContentOtp"
+        android:maxLength="1"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:autofillHints="postalCode"
+        android:hint="@string/_1"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@id/edtOtp2"
+        app:layout_constraintTop_toBottomOf="@id/textViewDestinationOtp"
+        tools:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/edtOtp4"
+        android:maxLength="1"
+        style="@style/EditTextContentOtp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:autofillHints="postalCode"
+        android:hint="@string/_1"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@id/edtOtp3"
+        app:layout_constraintTop_toBottomOf="@id/textViewDestinationOtp"
+        tools:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/edtOtp5"
+        android:maxLength="1"
+        style="@style/EditTextContentOtp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:autofillHints="postalCode"
+        android:hint="@string/_3"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@id/edtOtp4"
+        app:layout_constraintTop_toBottomOf="@id/textViewDestinationOtp"
+        tools:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/edtOtp6"
+        style="@style/EditTextContentOtp"
+        android:maxLength="1"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="30dp"
+        android:autofillHints="postalCode"
+        android:hint="@string/_0"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/edtOtp5"
+        app:layout_constraintTop_toBottomOf="@id/textViewDestinationOtp"
+        tools:ignore="LabelFor" />
+
+    <TextView
+        android:id="@+id/textViewResending"
+        style="@style/TextContent.Body.PopMedium"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="31dp"
+        android:text="@string/resending"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edtOtp1" />
+
+
+    <TextView
+        android:id="@+id/textViewRequestNewCode"
+        style="@style/TextContent.Body.PopBold"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginTop="89dp"
+        android:text="@string/request_new_code"
+        android:textColor="@color/dark_blue"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewResending" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
