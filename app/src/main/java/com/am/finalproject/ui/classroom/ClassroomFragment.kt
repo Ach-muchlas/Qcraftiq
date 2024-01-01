@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.am.finalproject.R
 import com.am.finalproject.adapter.classroom.CourseTrackIngAdapter
 import com.am.finalproject.adapter.home.HomeCategoryAdapter
+import com.am.finalproject.data.local.entity.CategoryEntity
 import com.am.finalproject.data.remote.CategoryResponse
 import com.am.finalproject.data.remote.DataItemTrackingClass
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentClassroomBinding
 import com.am.finalproject.ui.auth.AuthViewModel
+import com.am.finalproject.ui.bottom_sheet.IsLoginRequiredBottomSheet
 import com.am.finalproject.ui.details.DetailsActivity
 import com.am.finalproject.ui.home.HomeViewModel
 import com.am.finalproject.utils.DisplayLayout
@@ -42,8 +44,14 @@ class ClassroomFragment : Fragment() {
         displayTopicClass()
         displayCategory()
         setUpTabLayout()
-
+        showBottomSheetIsLoginRequired()
         return binding.root
+    }
+
+    private fun showBottomSheetIsLoginRequired() {
+        if (token.isNullOrEmpty()) {
+            IsLoginRequiredBottomSheet.show(childFragmentManager)
+        }
     }
 
     private fun displayTopicClass() {
@@ -71,14 +79,14 @@ class ClassroomFragment : Fragment() {
     }
 
     private fun displayCategory() {
-        homeViewModel.getCategory().observe(viewLifecycleOwner) { resource ->
+        homeViewModel.getCategoryLocalData().observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.LOADING -> {
                     DisplayLayout.setupVisibilityProgressBar(binding.progressBarCategory, true)
                 }
 
                 Status.SUCCESS -> {
-                    setUpCategoryAdapter(resource.data!!)
+                    setUpCategoryAdapter(resource.data)
                     DisplayLayout.setupVisibilityProgressBar(binding.progressBarCategory, false)
                 }
 
@@ -158,11 +166,11 @@ class ClassroomFragment : Fragment() {
 
     /*The function is used to set up a data adapter for popular courses. */
     @SuppressLint("NotifyDataSetChanged")
-    private fun setUpCategoryAdapter(data: CategoryResponse?) {
+    private fun setUpCategoryAdapter(data: List<CategoryEntity>?) {
         val adapter = HomeCategoryAdapter()
         binding.recyclerViewCategory.adapter = adapter
         binding.recyclerViewCategory.layoutManager = GridLayoutManager(requireContext(), 2)
-        adapter.submitList(data?.data)
+        adapter.submitList(data)
         binding.textViewSeeAllCategory.setOnClickListener {
             homeViewModel.showAllItem.observe(viewLifecycleOwner) { showALlItem ->
                 adapter.showAllItems = showALlItem

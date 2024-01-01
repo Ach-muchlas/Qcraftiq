@@ -38,8 +38,9 @@ class SearchResultFragment : Fragment() {
     private fun initialize() {
         if (category != null) {
             searchCategoryById()
+        } else {
+            search()
         }
-        search()
     }
 
 
@@ -51,6 +52,8 @@ class SearchResultFragment : Fragment() {
     }
 
     private fun searchCategoryById() {
+        binding.edtSearch.visibility = View.GONE
+
         viewModel.searchCourseByCategory(category.toString())
             .observe(viewLifecycleOwner) { resources ->
                 when (resources.status) {
@@ -87,7 +90,6 @@ class SearchResultFragment : Fragment() {
                 Status.SUCCESS -> {
                     setupDataAdapter(resources.data?.data)
                 }
-
                 Status.ERROR -> {}
             }
         }
@@ -117,6 +119,7 @@ class SearchResultFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         DisplayLayout.setUpBottomNavigation(activity, false )
+        binding.edtSearch.visibility = View.VISIBLE
         _binding = null
     }
 }

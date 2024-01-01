@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +17,7 @@ import com.bumptech.glide.Glide
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class DetailPaymentActivity : AppCompatActivity() {
@@ -27,6 +27,7 @@ class DetailPaymentActivity : AppCompatActivity() {
     private val viewModel: PaymentViewModel by inject()
     private var isContainerTransferBankVisible = false
     private var isContainerCreditCardVisible = false
+    private lateinit var selectedDate: Date
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,17 +46,9 @@ class DetailPaymentActivity : AppCompatActivity() {
         binding.containerCreditCard.root.visibility = View.GONE
         receiveDataBundle = intent.getParcelableExtra(KEY_BUNDLE)
         DisplayLayout.hideAppBar(this)
+        selectedDate = Date()
     }
 
-
-    private fun navigation() {
-        Log.e("SIMPLE", "Setting onClickListener in navigation")
-        binding.buttonPayment.setOnClickListener {
-//            DisplayLayout.toastMessage(this@DetailPaymentActivity, "COK", true)
-            Log.e("SIMPLE", "CLICK2")
-            postOrder()
-        }
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupEditTextExpired() {
@@ -79,13 +72,14 @@ class DetailPaymentActivity : AppCompatActivity() {
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
                 // Update the EditText with the selected date
+                selectedDate = calendar.time
                 Formatter.formatDate(binding.containerCreditCard.edtExpire, calendar)
+
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
         )
-
         // Show the date picker dialog
         datePickerDialog.show()
     }
@@ -114,7 +108,7 @@ class DetailPaymentActivity : AppCompatActivity() {
         val formattedDate = SimpleDateFormat(
             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
             Locale.getDefault()
-        ).format(calendar.time)
+        ).format(selectedDate)
 
         receiveDataBundle?.let { course ->
             val ppn = course.price * 0.11
@@ -160,6 +154,17 @@ class DetailPaymentActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun updateTextViewWithSelectedDate() {
+        // Example: Update a TextView with the selected date
+        val formattedDate = SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            Locale.getDefault()
+        ).format(selectedDate)
+
+        // Update your UI element (replace with your actual UI element)
+        binding.containerCreditCard.edtExpire.setText(formattedDate)
     }
 
     private fun visiblePaymentMethod() {

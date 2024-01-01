@@ -2,6 +2,7 @@ package com.am.finalproject.utils
 
 import android.content.Context
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import com.am.finalproject.R
 
@@ -21,5 +22,14 @@ object Navigate {
     fun intentActivity(context: Context, targetActivity: Class<*>) {
         val intent = Intent(context, targetActivity)
         context.startActivity(intent)
+    }
+
+    fun intentActivityUseFinish(context: Context, targetActivity: Class<*>) {
+        val intent = Intent(context, targetActivity)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+        if (context is AppCompatActivity) {
+            context.finish()
+        }
     }
 }

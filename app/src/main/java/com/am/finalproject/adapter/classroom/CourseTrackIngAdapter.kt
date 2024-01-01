@@ -33,7 +33,7 @@ class CourseTrackIngAdapter : ListAdapter<DataItemTrackingClass, CourseTrackIngA
             binding.textViewLevelCourse.text = data.course.level
             binding.textViewModule.text = Formatter.formatSizeModule(sizeModule ?: 0)
             binding.textViewTime.text = Formatter.formatTimeSecondToMinute(timeModule ?: 0)
-            binding.buttonBuy.visibility = View.GONE
+            binding.buttonBuyPopular.visibility = View.GONE
             binding.iconProgress.visibility = View.VISIBLE
             when (data.status.toString()) {
                 "DONE" -> {

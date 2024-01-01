@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 class HomePopularCourseAdapter :
     ListAdapter<DataItemCourse, HomePopularCourseAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-    var callBackOpenBottomSheetPayment: ((DataItemCourse) -> Unit)? = null
+    var onClick: ((DataItemCourse) -> Unit)? = null
 
     inner class MyViewHolder(private val binding: ItemPopularCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -27,10 +27,14 @@ class HomePopularCourseAdapter :
             binding.textViewRating.text = data.rating.toString()
             binding.textViewMentor.text = author
             binding.textViewLevelCourse.text = data.level
-            binding.buttonBuy.text = Formatter.formatCurrency(data.price)
             binding.progressBar.visibility = View.GONE
             binding.textViewProgressStatus.visibility = View.GONE
             binding.iconProgress.visibility = View.GONE
+            if (data.type == "FREE") {
+                binding.buttonBuyPopular.text = "Mulai Belajar"
+            } else {
+                binding.buttonBuyPopular.text = Formatter.formatPrice(data.price)
+            }
 
             if (!data.module.isNullOrEmpty()) {
                 binding.textViewTime.text =
@@ -41,12 +45,11 @@ class HomePopularCourseAdapter :
                 binding.textViewTime.text = Formatter.formatTimeSecondToMinute(0)
             }
 
-
             binding.card.setOnClickListener {
-                callBackOpenBottomSheetPayment?.invoke(
-                    data
-                )
+                onClick?.invoke(data)
             }
+
+
         }
     }
 
@@ -56,8 +59,6 @@ class HomePopularCourseAdapter :
             ItemPopularCourseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
-
-
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val data = getItem(position)
         holder.bindContentPopularCourse(data)

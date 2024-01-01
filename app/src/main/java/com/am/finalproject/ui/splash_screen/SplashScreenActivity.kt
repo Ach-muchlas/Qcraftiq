@@ -51,15 +51,6 @@ class SplashScreenActivity : AppCompatActivity() {
                 startActivity(mainIntent)
                 finish()
             }
-        }, 2000L)
-    }
-
-    private fun playAnimation() {
-        val logo = ObjectAnimator.ofFloat(binding.imageViewAppLogo, View.ALPHA, 1f).setDuration(2000)
-        val name = ObjectAnimator.ofFloat(binding.textViewStudy, View.ALPHA, 1f).setDuration(2000)
-
-        AnimatorSet().apply {
-            playSequentially(logo, name)
-        }.start()
+        }, 100L)
     }
 }

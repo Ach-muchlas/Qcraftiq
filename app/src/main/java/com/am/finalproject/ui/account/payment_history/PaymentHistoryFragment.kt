@@ -13,6 +13,8 @@ import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentPaymentHistoryBinding
 import com.am.finalproject.ui.detail_payment.PaymentViewModel
 import com.am.finalproject.utils.DisplayLayout
+import com.am.finalproject.utils.DisplayLayout.setupVisibilityProgressBar
+import com.am.finalproject.utils.DisplayLayout.toastMessage
 import org.koin.android.ext.android.inject
 
 class PaymentHistoryFragment : Fragment() {
@@ -40,20 +42,20 @@ class PaymentHistoryFragment : Fragment() {
     private fun displayCourse() {
         viewModel.init(requireContext())
         val token = viewModel.getUser()?.accessToken.toString()
-        viewModel.getHistoryOrderCourse(token.toString()).observe(viewLifecycleOwner) { resources ->
+        viewModel.getHistoryOrderCourse(token).observe(viewLifecycleOwner) { resources ->
             when (resources.status) {
                 Status.LOADING -> {
-                    DisplayLayout.setupVisibilityProgressBar(binding.progressBar, true)
+                    setupVisibilityProgressBar(binding.progressBar, true)
                 }
 
                 Status.SUCCESS -> {
-                    DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
+                    setupVisibilityProgressBar(binding.progressBar, false)
                     setupPaymentHistoryAdapter(resources.data)
                 }
 
                 Status.ERROR -> {
-                    DisplayLayout.setupVisibilityProgressBar(binding.progressBar, false)
-                    DisplayLayout.toastMessage(
+                    setupVisibilityProgressBar(binding.progressBar, false)
+                    toastMessage(
                         requireContext(),
                         resources.message.toString(),
                         false

@@ -236,4 +236,5 @@
     <string name="buy_now">Beli Sekarang</string>
     <string name="youtube_view">Youtube View</string>
     <string name="name_app">CraftIQ</string>
+    <string name="vector_login_required">vector login required</string>
 </resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/corner_top"
+    tools:context=".ui.bottom_sheet.IsLoginRequiredBottomSheet">
+
+
+    <ImageView
+        android:id="@+id/imageViewCloseButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/close_icon"
+        android:src="@drawable/close_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewOppps"
+        style="@style/TextContent.Headline"
+        android:layout_marginTop="80dp"
+        android:text="Oopps!!"
+        android:textSize="40sp"
+        android:textColor="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewCloseButton" />
+
+    <ImageView
+        android:id="@+id/vectorLogin"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/vector_login_required"
+        android:src="@drawable/login_required"
+        app:layout_constraintEnd_toEndOf="@id/textViewOppps"
+        app:layout_constraintStart_toStartOf="@id/textViewOppps"
+        app:layout_constraintTop_toBottomOf="@id/textViewOppps" />
+
+    <TextView
+        style="@style/TextContent.Body.MonMedium"
+        android:layout_marginTop="30dp"
+        android:text="Maaf, Anda harus login terlebih dahulu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/textViewLoginRequired"
+        app:layout_constraintTop_toBottomOf="@id/vectorLogin" />
+
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="275dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/mon_bold"
+        android:text="@string/enter"
+        android:textSize="16sp"
+        android:backgroundTint="@color/dark_blue"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewLoginRequired"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

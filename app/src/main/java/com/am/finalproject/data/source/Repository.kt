@@ -368,7 +368,6 @@ class Repository(
         emit(Resource.loading(null))
         try {
             val response = apiService.getTrackingClass("Bearer $token")
-
             if (response.isSuccessful) {
                 emit(Resource.success(response.body()))
             } else {
@@ -382,6 +381,21 @@ class Repository(
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
         }
     }
+
+    fun getFilterTrackingClass(token: String, statusTrackingClass: String) =
+        liveData(Dispatchers.IO) {
+            emit(Resource.loading(null))
+            try {
+                val response = apiService.getTrackingClass("Bearer $token")
+                val allData = response.body()?.data
+                val filtered =
+                    allData?.filter { it.status!!.contains(statusTrackingClass, ignoreCase = true) }
+                emit(Resource.success(filtered))
+
+            } catch (exception: Exception) {
+                emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+            }
+        }
 
 
     fun getCurrentUser(token: String) = liveData(Dispatchers.IO) {

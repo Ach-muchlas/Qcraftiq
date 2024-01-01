@@ -11,14 +11,13 @@ import com.am.finalproject.data.remote.NotificationResponse
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentNotificationBinding
 import com.am.finalproject.ui.auth.AuthViewModel
-import com.am.finalproject.ui.home.HomeViewModel
+import com.am.finalproject.ui.bottom_sheet.IsLoginRequiredBottomSheet
 import com.am.finalproject.utils.DisplayLayout
 import org.koin.android.ext.android.inject
 
 class NotificationFragment : Fragment() {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
-    private val homeViewModel: HomeViewModel by inject()
     private val viewModel: NotificationViewModel by inject()
     private val authViewModel: AuthViewModel by inject()
 
@@ -28,17 +27,20 @@ class NotificationFragment : Fragment() {
     ): View {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         displayNotification()
-//        setUpNotificationAdapter()
-//        setupAdapter()
-
         return binding.root
     }
 
 
+    private fun showBottomSheetIsLoginRequired(token: String?) {
+        if (token.isNullOrEmpty()) {
+            IsLoginRequiredBottomSheet.show(childFragmentManager)
+        }
+    }
 
     private fun displayNotification() {
         authViewModel.init(requireContext())
         val token = authViewModel.getUser()?.accessToken
+        showBottomSheetIsLoginRequired(token)
         viewModel.notificationUser(token.toString()).observe(viewLifecycleOwner) { resources ->
             when (resources.status) {
                 Status.LOADING -> {

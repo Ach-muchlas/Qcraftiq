@@ -11,7 +11,7 @@
         android:id="@+id/textViewNotification"
         style="@style/TextContent.Headline"
         android:layout_marginHorizontal="26dp"
-        android:layout_marginTop="85dp"
+        android:layout_marginTop="30dp"
         android:text="@string/notification"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
