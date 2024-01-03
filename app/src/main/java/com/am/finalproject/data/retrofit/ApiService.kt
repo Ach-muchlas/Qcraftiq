@@ -7,7 +7,9 @@ import com.am.finalproject.data.remote.HistoryOrdersResponse
 import com.am.finalproject.data.remote.LoginBody
 import com.am.finalproject.data.remote.LoginResponse
 import com.am.finalproject.data.remote.NotificationResponse
+import com.am.finalproject.data.remote.PayForFreeCourseResponse
 import com.am.finalproject.data.remote.PaymentBody
+import com.am.finalproject.data.remote.PostCourseBody
 import com.am.finalproject.data.remote.RegisterBody
 import com.am.finalproject.data.remote.RegisterBodyWithOTP
 import com.am.finalproject.data.remote.RegisterResponse
@@ -90,4 +92,12 @@ interface ApiService {
         @Header("Authorization") bearer: String
     ) : Response<HistoryOrdersResponse>
 
+    @FormUrlEncoded
+    @POST("courseTrackings")
+    suspend fun postCourseTracking(
+        @Header("Authorization") bearer: String,
+        @Field("status") status: String,
+        @Field("userId") userId: String,
+        @Field("courseId") courseId: String,
+    ) : Response<PayForFreeCourseResponse>
 }

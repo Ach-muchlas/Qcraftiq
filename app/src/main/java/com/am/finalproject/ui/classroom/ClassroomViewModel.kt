@@ -6,4 +6,6 @@ import com.am.finalproject.data.source.Repository
 class ClassroomViewModel(private val repository: Repository) : ViewModel() {
     fun getDataClass(token: String) = repository.getTrackingClass(token)
     fun filterByStatus(query: String, token: String) = repository.filterByStatus(query, token)
+
+    fun searchCourse(token: String, title: String) = repository.searchCourseByNameInClass(title, token)
 }

@@ -273,13 +273,16 @@ class Repository(
         }
     }
 
-    suspend fun filter(query1: String) {
+    suspend fun filter(query1: String, query2: String?) {
         _filterResult.value = Resource.loading(null)
         try {
             val response = apiService.getPopularCourse()
             val allCourse = response.data
             val filtered = allCourse.filter {
-                it.category.id.contains(query1, ignoreCase = true)
+                it.category.id.contains(
+                    query1,
+                    ignoreCase = true
+                ) || it.level.contains(query2.toString(), ignoreCase = true)
             }
             _filterResult.value = Resource.success(filtered)
         } catch (exception: Exception) {
@@ -346,7 +349,7 @@ class Repository(
             val response = apiService.getTrackingClass("Bearer $token")
             val allCourse = response.body()?.data
             val filtered =
-                allCourse?.filter { it.status.toString().contains(query, ignoreCase = true) }
+                allCourse?.filter { it.course.title.contains(query, ignoreCase = true) }
             emit(Resource.success(filtered))
         } catch (exception: Exception) {
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
@@ -518,7 +521,27 @@ class Repository(
             }
         } catch (exception: Exception) {
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
-
         }
     }
+
+    fun getOrderFreeCourse(token: String, status: String, userId: String, courseId: String) =
+        liveData(Dispatchers.IO) {
+            emit(Resource.loading(null))
+            try {
+                val response =
+                    apiService.postCourseTracking("Bearer $token", status, userId, courseId)
+
+                if (response.isSuccessful) {
+                    emit(Resource.success(response.body()))
+                } else {
+                    response.errorBody()?.let {
+                        val errorResponse = JSONObject(it.string())
+                        val errorMessage = errorResponse.getString("message")
+                        emit(Resource.error(null, errorMessage))
+                    }
+                }
+            } catch (exception: Exception) {
+                emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
+            }
+        }
 }

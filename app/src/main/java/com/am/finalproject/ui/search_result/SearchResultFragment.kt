@@ -1,10 +1,8 @@
 package com.am.finalproject.ui.search_result
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +15,12 @@ import com.am.finalproject.adapter.course.TopicClassAdapter
 import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentSearchResultBinding
+import com.am.finalproject.ui.account.AccountViewModel
+import com.am.finalproject.ui.auth.AuthViewModel
+import com.am.finalproject.ui.bottom_sheet.IsLoginRequiredBottomSheet
 import com.am.finalproject.ui.bottom_sheet.OrdersBottomSheetFragment
+import com.am.finalproject.ui.detail_payment.PaymentViewModel
+import com.am.finalproject.ui.details.DetailsActivity
 import com.am.finalproject.ui.home.HomeFragment
 import com.am.finalproject.utils.DisplayLayout
 import org.koin.android.ext.android.inject
@@ -26,6 +29,9 @@ class SearchResultFragment : Fragment() {
     private var _binding: FragmentSearchResultBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SearchResultViewModel by inject()
+    private val authViewModel: AuthViewModel by inject()
+    private val paymentViewModel: PaymentViewModel by inject()
+    private val accountViewModel: AccountViewModel by inject()
     private val category: String? by lazy { arguments?.getString(HomeFragment.KEY_CATEGORY_TITle) }
 
     override fun onCreateView(
@@ -36,6 +42,7 @@ class SearchResultFragment : Fragment() {
         navigation()
         initialize()
         search()
+        authViewModel.init(requireContext())
         DisplayLayout.setUpBottomNavigation(activity, true)
         return binding.root
     }
@@ -119,16 +126,115 @@ class SearchResultFragment : Fragment() {
     private fun setupDataAdapter(data: List<CourseEntity>?) {
         val adapter = TopicClassAdapter()
         adapter.submitList(data)
-        binding.recyclerViewCourse.adapter = adapter
         binding.recyclerViewCourse.layoutManager = LinearLayoutManager(requireContext())
-//        adapter.callBackOpenOrdersBottomSheet = {
-//            OrdersBottomSheetFragment.show(childFragmentManager, it)
-//        }
+        val token = authViewModel.getUser()?.accessToken.toString()
+        adapter.onClick = { dataItemCourse ->
+            if (authViewModel.isUserLogin()) {
+                paymentViewModel.getHistoryOrderCourse(token)
+                    .observe(viewLifecycleOwner) { resources ->
+                        when (resources.status) {
+                            Status.LOADING -> {
+                                DisplayLayout.toastMessage(
+                                    requireContext(),
+                                    "Mohon tunggu sebentar",
+                                    true
+                                )
+                            }
+
+                            Status.SUCCESS -> {
+                                val courseAlreadyPurchased =
+                                    resources.data?.data?.any {
+                                        it?.course?.id == dataItemCourse.id && it.status in listOf(
+                                            "WAITING",
+                                            "APPROVED"
+                                        )
+                                    }
+                                when (dataItemCourse.type) {
+                                    "FREE" -> {
+                                        if (courseAlreadyPurchased == true) {
+                                            navigateToDetailActivity(dataItemCourse.id)
+                                        } else {
+                                            orderFreeCourse(dataItemCourse.id)
+                                        }
+                                    }
+
+                                    "PREMIUM" -> {
+                                        if (courseAlreadyPurchased == true) {
+                                            navigateToDetailActivity(dataItemCourse.id)
+                                        } else {
+                                            OrdersBottomSheetFragment.show(
+                                                childFragmentManager,
+                                                dataItemCourse
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+
+                            Status.ERROR -> {
+                                DisplayLayout.toastMessage(
+                                    requireContext(),
+                                    resources.message.toString(),
+                                    false
+                                )
+                            }
+                        }
+
+                    }
+            } else {
+                IsLoginRequiredBottomSheet.show(childFragmentManager)
+            }
+        }
+        binding.recyclerViewCourse.adapter = adapter
+    }
+
+    private fun orderFreeCourse(courseId: String) {
+        val token = authViewModel.getUser()?.accessToken.toString()
+        accountViewModel.getCurrentUser(token).observe(viewLifecycleOwner) { resources ->
+            when (resources.status) {
+                Status.LOADING -> {}
+                Status.SUCCESS -> {
+                    val dataUserId = resources.data?.data?.id
+                    val status = "PROGRESS"
+                    paymentViewModel.postOrderFreeCourse(
+                        token,
+                        status,
+                        dataUserId.toString(),
+                        courseId
+                    ).observe(viewLifecycleOwner) { result ->
+                        when (result.status) {
+                            Status.LOADING -> {}
+                            Status.SUCCESS -> {
+                                navigateToDetailActivity(courseId)
+                            }
+
+                            Status.ERROR -> {
+                                DisplayLayout.toastMessage(
+                                    requireContext(),
+                                    result.message.toString(),
+                                    false
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Status.ERROR -> {}
+            }
+
+        }
+    }
+
+    private fun navigateToDetailActivity(courseId: String?) {
+        val intent = Intent(context, DetailsActivity::class.java).apply {
+            putExtra(DetailsActivity.KEY_ID, courseId)
+        }
+        startActivity(intent)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        DisplayLayout.setUpBottomNavigation(activity, false )
+        DisplayLayout.setUpBottomNavigation(activity, false)
         binding.edtSearch.visibility = View.VISIBLE
         _binding = null
     }

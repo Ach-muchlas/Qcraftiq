@@ -3,9 +3,12 @@ package com.am.finalproject.ui.classroom
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -45,6 +48,7 @@ class ClassroomFragment : Fragment() {
         displayTopicClass()
         displayCategory()
         setUpTabLayout()
+        setupSearch()
         showBottomSheetIsLoginRequired()
         return binding.root
     }
@@ -52,6 +56,25 @@ class ClassroomFragment : Fragment() {
     private fun showBottomSheetIsLoginRequired() {
         if (token.isNullOrEmpty()) {
             IsLoginRequiredBottomSheet.show(childFragmentManager)
+        }
+    }
+
+    private fun setupSearch(){
+        binding.edtSearch.doAfterTextChanged {
+            val title = it.toString()
+            viewModel.searchCourse(token.toString(), title).observe(viewLifecycleOwner){result ->
+                when(result.status){
+                    Status.LOADING -> {
+
+                    }
+                    Status.SUCCESS -> {
+                        setupCourseTrackingAdapter(result.data)
+                    }
+                    Status.ERROR -> {
+                        DisplayLayout.toastMessage(requireContext(), result.message.toString(), false)
+                    }
+                }
+            }
         }
     }
 
@@ -108,7 +131,7 @@ class ClassroomFragment : Fragment() {
         val tabLayout = binding.tabLayoutClass
         tabLayout.addTab(tabLayout.newTab().setText("All"))
         tabLayout.addTab(tabLayout.newTab().setText("In Progress"))
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.done)))
+        tabLayout.addTab(tabLayout.newTab().setText("Done"))
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {

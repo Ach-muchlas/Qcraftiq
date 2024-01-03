@@ -18,6 +18,7 @@ import com.am.finalproject.data.local.entity.CategoryEntity
 import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentHomeBinding
+import com.am.finalproject.ui.account.AccountViewModel
 import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.bottom_sheet.IsLoginRequiredBottomSheet
 import com.am.finalproject.ui.bottom_sheet.OrdersBottomSheetFragment
@@ -30,9 +31,6 @@ import com.am.finalproject.utils.DisplayLayout.toastMessage
 import com.am.finalproject.utils.Navigate
 import com.google.android.material.tabs.TabLayout
 import org.koin.android.ext.android.inject
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -41,7 +39,7 @@ class HomeFragment : Fragment() {
     private val searchViewModel: SearchResultViewModel by inject()
     private val authViewModel: AuthViewModel by inject()
     private val paymentViewModel: PaymentViewModel by inject()
-    private val calender = Calendar.getInstance()
+    private val accountViewModel: AccountViewModel by inject()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -155,41 +153,41 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun orderCourse(dataItem: CourseEntity) {
-        val token = authViewModel.getUser()?.accessToken
-        val formattedDate = SimpleDateFormat(
-            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-            Locale.getDefault()
-        ).format(calender.time)
-        val ppn = dataItem.price * 0.11
-        val total = dataItem.price * ppn
+    /*fungsi ini ditujukan untuk pembelian course yang free agar langsung masuk ke tracking course */
+    private fun orderFreeCourse(courseId: String) {
+        authViewModel.init(requireContext())
+        val token = authViewModel.getUser()?.accessToken.toString()
 
-        paymentViewModel.postOrderCourse(
-            token.toString(),
-            formattedDate,
-            0,
-            total.toInt(),
-            "",
-            "",
-            dataItem.id
-        ).observe(viewLifecycleOwner) { resources ->
+        accountViewModel.getCurrentUser(token).observe(viewLifecycleOwner) { resources ->
             when (resources.status) {
-                Status.LOADING -> {
-                    toastMessage(requireContext(), "Mohon tunggu sebentar", true)
-                }
-
-                Status.ERROR -> {
-                    toastMessage(requireContext(), resources.message.toString(), false)
-                }
-
+                Status.LOADING -> {}
                 Status.SUCCESS -> {
-                    toastMessage(
-                        requireContext(),
-                        resources.data?.message.toString(),
-                        true
-                    )
-                    navigateToDetailActivity(dataItem.id)
+                    val dataUserId = resources.data?.data?.id
+                    val status = "PROGRESS"
+                    paymentViewModel.postOrderFreeCourse(
+                        token,
+                        status,
+                        dataUserId.toString(),
+                        courseId
+                    ).observe(viewLifecycleOwner) { result ->
+                        when (result.status) {
+                            Status.LOADING -> {}
+                            Status.SUCCESS -> {
+                                navigateToDetailActivity(courseId)
+                            }
+
+                            Status.ERROR -> {
+                                toastMessage(
+                                    requireContext(),
+                                    result.message.toString(),
+                                    false
+                                )
+                            }
+                        }
+                    }
                 }
+
+                Status.ERROR -> {}
             }
 
         }
@@ -198,10 +196,11 @@ class HomeFragment : Fragment() {
     /*The function is used to set up a data adapter for popular courses.*/
     private fun setupPopularCourseAdapter(data: List<CourseEntity>?) {
         val adapter = HomePopularCourseAdapter()
-        adapter.submitList(data)
+
         binding.recyclerViewPopularCourse.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val token = authViewModel.getUser()?.accessToken.toString()
+
         adapter.onClick = { dataItemCourse ->
             if (authViewModel.isUserLogin()) {
                 paymentViewModel.getHistoryOrderCourse(token)
@@ -224,8 +223,9 @@ class HomeFragment : Fragment() {
                                         if (courseAlreadyPurchased == true) {
                                             navigateToDetailActivity(dataItemCourse.id)
                                         } else {
-                                            orderCourse(dataItemCourse)
+                                            orderFreeCourse(dataItemCourse.id)
                                         }
+
                                     }
 
                                     "PREMIUM" -> {
@@ -251,6 +251,7 @@ class HomeFragment : Fragment() {
                 IsLoginRequiredBottomSheet.show(childFragmentManager)
             }
         }
+        adapter.submitList(data)
         binding.recyclerViewPopularCourse.adapter = adapter
     }
 

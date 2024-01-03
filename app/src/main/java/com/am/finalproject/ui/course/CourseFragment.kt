@@ -14,6 +14,7 @@ import com.am.finalproject.adapter.course.TopicClassAdapter
 import com.am.finalproject.data.local.entity.CourseEntity
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.FragmentCourseBinding
+import com.am.finalproject.ui.account.AccountViewModel
 import com.am.finalproject.ui.auth.AuthViewModel
 import com.am.finalproject.ui.bottom_sheet.FilterCourseBottomSheetFragment
 import com.am.finalproject.ui.bottom_sheet.IsLoginRequiredBottomSheet
@@ -26,9 +27,6 @@ import com.am.finalproject.utils.DisplayLayout
 import com.am.finalproject.utils.Navigate
 import com.google.android.material.tabs.TabLayout
 import org.koin.android.ext.android.inject
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class CourseFragment : Fragment() {
 	private var _binding: FragmentCourseBinding? = null
@@ -36,7 +34,7 @@ class CourseFragment : Fragment() {
 	private val searchViewModel: SearchResultViewModel by inject()
 	private val authViewModel: AuthViewModel by inject()
 	private val paymentViewModel: PaymentViewModel by inject()
-	private val calender = Calendar.getInstance()
+	private val accountViewModel: AccountViewModel by inject()
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -53,8 +51,9 @@ class CourseFragment : Fragment() {
 
 	private fun navigation() {
 		binding.textViewFilter.setOnClickListener {
-			FilterCourseBottomSheetFragment.show(childFragmentManager) {
-				searchViewModel.filter(it)
+			val dataDummyLevel = "BEGINNER"
+			FilterCourseBottomSheetFragment.show(childFragmentManager) { id, level ->
+				searchViewModel.filter(id, level ?: dataDummyLevel)
 			}
 		}
 	}
@@ -203,7 +202,7 @@ class CourseFragment : Fragment() {
 										if (courseAlreadyPurchased == true) {
 											navigateToDetailActivity(dataItemCourse.id)
 										} else {
-											orderCourse(dataItemCourse)
+											orderFreeCourse(dataItemCourse.id)
 										}
 									}
 
@@ -237,46 +236,42 @@ class CourseFragment : Fragment() {
 		binding.recyclerViewTopicClass.adapter = adapter
 	}
 
-	private fun orderCourse(dataItem: CourseEntity) {
-		val token = authViewModel.getUser()?.accessToken
-		val formattedDate = SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-			Locale.getDefault()
-		).format(calender.time)
-		val ppn = dataItem.price * 0.11
-		val total = dataItem.price * ppn
+	private fun orderFreeCourse(courseId: String) {
+		authViewModel.init(requireContext())
+		val token = authViewModel.getUser()?.accessToken.toString()
 
-		paymentViewModel.postOrderCourse(
-			token.toString(),
-			formattedDate,
-			0,
-			total.toInt(),
-			"",
-			"",
-			dataItem.id
-		).observe(viewLifecycleOwner) { resources ->
+		accountViewModel.getCurrentUser(token).observe(viewLifecycleOwner) { resources ->
 			when (resources.status) {
-				Status.LOADING -> {
-					DisplayLayout.toastMessage(requireContext(), "Mohon tunggu sebentar", true)
-				}
-
-				Status.ERROR -> {
-					DisplayLayout.toastMessage(
-						requireContext(),
-						resources.message.toString(),
-						false
-					)
-				}
-
+				Status.LOADING -> {}
 				Status.SUCCESS -> {
-					DisplayLayout.toastMessage(
-						requireContext(),
-						resources.data?.message.toString(),
-						true
-					)
-					navigateToDetailActivity(dataItem.id)
+					val dataUserId = resources.data?.data?.id
+					val status = "PROGRESS"
+					paymentViewModel.postOrderFreeCourse(
+						token,
+						status,
+						dataUserId.toString(),
+						courseId
+					).observe(viewLifecycleOwner) { result ->
+						when (result.status) {
+							Status.LOADING -> {}
+							Status.SUCCESS -> {
+								navigateToDetailActivity(courseId)
+							}
+
+							Status.ERROR -> {
+								DisplayLayout.toastMessage(
+									requireContext(),
+									result.message.toString(),
+									false
+								)
+							}
+						}
+					}
 				}
+
+				Status.ERROR -> {}
 			}
+
 		}
 	}
 

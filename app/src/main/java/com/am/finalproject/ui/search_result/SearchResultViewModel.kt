@@ -25,9 +25,9 @@ class SearchResultViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun filter(categoryId: String) {
+    fun filter(categoryId: String, levelCourse : String) {
         viewModelScope.launch {
-            repository.filter(categoryId)
+            repository.filter(categoryId, levelCourse)
         }
     }
 

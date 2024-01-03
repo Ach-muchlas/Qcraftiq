@@ -3,6 +3,7 @@ package com.am.finalproject.adapter.detail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.am.finalproject.R
 import com.am.finalproject.data.multiple_list.materials.DataItemMaterials
 import com.am.finalproject.data.multiple_list.materials.DatabaseMaterials
 import com.am.finalproject.databinding.ItemHeaderStudyMaterialsBinding
@@ -12,7 +13,6 @@ import com.am.finalproject.databinding.ItemStudyMaterialsBinding
 class StudyMaterialsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var callBackYoutubeView: ((String) -> Unit?)? = null
-
     inner class ItemViewHolder(private val itemBinding: ItemStudyMaterialsBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: DataItemMaterials.Item) {
@@ -20,6 +20,7 @@ class StudyMaterialsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             itemBinding.textViewTitleVideo.text = item.title
             itemBinding.viewMaterials.setOnClickListener {
                 callBackYoutubeView?.invoke(item.urlYoutube)
+                itemBinding.imageViewVideoPlayer.setImageResource(R.drawable.video_player_done)
             }
         }
     }

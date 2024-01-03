@@ -17,7 +17,7 @@ import com.am.finalproject.ui.search_result.SearchResultViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.android.ext.android.inject
 
-class FilterCourseBottomSheetFragment(private val callBackFilter: (String) -> Unit) :
+class FilterCourseBottomSheetFragment(private val callBackFilter: (String, String) -> Unit) :
     BottomSheetDialogFragment() {
     private var _binding: FragmentFilterCourseBottomSheetBinding? = null
     private val binding get() = _binding!!
@@ -67,14 +67,14 @@ class FilterCourseBottomSheetFragment(private val callBackFilter: (String) -> Un
             val checkedItem =
                 adapter.itemList.filter { it is DataItemFilter.Item && it.isChecked } as List<DataItemFilter.Item>
             val categoryId = checkedItem.filter { it.type == "Category" }.map { it.id }
-            callBackFilter.invoke(categoryId.joinToString())
-
+            val levelCourse = checkedItem.filter { it.type == "Level" }.map { it.title }
+            callBackFilter.invoke(categoryId.joinToString(), levelCourse.joinToString())
             dismissNow()
         }
     }
 
     companion object {
-        fun show(fragmentManager: FragmentManager, callBackDataFilter: (String) -> Unit) {
+        fun show(fragmentManager: FragmentManager, callBackDataFilter: (String, String) -> Unit) {
             val bottomSheetFilter = FilterCourseBottomSheetFragment(callBackDataFilter)
             bottomSheetFilter.show(fragmentManager, bottomSheetFilter.tag)
         }

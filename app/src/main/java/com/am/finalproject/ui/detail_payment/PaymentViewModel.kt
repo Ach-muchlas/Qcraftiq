@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.am.finalproject.data.local.sharepref.UserPreferences
 import com.am.finalproject.data.source.Repository
-import java.time.LocalDateTime
 
 class PaymentViewModel(private val repository: Repository) : ViewModel() {
     private lateinit var sharedpref: UserPreferences
@@ -27,4 +26,6 @@ class PaymentViewModel(private val repository: Repository) : ViewModel() {
 
 
     fun getHistoryOrderCourse(token: String) = repository.getHistoryOrders(token)
+    fun postOrderFreeCourse(token: String, status: String, userId: String, courseId: String) =
+        repository.getOrderFreeCourse(token, status, userId, courseId)
 }

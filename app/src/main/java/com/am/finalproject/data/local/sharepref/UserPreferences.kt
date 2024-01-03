@@ -11,6 +11,7 @@ class UserPreferences(context: Context) {
         private const val KEY_TOKEN = "accessToken"
         private const val KEY_LOGIN = "isLogin"
         private const val KEY_ON_BOARDING = "onBoarding"
+        private const val KEY_VIDEO_PLAYER = "video"
     }
 
     private val sharedPreferences: SharedPreferences by lazy {

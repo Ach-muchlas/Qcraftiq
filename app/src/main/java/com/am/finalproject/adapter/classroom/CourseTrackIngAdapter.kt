@@ -1,5 +1,6 @@
 package com.am.finalproject.adapter.classroom
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,11 +18,12 @@ class CourseTrackIngAdapter : ListAdapter<DataItemTrackingClass, CourseTrackIngA
     var callBackToDetail: ((String) -> Unit)? = null
     inner class MyViewHolder(val binding: ItemPopularCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(data: DataItemTrackingClass) {
             val author = "By " + data.course.authorBy
             val timeModule = data.course.module?.sumOf { it.time ?: 0 }
             val sizeModule = data.course.module?.size
-            val progress = 0
+            var progress = 0
 
             Glide.with(binding.root.context).load(data.course.image).into(binding.imageContent)
             binding.textViewTagLineCategory.text = data.course.category.title
@@ -35,19 +37,15 @@ class CourseTrackIngAdapter : ListAdapter<DataItemTrackingClass, CourseTrackIngA
             binding.iconProgress.visibility = View.VISIBLE
             when (data.status.toString()) {
                 "DONE" -> {
-                    progress.plus(10)
+                    progress = 100
                     binding.textViewProgressStatus.text = "${progress}% complete"
-                    binding.progressBar.setProgress(progress.plus(10))
+                    binding.progressBar.setProgress(progress)
                 }
 
                 "PROGRESS" -> {
-                    binding.textViewProgressStatus.text = "${progress.plus(5)}% complete"
-                    binding.progressBar.setProgress(progress.plus(5))
-                }
-
-                else -> {
+                    progress = 50
                     binding.textViewProgressStatus.text = "${progress}% complete"
-                    binding.progressBar.setProgress(0)
+                    binding.progressBar.setProgress(progress)
                 }
             }
 

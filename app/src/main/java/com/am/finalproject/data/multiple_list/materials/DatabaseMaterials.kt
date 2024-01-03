@@ -35,7 +35,8 @@ object DatabaseMaterials {
                             DataItemMaterials.Item(
                                 numberForChapterOne++,
                                 item.title.toString(),
-                                item.video.toString()
+                                item.video.toString(),
+                                false
                             )
                         )
                     }
@@ -58,7 +59,8 @@ object DatabaseMaterials {
                             DataItemMaterials.Item(
                                 numberForChapterTwo++,
                                 item.title.toString(),
-                                item.video.toString()
+                                item.video.toString(),
+                                false
                             )
                         )
                     }

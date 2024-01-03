@@ -33,6 +33,7 @@ class MateriKelasDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentMaterikelasdetailsBinding.inflate(inflater, container, false)
         displayMaterials()
+        viewModel.init(requireContext())
         return binding.root
     }
 

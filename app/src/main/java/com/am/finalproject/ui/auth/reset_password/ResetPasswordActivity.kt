@@ -72,22 +72,12 @@ class ResetPasswordActivity : AppCompatActivity() {
                         when (result.status) {
                             Status.LOADING -> {}
                             Status.SUCCESS -> {
-                                StyleableToast.makeText(
-                                    this@ResetPasswordActivity,
-                                    result.data?.message,
-                                    Toast.LENGTH_SHORT,
-                                    R.style.MyToast_IsGreen
-                                ).show()
+                                DisplayLayout.toastMessage(this@ResetPasswordActivity, result.data?.message.toString(), true)
                                 textEmail?.clear()
                             }
 
                             Status.ERROR -> {
-                                StyleableToast.makeText(
-                                    this@ResetPasswordActivity,
-                                    result.message,
-                                    Toast.LENGTH_SHORT,
-                                    R.style.MyToast_IsRed
-                                ).show()
+                                DisplayLayout.toastMessage(this@ResetPasswordActivity, result.message.toString(), false)
                             }
                         }
 
