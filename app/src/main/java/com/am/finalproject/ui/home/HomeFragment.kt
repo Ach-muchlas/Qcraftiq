@@ -225,7 +225,6 @@ class HomeFragment : Fragment() {
                                         } else {
                                             orderFreeCourse(dataItemCourse.id)
                                         }
-
                                     }
 
                                     "PREMIUM" -> {

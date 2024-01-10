@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.am.finalproject.R
@@ -21,6 +22,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import org.koin.android.ext.android.inject
+import java.util.regex.Pattern
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -88,13 +90,16 @@ class DetailsActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+            val textDetail = findViewById<TextView>(R.id.tv_desc)
+            textDetail.text = course.description
+
             val youTubePlayerView = binding.youTubePlayerView
             lifecycle.addObserver(youTubePlayerView)
             youTubePlayerView.addYouTubePlayerListener(object: AbstractYouTubePlayerListener(){
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     super.onReady(youTubePlayer)
                     val module: DataItemModule? = course.module?.getOrNull(0)
-                    val urlVideo = Formatter.extractYouTubeId(module?.video ?: "")
+                    val urlVideo = extractYouTubeId(module?.video ?: "")
                     youTubePlayer.loadVideo(urlVideo.toString(), 0F)
                 }
             })
@@ -127,6 +132,18 @@ class DetailsActivity : AppCompatActivity() {
         }.attach()
     }
 
+    private fun extractYouTubeId(youtubeUrl: String?): String {
+        //ekstraks ID video dari URL YouTube lengkap
+        val pattern =
+            Pattern.compile("https?://.*(?:youtu\\.be/|v/|e/|u/\\w+/|embed/|v=)([^#&?]*).*")
+        val matcher = pattern.matcher(youtubeUrl.toString())
+
+        return if (matcher.matches()) {
+            matcher.group(1)!!
+        } else {
+            ""
+        }
+    }
 
     companion object {
         const val KEY_ID = "key_id"

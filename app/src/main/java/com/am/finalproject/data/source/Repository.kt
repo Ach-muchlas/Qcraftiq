@@ -137,7 +137,16 @@ class Repository(
     fun changePassword(password: String, newPassword: String, token : String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(null))
         try {
-            emit(Resource.success(apiService.changePasswordUser("Bearer $token", password, newPassword)))
+            val response = apiService.changePasswordUser("Bearer $token", password, newPassword)
+            if (response.isSuccessful) {
+                emit(Resource.success(response.body()))
+            } else {
+                response.errorBody()?.let {
+                    val errorResponse = JSONObject(it.string())
+                    val errorMessage = errorResponse.getString("message")
+                    emit(Resource.error(null, errorMessage))
+                }
+            }
         } catch (exception: Exception) {
             emit(Resource.error(null, exception.message ?: "Error Occurred!!"))
         }

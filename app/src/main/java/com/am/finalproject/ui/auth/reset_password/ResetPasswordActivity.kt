@@ -10,7 +10,9 @@ import com.am.finalproject.R
 import com.am.finalproject.data.source.Status
 import com.am.finalproject.databinding.ActivityResetPasswordBinding
 import com.am.finalproject.ui.auth.AuthViewModel
+import com.am.finalproject.ui.auth.login.LoginActivity
 import com.am.finalproject.utils.DisplayLayout
+import com.am.finalproject.utils.Navigate
 import io.github.muddz.styleabletoast.StyleableToast
 import org.koin.android.ext.android.inject
 
@@ -65,6 +67,10 @@ class ResetPasswordActivity : AppCompatActivity() {
 
     private fun navigation() {
         binding.apply {
+            imageViewButtonBack.setOnClickListener {
+                Navigate.intentActivity(this@ResetPasswordActivity, LoginActivity::class.java)
+            }
+
             val textEmail = edtEmail.text
             buttonResetPassword.setOnClickListener {
                 viewModel.resetPassword(email = textEmail.toString())

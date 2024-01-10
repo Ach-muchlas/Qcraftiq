@@ -125,26 +125,16 @@
         tools:ignore="LabelFor" />
 
     <TextView
-        android:id="@+id/textViewResending"
-        style="@style/TextContent.Body.PopMedium"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="31dp"
-        android:text="@string/resending"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtOtp1" />
-
-
-    <TextView
         android:id="@+id/textViewRequestNewCode"
         style="@style/TextContent.Body.PopBold"
         android:layout_marginHorizontal="0dp"
-        android:layout_marginTop="89dp"
+        android:layout_marginTop="100dp"
         android:text="@string/request_new_code"
         android:textColor="@color/dark_blue"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewResending" />
+        app:layout_constraintTop_toBottomOf="@id/edtOtp1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

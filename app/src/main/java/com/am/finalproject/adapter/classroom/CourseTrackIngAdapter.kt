@@ -20,7 +20,6 @@ class CourseTrackIngAdapter : ListAdapter<DataItemTrackingClass, CourseTrackIngA
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(data: DataItemTrackingClass) {
-            val author = "By " + data.course.authorBy
             val timeModule = data.course.module?.sumOf { it.time ?: 0 }
             val sizeModule = data.course.module?.size
             var progress = 0
@@ -29,7 +28,7 @@ class CourseTrackIngAdapter : ListAdapter<DataItemTrackingClass, CourseTrackIngA
             binding.textViewTagLineCategory.text = data.course.category.title
             binding.textViewRating.text = data.course.rating.toString()
             binding.textViewTitleCourse.text = data.course.title
-            binding.textViewMentor.text = author
+            binding.textViewMentor.text = data.course.authorBy
             binding.textViewLevelCourse.text = data.course.level
             binding.textViewModule.text = Formatter.formatSizeModule(sizeModule ?: 0)
             binding.textViewTime.text = Formatter.formatTimeSecondToMinute(timeModule ?: 0)
